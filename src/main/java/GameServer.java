@@ -10,6 +10,7 @@ public class GameServer {
 
     private int numPlayers;
 
+
     // read each player in array, send current table to them, receive operations from player
     private void start() {
         System.out.println("To do");

@@ -1,16 +1,24 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Player implements Serializable {
     private String name;
+    private List<String> tiles;
 
     public Player(String name) {
         this.name = name;
+        this.tiles = new ArrayList<>();
     }
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getTiles() {
+        return tiles;
     }
 
     //  ********************* Networking Code below ****************************
