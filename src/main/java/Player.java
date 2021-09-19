@@ -12,6 +12,8 @@ public class Player implements Serializable {
         randomizeTiles();
     }
 
+    public Player() {}
+
     public void randomizeTiles() {
         Random r = new Random();
         for (int i = 0; i < 14; i++) {
@@ -27,7 +29,6 @@ public class Player implements Serializable {
                 }
             }
         });
-        System.out.println(tiles);
     }
 
     public void setTiles(List<String> tiles) {
