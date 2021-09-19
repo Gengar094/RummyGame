@@ -1,8 +1,6 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Player implements Serializable {
     private String name;
@@ -11,6 +9,29 @@ public class Player implements Serializable {
     public Player(String name) {
         this.name = name;
         this.tiles = new ArrayList<>();
+        randomizeTiles();
+    }
+
+    public void randomizeTiles() {
+        Random r = new Random();
+        for (int i = 0; i < 14; i++) {
+            tiles.add(Config.GAME_TILES[r.nextInt(Config.GAME_TILES.length)]);
+        }
+        tiles.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.charAt(0) == o2.charAt(0)) {
+                    return Integer.parseInt(o1.substring(1)) - Integer.parseInt(o2.substring(1));
+                } else {
+                    return o1.charAt(0) - o2.charAt(0);
+                }
+            }
+        });
+        System.out.println(tiles);
+    }
+
+    public void setTiles(List<String> tiles) {
+        this.tiles = tiles;
     }
 
     public String getName() {
@@ -34,7 +55,7 @@ public class Player implements Serializable {
         }
     }
 
-    private void startGame() {
+    public void startGame() {
         try {
             Socket socket = new Socket("localhost", Config.GAME_SERVER_PORT_NUMBER);
             ObjectOutputStream dOut = new ObjectOutputStream(socket.getOutputStream());
