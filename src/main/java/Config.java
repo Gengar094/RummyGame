@@ -1,4 +1,8 @@
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Config {
 
     public static final int GAME_SERVER_PORT_NUMBER = 3010;
@@ -30,5 +34,7 @@ public class Config {
                     "R12", "B12", "G12", "O12",
                     "R13", "B13", "G13", "O13",
                     "R13", "B13", "G13", "O13"};
+
+    public static List<String> tiles = new LinkedList<String>(Arrays.asList(GAME_TILES));
 
 }
