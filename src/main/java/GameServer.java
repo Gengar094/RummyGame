@@ -13,8 +13,14 @@ public class GameServer {
 
     // read each player in array, send current table to them, receive operations from player
     private void start() {
-        System.out.println("To do");
+        while (true) {}
     }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public void reset() {}
 
 
     // Networking Code
@@ -50,6 +56,7 @@ public class GameServer {
         }
 
         System.out.println("We have three connected players, now let's get started");
+        start();
     }
 
 
@@ -64,7 +71,6 @@ public class GameServer {
     public static void main(String[] args) {
         GameServer gs = new GameServer();
         gs.acceptConnections();
-        gs.start();
         System.out.println("End of the game");
         gs.close();
     }

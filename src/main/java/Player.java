@@ -62,6 +62,11 @@ public class Player implements Serializable {
         return tiles;
     }
 
+    public void reset() {
+        Config.tiles.addAll(this.tiles);
+        this.tiles = new ArrayList<>();
+    }
+
     //  ********************* Networking Code below ****************************
     private void run(Socket socket) {
         while(true) {
