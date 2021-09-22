@@ -18,15 +18,6 @@ public class Player implements Serializable {
         randomizeTiles();
     }
 
-    public Player() {
-        this.tiles = new ArrayList<>();
-        this.map = new HashMap();
-        map.put('R', 1);
-        map.put('B', 2);
-        map.put('G', 3);
-        map.put('O', 4);
-    }
-
     public void randomizeTiles() {
         Random r = new Random();
         for (int i = 0; i < 14; i++) {
@@ -60,6 +51,17 @@ public class Player implements Serializable {
 
     public List<String> getTiles() {
         return tiles;
+    }
+
+    public void drawTiles() {
+        int index = new Random().nextInt(Config.tiles.size());
+        System.out.println(index);
+        tiles.add(Config.tiles.get(index));
+        Config.tiles.remove(index);
+    }
+
+    public void play(String card) {
+        tiles.remove(card);
     }
 
     public void reset() {

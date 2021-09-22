@@ -1,12 +1,14 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class GameServer {
     private Player[] players = new Player[3];
     private Socket[] sockets = new Socket[3];
     private ServerSocket server;
     private String[] table = {"1st", "2nd", "3rd"};
+    private Game game;
 
     private int numPlayers;
 
@@ -16,12 +18,31 @@ public class GameServer {
         while (true) {}
     }
 
+    public void reset() {}
+
+    public void endTurn() {
+        game.endTurn();
+    }
+
+    public void draw() {
+        game.draw();
+    }
+
+    public void play(String[] melds) {
+        game.play(Arrays.asList(melds));
+    }
+
     public void setPlayers(Player[] players) {
         this.players = players;
     }
 
-    public void reset() {}
+    public Game getGame() {
+        return game;
+    }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     // Networking Code
     public GameServer() {
@@ -56,6 +77,7 @@ public class GameServer {
         }
 
         System.out.println("We have three connected players, now let's get started");
+        this.game = new Game(players);
         start();
     }
 
