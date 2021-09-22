@@ -26,7 +26,7 @@ public class AppTest {
     }
     @AfterEach
     public void reset() {
-        gs.reset();
+        gs.reset(); // game reset
         p1.reset();
         p1.randomizeTiles();
         p2.reset();
@@ -103,6 +103,171 @@ public class AppTest {
         assertFalse(p1.getTiles().contains("B12"));
         assertFalse(p1.getTiles().contains("O13"));
 
-
     }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints1() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R3", "R4", "R4", "R5", "R5", "R6", "R11", "R12", "R13", "O12")));
+        gs.play(new String[] {"R11", "R12", "R13"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 1);
+        assertFalse(p1.getTiles().contains("R11"));
+        assertFalse(p1.getTiles().contains("R12"));
+        assertFalse(p1.getTiles().contains("R13"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints2() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R3", "R4", "R4", "R5", "R5", "R6", "R12", "B12","G12", "O12")));
+        gs.play(new String[] {"R12", "B12", "G12"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 1);
+        assertFalse(p1.getTiles().contains("R12"));
+        assertFalse(p1.getTiles().contains("B12"));
+        assertFalse(p1.getTiles().contains("G12"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints3() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R3", "R4", "R4", "R9", "R10", "R11", "R12", "R13", "G12", "O12")));
+        gs.play(new String[] {"R9", "R10", "R11", "R12", "R13"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 1);
+        assertFalse(p1.getTiles().contains("R9"));
+        assertFalse(p1.getTiles().contains("R10"));
+        assertFalse(p1.getTiles().contains("R11"));
+        assertFalse(p1.getTiles().contains("R12"));
+        assertFalse(p1.getTiles().contains("R13"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints4() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R3", "R4", "R4", "R9", "R10", "R11", "R13", "B13", "G13", "O13")));
+        gs.play(new String[] {"R13", "B13", "G13", "O13"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 1);
+        assertFalse(p1.getTiles().contains("R13"));
+        assertFalse(p1.getTiles().contains("B13"));
+        assertFalse(p1.getTiles().contains("G13"));
+        assertFalse(p1.getTiles().contains("O13"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints5() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R4", "R5", "R9", "R10", "R11", "R13", "B7", "B8", "B9", "B10")));
+        gs.play(new String[] {"R2", "R3", "R4"});
+        gs.play(new String[] {"B7", "B8", "B9"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 2);
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("R3"));
+        assertFalse(p1.getTiles().contains("R4"));
+        assertFalse(p1.getTiles().contains("B7"));
+        assertFalse(p1.getTiles().contains("B8"));
+        assertFalse(p1.getTiles().contains("B9"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints6() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R4", "R5", "B2", "B4", "B5", "G4", "O2", "O4", "O5", "O6")));
+        gs.play(new String[] {"R2", "B2", "O2"});
+        gs.play(new String[] {"G4", "O4", "B4", "R4"});
+        gs.play(new String[] {"O5", "B5", "R5"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 3);
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("R3"));
+        assertFalse(p1.getTiles().contains("R4"));
+        assertFalse(p1.getTiles().contains("B7"));
+        assertFalse(p1.getTiles().contains("B8"));
+        assertFalse(p1.getTiles().contains("B9"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints7() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R4", "R5", "R8", "G8", "O8", "O9", "O10", "O11", "O12", "O13")));
+        gs.play(new String[] {"R8", "G8", "O8"});
+        gs.play(new String[] {"R2", "R3", "R4"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 2);
+        assertFalse(p1.getTiles().contains("R8"));
+        assertFalse(p1.getTiles().contains("G8"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("R3"));
+        assertFalse(p1.getTiles().contains("R4"));
+    }
+
+    //
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPoints8() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "B2", "B3", "B5", "B6", "B7", "G2", "G3", "G4", "O2", "O3")));
+        gs.play(new String[] {"R2", "O2", "B2"});
+        gs.play(new String[] {"G2", "G3", "G4"});
+        gs.play(new String[] {"R3", "B3", "O3"});
+        gs.play(new String[] {"B5", "B6", "B7"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 4);
+        assertFalse(p1.getTiles().contains("R8"));
+        assertFalse(p1.getTiles().contains("G8"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("R3"));
+        assertFalse(p1.getTiles().contains("R4"));
+    }
+
+    @DisplayName("Tests for initial 30 points")
+    @Test
+    public void testInitialPointsAndWin() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R4", "R5", "R8", "G8", "O8", "O9", "O10", "O11", "O12", "O13")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("B1", "B1", "B2", "B2", "B3", "B3", "B4", "B4", "B5", "B5", "B6", "B6", "B7", "B7")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O1", "O2", "O2", "O3", "O3", "O4", "O4", "O5", "O5", "O6", "O6", "O7", "O7")));
+        gs.play(new String[] {"R2", "B2", "G2", "O2"});
+        gs.play(new String[] {"G3", "G4", "G5", "G6", "G7"});
+        gs.play(new String[] {"O4", "O5", "O6", "O7", "O8"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 3);
+        assertEquals(p1.getTiles().size(), 0);
+        assertTrue(gs.getGame().getWinner(), p1);
+        assertEquals(gs.getGame().getWinner().getScore(), 112);
+        assertEquals(p2.getScore(), -56);
+        assertEquals(p3.getScore(), -56);
+    }
+
+
 }
