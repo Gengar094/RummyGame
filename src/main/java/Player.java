@@ -6,6 +6,7 @@ public class Player implements Serializable {
     private String name;
     private List<String> tiles;
     private Map<Character, Integer> map;
+    private int score;
 
     public Player(String name) {
         this.name = name;
@@ -51,6 +52,23 @@ public class Player implements Serializable {
 
     public List<String> getTiles() {
         return tiles;
+    }
+
+    public int calculateNetScore() {
+        int sum = 0;
+        for (String t: tiles) {
+            sum += Integer.parseInt(t.substring(1));
+        }
+        score = -sum;
+        return score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void drawTiles() {

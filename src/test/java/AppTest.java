@@ -200,11 +200,15 @@ public class AppTest {
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 3);
         assertFalse(p1.getTiles().contains("R2"));
-        assertFalse(p1.getTiles().contains("R3"));
+        assertFalse(p1.getTiles().contains("B2"));
+        assertFalse(p1.getTiles().contains("O2"));
+        assertFalse(p1.getTiles().contains("G4"));
+        assertFalse(p1.getTiles().contains("O4"));
+        assertFalse(p1.getTiles().contains("B4"));
         assertFalse(p1.getTiles().contains("R4"));
-        assertFalse(p1.getTiles().contains("B7"));
-        assertFalse(p1.getTiles().contains("B8"));
-        assertFalse(p1.getTiles().contains("B9"));
+        assertFalse(p1.getTiles().contains("O5"));
+        assertFalse(p1.getTiles().contains("B5"));
+        assertFalse(p1.getTiles().contains("R5"));
     }
 
     @DisplayName("Tests for initial 30 points")
@@ -254,7 +258,7 @@ public class AppTest {
         p1.reset();
         p2.reset();
         p3.reset();
-        p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R4", "R5", "R8", "G8", "O8", "O9", "O10", "O11", "O12", "O13")));
+        p1.setTiles(new ArrayList<>(Arrays.asList("R2", "B2", "G2", "G3", "G4", "G5", "G6", "G7", "O2", "O4", "O5", "O6", "O7", "O8")));
         p2.setTiles(new ArrayList<>(Arrays.asList("B1", "B1", "B2", "B2", "B3", "B3", "B4", "B4", "B5", "B5", "B6", "B6", "B7", "B7")));
         p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O1", "O2", "O2", "O3", "O3", "O4", "O4", "O5", "O5", "O6", "O6", "O7", "O7")));
         gs.play(new String[] {"R2", "B2", "G2", "O2"});
@@ -263,7 +267,7 @@ public class AppTest {
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 3);
         assertEquals(p1.getTiles().size(), 0);
-        assertTrue(gs.getGame().getWinner(), p1);
+        assertEquals(gs.getGame().getWinner(), p1);
         assertEquals(gs.getGame().getWinner().getScore(), 112);
         assertEquals(p2.getScore(), -56);
         assertEquals(p3.getScore(), -56);

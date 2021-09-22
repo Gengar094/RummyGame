@@ -18,7 +18,9 @@ public class GameServer {
         while (true) {}
     }
 
-    public void reset() {}
+    public void reset() {
+        this.game = new Game(players);
+    }
 
     public void endTurn() {
         game.endTurn();
