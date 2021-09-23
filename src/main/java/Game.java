@@ -23,6 +23,10 @@ public class Game {
         return winner;
     }
 
+    public int getTurn() {
+        return -1;
+    }
+
     public List<List<String>> getTable() {
         return table;
     }
