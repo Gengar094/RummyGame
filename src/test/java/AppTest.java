@@ -294,7 +294,7 @@ public class AppTest {
         gs.endTurn();
 
         assertEquals(gs.getGame().getTurn(), 2);
-        assertEquals(gs.getGame().getTable(), 4);
+        assertEquals(gs.getGame().getTable().size(), 4);
         assertFalse(p1.getTiles().contains("G2"));
         assertFalse(p1.getTiles().contains("G3"));
         assertFalse(p1.getTiles().contains("G4"));
@@ -322,7 +322,7 @@ public class AppTest {
         gs.endTurn();
 
         assertEquals(gs.getGame().getTurn(), 2);
-        assertEquals(gs.getGame().getTable(), 4);
+        assertEquals(gs.getGame().getTable().size(), 4);
         assertFalse(p1.getTiles().contains("G2"));
         assertFalse(p1.getTiles().contains("R2"));
         assertFalse(p1.getTiles().contains("O2"));

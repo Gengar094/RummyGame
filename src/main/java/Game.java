@@ -24,7 +24,7 @@ public class Game {
     }
 
     public int getTurn() {
-        return -1;
+        return curr / 3 + 1;
     }
 
     public List<List<String>> getTable() {
