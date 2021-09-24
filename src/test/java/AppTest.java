@@ -429,6 +429,34 @@ public class AppTest {
 
     }
 
+    //
+    @DisplayName("Tests for playing melds after initial 30")
+    @Test
+    public void testAfterInitial30_68() {
+        p1.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R2", "R3", "R11", "R12", "R13", "G2", "G3", "G8", "G9", "G10", "G11", "G12", "O2", "O3")));
+        p2.reset();
+        p2.setTiles(new ArrayList<>(Arrays.asList("B11", "B12", "B13", "G1", "G1", "G5", "G5", "G6", "G6", "G7", "G7", "G8", "G9", "G11")));
+        p3.reset();
+        p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O2", "O3", "O4", "O4", "O5", "O6", "O7", "O8", "O9", "O10", "O11", "O12", "O13")));
+        gs.play(new String[] {"R11", "R12", "R13"});
+        gs.endTurn();
+        gs.play(new String[] {"B11", "B12", "B13"});
+        gs.endTurn();
+        gs.play(new String[] {"O11", "O12", "O13"});
+        gs.endTurn();
 
+        // Turn 2
+        gs.play(new String[] {"G2", "R2", "O2"});
+        gs.play(new String[] {"G3", "R3", "O3"});
+        gs.play(new String[] {"G8", "G9", "G10", "G11", "G12"});
+        gs.endTurn();
+
+        assertEquals(gs.getGame().getTurn(), 2);
+        assertEquals(gs.getGame().getTable().size(), 6);
+        assertEquals(p1.getTiles().size(), 0);
+        assertEquals(gs.getGame().getWinner(), p1);
+
+    }
 
 }
