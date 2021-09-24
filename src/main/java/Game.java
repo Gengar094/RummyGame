@@ -23,6 +23,10 @@ public class Game {
         return winner;
     }
 
+    public boolean hasToDraw() {
+        return true;
+    }
+
     public int getTurn() {
         return curr / 3 + 1;
     }

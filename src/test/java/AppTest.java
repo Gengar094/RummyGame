@@ -429,7 +429,7 @@ public class AppTest {
 
     }
 
-    //
+
     @DisplayName("Tests for playing melds after initial 30")
     @Test
     public void testAfterInitial30_68() {
@@ -457,6 +457,20 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 0);
         assertEquals(gs.getGame().getWinner(), p1);
 
+    }
+
+    @DisplayName("Test for a player having or choosing to draw a tile -- choose to draw")
+    @Test
+    public void testAPlayerChooseToDraw() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R2", "R3", "R7", "R8", "R9", "R10", "G2", "G3", "G12", "O2", "O3", "O8", "O9", "O10")));
+        assertFalse(gs.getGame().hasToDraw());
+        gs.draw();
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 0);
+        assertEquals(p1.getTiles().size(), 15);
     }
 
 }
