@@ -330,4 +330,105 @@ public class AppTest {
     }
 
 
+    @DisplayName("Tests for playing melds after initial 30")
+    @Test
+    public void testAfterInitial30_64() {
+        p1.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "R12", "R13", "G2", "G3", "G4", "O1", "O2", "O3", "O4", "O5", "O8", "O9", "O10")));
+        p2.reset();
+        p2.setTiles(new ArrayList<>(Arrays.asList("B11", "B12", "B13", "G1", "G1", "G5", "G5", "G6", "G6", "G7", "G7", "G8", "G8", "G9")));
+        p3.reset();
+        p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O2", "O3", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10", "O11", "O12", "O13")));
+        gs.play(new String[] {"R11", "R12", "R13"});
+        gs.endTurn();
+        gs.play(new String[] {"B11", "B12", "B13"});
+        gs.endTurn();
+        gs.play(new String[] {"O11", "O12", "O13"});
+        gs.endTurn();
+
+        // Turn 2
+        gs.play(new String[] {"G2", "G3", "G4"});
+        gs.play(new String[] {"O8", "O9", "O10"});
+        gs.endTurn();
+
+        assertEquals(gs.getGame().getTurn(), 2);
+        assertEquals(gs.getGame().getTable().size(), 5);
+        assertFalse(p1.getTiles().contains("G2"));
+        assertFalse(p1.getTiles().contains("G3"));
+        assertFalse(p1.getTiles().contains("G4"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("O9"));
+        assertFalse(p1.getTiles().contains("O10"));
+
+    }
+
+
+    @DisplayName("Tests for playing melds after initial 30")
+    @Test
+    public void testAfterInitial30_66() {
+        p1.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R2", "R3", "R8", "R11", "R12", "R13", "B8", "G3", "G4", "G8", "O2", "O8", "O9", "O10")));
+        p2.reset();
+        p2.setTiles(new ArrayList<>(Arrays.asList("B1", "B11", "B12", "B13", "G1", "G1", "G5", "G5", "G6", "G6", "G7", "G7", "G8", "G9")));
+        p3.reset();
+        p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O2", "O3", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10", "O11", "O12", "O13")));
+        gs.play(new String[] {"R11", "R12", "R13"});
+        gs.endTurn();
+        gs.play(new String[] {"B11", "B12", "B13"});
+        gs.endTurn();
+        gs.play(new String[] {"O11", "O12", "O13"});
+        gs.endTurn();
+
+        // Turn 2
+        gs.play(new String[] {"G2", "R2", "O2"});
+        gs.play(new String[] {"O8", "R8", "B8", "G8"});
+        gs.endTurn();
+
+        assertEquals(gs.getGame().getTurn(), 2);
+        assertEquals(gs.getGame().getTable().size(), 5);
+        assertFalse(p1.getTiles().contains("G2"));
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("O2"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("R8"));
+        assertFalse(p1.getTiles().contains("B8"));
+        assertFalse(p1.getTiles().contains("G8"));
+
+    }
+
+    @DisplayName("Tests for playing melds after initial 30")
+    @Test
+    public void testAfterInitial30_67() {
+        p1.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R2", "R3", "R8", "R11", "R12", "R13", "G2", "G3", "G4", "G8", "O2", "O8", "O9", "O10")));
+        p2.reset();
+        p2.setTiles(new ArrayList<>(Arrays.asList("B11", "B12", "B13", "G1", "G1", "G5", "G5", "G6", "G6", "G7", "G7", "G8", "G8", "G9")));
+        p3.reset();
+        p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O2", "O3", "O3", "O4", "O5", "O6", "O7", "O8", "O9", "O10", "O11", "O12", "O13")));
+        gs.play(new String[] {"R11", "R12", "R13"});
+        gs.endTurn();
+        gs.play(new String[] {"B11", "B12", "B13"});
+        gs.endTurn();
+        gs.play(new String[] {"O11", "O12", "O13"});
+        gs.endTurn();
+
+        // Turn 2
+        gs.play(new String[] {"G2", "R2", "O2"});
+        gs.play(new String[] {"O8", "O9", "O10"});
+        gs.endTurn();
+
+        assertEquals(gs.getGame().getTurn(), 2);
+        assertEquals(gs.getGame().getTable().size(), 5);
+        assertFalse(p1.getTiles().contains("G2"));
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("O2"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("O9"));
+        assertFalse(p1.getTiles().contains("O10"));
+
+    }
+
+
+
 }
