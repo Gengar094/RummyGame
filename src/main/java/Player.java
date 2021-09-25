@@ -82,6 +82,67 @@ public class Player implements Serializable {
         tiles.remove(card);
     }
 
+    public boolean hasToDraw() {
+        List<String> currTile1 = new ArrayList<>(tiles);
+        List<String> currTile2 = new ArrayList<>(tiles);
+        int sum1 = calculateSet(currTile1) + calculateRun(currTile1);
+        int sum2 = calculateRun(currTile2) + calculateSet(currTile2);
+        return Math.max(sum1, sum2) <= 30;
+    }
+
+    // "R7" "R8" "R9" "R10"
+    public int calculateRun(List<String> currTile) {
+        int sum = 0;
+        int temp = 0;
+        int count = 1;
+        while (currTile.size() != 0) {
+            for (int i = 0; i < currTile.size(); i++) {
+                String tile = currTile.get(i);
+                temp += Integer.parseInt(tile.substring(1));
+                currTile.remove(tile);
+                String nextTile = findNext(tile);
+                while (currTile.contains(nextTile)) {
+                    temp += Integer.parseInt(nextTile.substring(1));
+                    currTile.remove(nextTile);
+                    nextTile = findNext(nextTile);
+                    count++;
+                }
+                if (count >= 3) {
+                    sum += temp;
+                }
+                temp = 0;
+                count = 1;
+                --i;
+            }
+        }
+        return sum;
+    }
+
+    public String findNext(String tile) {
+        int next = Integer.parseInt(tile.substring(1)) + 1;
+        String nextTile = tile.charAt(0) + Integer.toString(next);
+        return nextTile;
+    }
+
+    // "R8" "B8" "G8" "O8"
+    public int calculateSet(List<String> tiles) {
+        Map<Integer, HashSet<Character>> map = new HashMap<>();
+        int sum = 0;
+        for (String tile: tiles) {
+            int target = Integer.parseInt(tile.substring(1));
+            if (!map.containsKey(target)) {
+                map.put(target, new HashSet<>());
+            }
+            map.get(target).add(tile.charAt(0));
+        }
+        for (int i = 1; i < 14; i++) {
+            if (map.containsKey(i) && (map.get(i).size() >= 3)) {
+                sum += i * map.get(i).size();
+            }
+        }
+        return sum;
+    }
+
     public void reset() {
         Config.tiles.addAll(this.tiles);
         this.tiles = new ArrayList<>();

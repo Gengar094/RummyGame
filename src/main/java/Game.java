@@ -24,7 +24,7 @@ public class Game {
     }
 
     public boolean hasToDraw() {
-        return true;
+        return players[curr % 3].hasToDraw();
     }
 
     public int getTurn() {
