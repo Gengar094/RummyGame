@@ -38,6 +38,9 @@ public class GameServer {
         this.players = players;
     }
 
+    public void setDraw(String draw) {
+    }
+
     public Game getGame() {
         return game;
     }

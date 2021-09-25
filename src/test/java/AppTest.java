@@ -487,4 +487,51 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 15);
     }
 
+    @DisplayName("Test for declaring a winner upon a player playing all tiles and reporting correct scores")
+    @Test
+    public void testWinnerAndScores() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R3", "R5", "R9", "R10", "B3", "B3", "B6", "B12", "B13", "G2", "G2", "G11", "O2", "O7")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R2", "B2", "G2", "G3", "G4", "G5", "G6", "O2", "G7", "O4", "O5", "O6", "O7", "O8")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("R4", "R7", "R10", "R11", "R12", "R13", "B7", "B10", "B11", "B12", "B13", "G8", "O6", "O6")));
+        gs.setDraw("R2");
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 0);
+        assertEquals(p1.getTiles().size(), 15);
+        gs.setDraw("G5");
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 0);
+        assertEquals(p2.getTiles().size(), 15);
+        gs.play(new String[] {"R10", "R11", "R12", "R13"});
+        gs.play(new String[] {"B10", "B11", "B12", "B13"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 2);
+        assertFalse(p3.getTiles().contains("R10"));
+        assertFalse(p3.getTiles().contains("R11"));
+        assertFalse(p3.getTiles().contains("R12"));
+        assertFalse(p3.getTiles().contains("R13"));
+        assertFalse(p3.getTiles().contains("B10"));
+        assertFalse(p3.getTiles().contains("B11"));
+        assertFalse(p3.getTiles().contains("B12"));
+        assertFalse(p3.getTiles().contains("B13"));
+        gs.play(new String[] {"R2", "G2", "O2"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 3);
+        assertFalse(p1.getTiles().contains("R2"));
+        assertFalse(p1.getTiles().contains("G2"));
+        assertFalse(p1.getTiles().contains("O2"));
+        gs.play(new String[] {"R2", "B2", "G2", "O2"});
+        gs.play(new String[] {"G3", "G4", "G5", "G6", "G7"});
+        gs.play(new String[] {"O4", "O5", "O6", "O7", "O8"});
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 6);
+        assertEquals(p2.getTiles().size(), 0);
+        assertEquals(gs.getGame().getWinner(), p2);
+        assertEquals(gs.getGame().getWinner().getScore(), 0);
+        assertEquals(p2.getScore(), -38);
+        assertEquals(p3.getScore(), -38);
+    }
+
 }

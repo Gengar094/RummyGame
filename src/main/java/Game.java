@@ -27,6 +27,10 @@ public class Game {
         return players[curr % 3].hasToDraw();
     }
 
+    public void setDraw(String draw) {
+
+    }
+
     public int getTurn() {
         return curr / 3 + 1;
     }
