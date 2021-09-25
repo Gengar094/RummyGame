@@ -473,4 +473,18 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 15);
     }
 
+    @DisplayName("Test for a player having or choosing to draw a tile -- has to draw")
+    @Test
+    public void testAPlayerHasToDraw() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R3", "R5", "R9", "R10", "B3", "B3", "B6", "B12", "B13", "G2", "G2", "G12", "O2", "O7")));
+        assertTrue(gs.getGame().hasToDraw());
+        gs.draw();
+        gs.endTurn();
+        assertEquals(gs.getGame().getTable().size(), 0);
+        assertEquals(p1.getTiles().size(), 15);
+    }
+
 }
