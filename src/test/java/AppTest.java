@@ -556,7 +556,7 @@ public class AppTest {
         // 2
         gs.draw();
         gs.endTurn();
-        gs.reuseAndPlay(new String[] {"B11"}, new String[] {"R11", "G11"});
+        gs.reuseAndPlay(1, new String[] {"B11"}, new String[] {"R11", "G11"});
         gs.endTurn();
         assertEquals(p2.getTiles().size(), 9);
         assertFalse(p2.getTiles().contains("R11"));
@@ -586,7 +586,7 @@ public class AppTest {
         // 2
         gs.draw();
         gs.endTurn();
-        gs.reuseAndPlay(new String[] {"R11"}, new String[] {"R12", "R13"});
+        gs.reuseAndPlay(1, new String[] {"R11"}, new String[] {"R12", "R13"});
         gs.endTurn();
         assertEquals(p2.getTiles().size(), 9);
         assertFalse(p2.getTiles().contains("R12"));

@@ -51,7 +51,7 @@ public class GameServer {
         this.game = game;
     }
 
-    public void reuseAndPlay(String[] reuse, String[] play) {}
+    public void reuseAndPlay(int meldNum, String[] reuse, String[] play) {}
 
     // Networking Code
     public GameServer() {
