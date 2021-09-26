@@ -531,7 +531,7 @@ public class AppTest {
         assertEquals(gs.getGame().getWinner(), p2);
         assertEquals(gs.getGame().getWinner().getScore(), 0);
         System.out.println(p1.getTiles());
-        assertEquals(p1.getScore(), -84);
+        assertEquals(p1.getScore(), -78);
         assertEquals(p3.getScore(), -38);
     }
 

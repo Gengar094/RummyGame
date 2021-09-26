@@ -157,7 +157,6 @@ public class Player implements Serializable {
     private void run(Socket socket) {
         while(true) {
             try {
-                System.out.println("START");
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 System.out.println((String) in.readObject());
             } catch (IOException | ClassNotFoundException e) {

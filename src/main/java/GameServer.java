@@ -15,7 +15,8 @@ public class GameServer {
 
     // read each player in array, send current table to them, receive operations from player
     private void start() {
-        while (true) {}
+        while (true) {
+        }
     }
 
     public void reset() {
