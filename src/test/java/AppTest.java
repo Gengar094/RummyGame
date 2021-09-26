@@ -268,7 +268,7 @@ public class AppTest {
         assertEquals(gs.getGame().getTable().size(), 3);
         assertEquals(p1.getTiles().size(), 0);
         assertEquals(gs.getGame().getWinner(), p1);
-        assertEquals(gs.getGame().getWinner().getScore(), 112);
+        assertEquals(gs.getGame().getWinner().getScore(), 0);
         assertEquals(p2.getScore(), -56);
         assertEquals(p3.getScore(), -56);
     }
