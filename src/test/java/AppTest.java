@@ -535,4 +535,63 @@ public class AppTest {
         assertEquals(p3.getScore(), -38);
     }
 
+
+    @DisplayName("Test for completing a partial set from a hand by reusing from a set of 4 of the table")
+    @Test
+    public void test_87() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "O11", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "G11", "B11")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("O7", "O8", "O9", "O10", "O11", "O12", "O13", "B1", "B2", "B3", "B4", "B5", "B6", "B7")));
+        gs.play(new String[] {"R11", "O11", "B11", "G11"});
+        gs.endTurn();
+        gs.play(new String[] {"R12", "B12", "G12"});
+        gs.endTurn();
+        gs.play(new String[] {"O7", "O8", "O9", "O10", "O11", "O12", "O13"});
+        gs.endTurn();
+
+
+        // 2
+        gs.draw();
+        gs.endTurn();
+        gs.reuseAndPlay(new String[] {"B11"}, new String[] {"R11", "G11"});
+        gs.endTurn();
+        assertEquals(p2.getTiles().size(), 9);
+        assertFalse(p2.getTiles().contains("R11"));
+        assertFalse(p2.getTiles().contains("G11"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B11", "R11", "G11"))));
+    }
+
+
+
+    @DisplayName("Test for completing a partial run from a hand by reusing from a set of 4 of the table")
+    @Test
+    public void test_91() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "O11", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "R12", "R13", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B13")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("O7", "O8", "O9", "O10", "O11", "O12", "O13", "B1", "B2", "B3", "B4", "B5", "B6", "B7")));
+        gs.play(new String[] {"R11", "O11", "B11", "G11"});
+        gs.endTurn();
+        gs.play(new String[] {"R12", "B12", "G12"});
+        gs.endTurn();
+        gs.play(new String[] {"O7", "O8", "O9", "O10", "O11", "O12", "O13"});
+        gs.endTurn();
+
+
+        // 2
+        gs.draw();
+        gs.endTurn();
+        gs.reuseAndPlay(new String[] {"R11"}, new String[] {"R12", "R13"});
+        gs.endTurn();
+        assertEquals(p2.getTiles().size(), 9);
+        assertFalse(p2.getTiles().contains("R12"));
+        assertFalse(p2.getTiles().contains("R13"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "R12", "R13"))));
+    }
+
 }

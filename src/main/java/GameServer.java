@@ -51,6 +51,8 @@ public class GameServer {
         this.game = game;
     }
 
+    public void reuseAndPlay(String[] reuse, String[] play) {}
+
     // Networking Code
     public GameServer() {
         System.out.println("Starting the game server");
