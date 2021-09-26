@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameServer {
@@ -32,7 +33,7 @@ public class GameServer {
     }
 
     public void play(String[] melds) {
-        game.play(Arrays.asList(melds));
+        game.play(new ArrayList<>(Arrays.asList(melds)));
     }
 
     public void setPlayers(Player[] players) {
@@ -51,7 +52,9 @@ public class GameServer {
         this.game = game;
     }
 
-    public void reuseAndPlay(int meldNum, String[] reuse, String[] play) {}
+    public void reuseAndPlay(int meldNum, String[] reuse, String[] play) {
+        game.reuseAndPlay(meldNum, reuse, play);
+    }
 
     // Networking Code
     public GameServer() {

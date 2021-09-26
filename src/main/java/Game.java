@@ -72,4 +72,18 @@ public class Game {
     public boolean win() {
         return players[curr % 3].getTiles().size() == 0;
     }
+
+    public void reuseAndPlay(int meldNum, String[] reuse, String[] play) {
+        List<String> target = table.get(meldNum - 1);
+        List<String> newMeld = new ArrayList<>();
+        for (int i = 0; i < reuse.length; i++) {
+            target.remove(reuse[i]);
+            newMeld.add(reuse[i]);
+        }
+        for (int i = 0; i < play.length; i++) {
+            players[curr % 3].play(play[i]);
+            newMeld.add(play[i]);
+        }
+        table.add(newMeld);
+    }
 }

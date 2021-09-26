@@ -543,7 +543,7 @@ public class AppTest {
         p2.reset();
         p3.reset();
         p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "O11", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10")));
-        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "G11", "B11")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "R11", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "G11", "B11")));
         p3.setTiles(new ArrayList<>(Arrays.asList("O7", "O8", "O9", "O10", "O11", "O12", "O13", "B1", "B2", "B3", "B4", "B5", "B6", "B7")));
         gs.play(new String[] {"R11", "O11", "B11", "G11"});
         gs.endTurn();
