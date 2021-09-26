@@ -39,6 +39,7 @@ public class GameServer {
     }
 
     public void setDraw(String draw) {
+        game.setDraw(draw);
     }
 
     public Game getGame() {

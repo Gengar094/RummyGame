@@ -26,6 +26,10 @@ public class Player implements Serializable {
             tiles.add(Config.tiles.get(index));
             Config.tiles.remove(index);
         }
+        sort();
+    }
+
+    public void sort() {
         tiles.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -44,6 +48,7 @@ public class Player implements Serializable {
             Config.tiles.remove(t);
         }
         this.tiles = tiles;
+        sort();
     }
 
     public String getName() {

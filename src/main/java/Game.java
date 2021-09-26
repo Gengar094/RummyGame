@@ -28,7 +28,9 @@ public class Game {
     }
 
     public void setDraw(String draw) {
-
+        players[curr % 3].getTiles().add(draw);
+        players[curr % 3].sort();
+        Config.tiles.remove(draw);
     }
 
     public int getTurn() {
@@ -57,12 +59,6 @@ public class Game {
             int s = players[i].calculateNetScore();
             score[i] = s;
         }
-        int sum = 0;
-        for (int i = 0; i < score.length; i++) {
-            sum += score[i];
-        }
-        score[curr % 3] = -sum;
-        players[curr % 3].setScore(-sum);
     }
 
     public void endTurn() {
