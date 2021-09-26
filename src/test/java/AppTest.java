@@ -494,7 +494,7 @@ public class AppTest {
         p2.reset();
         p3.reset();
         p1.setTiles(new ArrayList<>(Arrays.asList("R3", "R5", "R9", "R10", "B3", "B3", "B6", "B12", "B13", "G2", "G2", "G11", "O2", "O7")));
-        p2.setTiles(new ArrayList<>(Arrays.asList("R2", "B2", "G2", "G3", "G4", "G5", "G6", "O2", "G7", "O4", "O5", "O6", "O7", "O8")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R2", "B2", "G2", "G3", "G4", "G6", "G7", "O2", "O4", "O5", "O6", "O7", "O8", "O9")));
         p3.setTiles(new ArrayList<>(Arrays.asList("R4", "R7", "R10", "R11", "R12", "R13", "B7", "B10", "B11", "B12", "B13", "G8", "O6", "O6")));
         gs.setDraw("R2");
         gs.endTurn();
@@ -520,17 +520,17 @@ public class AppTest {
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 3);
         assertFalse(p1.getTiles().contains("R2"));
-        assertFalse(p1.getTiles().contains("G2"));
+        assertEquals(p1.getTiles().indexOf("G2"), p1.getTiles().lastIndexOf("G2"));
         assertFalse(p1.getTiles().contains("O2"));
         gs.play(new String[] {"R2", "B2", "G2", "O2"});
         gs.play(new String[] {"G3", "G4", "G5", "G6", "G7"});
-        gs.play(new String[] {"O4", "O5", "O6", "O7", "O8"});
+        gs.play(new String[] {"O4", "O5", "O6", "O7", "O8", "O9"});
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 6);
         assertEquals(p2.getTiles().size(), 0);
         assertEquals(gs.getGame().getWinner(), p2);
         assertEquals(gs.getGame().getWinner().getScore(), 0);
-        assertEquals(p2.getScore(), -38);
+        assertEquals(p2.getScore(), -78);
         assertEquals(p3.getScore(), -38);
     }
 
