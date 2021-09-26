@@ -62,7 +62,12 @@ public class Player implements Serializable {
     public int calculateNetScore() {
         int sum = 0;
         for (String t: tiles) {
-            sum += Integer.parseInt(t.substring(1));
+            int num = Integer.parseInt(t.substring(1));
+            if (num >= 10) {
+                sum += 10;
+            } else {
+                sum += num;
+            }
         }
         score = -sum;
         return score;
