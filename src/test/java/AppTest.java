@@ -650,4 +650,33 @@ public class AppTest {
 
     }
 
+
+
+    @DisplayName("Test for completing a partial run from a hand by reusing from run of the table")
+    @Test
+    public void test_101() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "O11", "O8", "O9", "R3", "R4", "R5", "R6", "R7", "B7", "R13", "B13")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "R12", "R13", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B13")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("O7", "O8", "O9", "O10", "O11", "O12", "O13", "B1", "B2", "B3", "B4", "B5", "B6", "B8")));
+        gs.play(new String[] {"R11", "O11", "B11", "G11"});
+        gs.endTurn();
+        gs.play(new String[] {"R12", "B12", "G12"});
+        gs.endTurn();
+        gs.play(new String[] {"O7", "O8", "O9", "O10", "O11", "O12", "O13"});
+        gs.endTurn();
+
+
+        // 2
+        gs.reuseAndPlay(3, new String[] {"O10"}, new String[] {"O8", "O9"});
+        gs.endTurn();
+        assertEquals(p1.getTiles().size(), 8);
+        assertFalse(p1.getTiles().contains("O8"));
+        assertFalse(p1.getTiles().contains("O9"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O10", "O8", "O9"))));
+
+    }
+
 }
