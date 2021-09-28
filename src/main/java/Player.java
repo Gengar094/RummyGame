@@ -59,6 +59,20 @@ public class Player implements Serializable {
         return tiles;
     }
 
+    public String getTilesString() {
+        StringBuilder sb = new StringBuilder();
+        if (tiles.size() == 0) return "{}";
+        sb.append("{");
+        for (int i = 0; i < tiles.size(); i++) {
+            sb.append(tiles.get(i));
+            if (i != tiles.size() - 1) {
+                sb.append(" ");
+            }
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+
     public int calculateNetScore() {
         int sum = 0;
         for (String t: tiles) {
@@ -83,9 +97,9 @@ public class Player implements Serializable {
 
     public void drawTiles() {
         int index = new Random().nextInt(Config.tiles.size());
-        System.out.println(index);
         tiles.add(Config.tiles.get(index));
         Config.tiles.remove(index);
+        sort();
     }
 
     public void play(String card) {
@@ -160,13 +174,30 @@ public class Player implements Serializable {
 
     //  ********************* Networking Code below ****************************
     private void run(Socket socket) {
-        while(true) {
-            try {
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                System.out.println((String) in.readObject());
-            } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Fail to receive message from server");
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            while (true) {
+                String str;
+                while ((str = reader.readLine()) != null && str.length() != 0) {
+                    if (!str.equals("END")) {
+                        System.out.println(str);
+                    } else {
+                        break;
+                    }
+                }
+                if (str.equals("END")) {
+                    break;
+                }
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                Scanner s = new Scanner(System.in);
+                String choice = s.next();
+                writer.write(choice);
+                writer.write("\n");
+                writer.flush();
             }
+        } catch (IOException e) {
+            System.out.println("Fail to receive message from server");
+            e.printStackTrace();
         }
     }
 
@@ -176,8 +207,10 @@ public class Player implements Serializable {
             ObjectOutputStream dOut = new ObjectOutputStream(socket.getOutputStream());
             dOut.writeObject(this);
             dOut.flush();
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            System.out.println((String) in.readObject());
             run(socket);
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Fail to join the server");
         }
     }
@@ -187,9 +220,9 @@ public class Player implements Serializable {
         Scanner s = new Scanner(System.in);
         System.out.println("What is your name?");
         String name = s.next();
-        s.close();
         Player p = new Player(name);
         p.startGame();
+        System.out.println("Game Over");
     }
 
 }

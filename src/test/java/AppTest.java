@@ -486,7 +486,7 @@ public class AppTest {
         assertEquals(gs.getGame().getTable().size(), 0);
         assertEquals(p1.getTiles().size(), 15);
     }
-
+    // todo
     @DisplayName("Test for declaring a winner upon a player playing all tiles and reporting correct scores")
     @Test
     public void testWinnerAndScores() {
