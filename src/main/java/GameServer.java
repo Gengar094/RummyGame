@@ -175,6 +175,14 @@ public class GameServer {
                     game.reuseAndPlay(index, reuse, play);
                 }
                 count++;
+                for (int i = 0; i < sockets.length; i++) {
+                    if (i != (game.getCurr() % 3)) {
+                        BufferedWriter writer2 = new BufferedWriter(new OutputStreamWriter(sockets[i].getOutputStream()));
+                        writer2.write("Current table after playing by Player " + players[i].getName() + ": " + game.getTableString(game.getTable()));
+                        writer2.newLine();
+                        writer2.flush();
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
