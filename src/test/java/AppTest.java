@@ -301,7 +301,7 @@ public class AppTest {
         p2.setTiles(new ArrayList<>(Arrays.asList("B1", "B1", "B2", "B2", "B3", "B3", "B4", "B4", "B5", "B5", "B6", "B6", "B7", "B7")));
         p3.setTiles(new ArrayList<>(Arrays.asList("O1", "O1", "O2", "O2", "O3", "O3", "O4", "O4", "O5", "O5", "O6", "O6", "O7", "O7")));
         assertEquals(0, gs.getGame().getTable().size());
-        
+
         gs.play(new String[] {"R2", "B2", "G2", "O2"});
         gs.play(new String[] {"G3", "G4", "G5", "G6", "G7"});
         gs.play(new String[] {"O4", "O5", "O6", "O7", "O8"});
@@ -331,17 +331,20 @@ public class AppTest {
         gs.endTurn();
         gs.play(new String[] {"O11", "O12", "O13"});
         gs.endTurn();
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R11", "R12", "R13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("B11", "B12", "B13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("O11", "O12", "O13")));
 
         // Turn 2
         gs.play(new String[] {"G2", "G3", "G4"});
         gs.endTurn();
 
         assertEquals(gs.getGame().getTurn(), 2);
-        assertEquals(gs.getGame().getTable().size(), 4);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("G2", "G3", "G4")));
         assertFalse(p1.getTiles().contains("G2"));
         assertFalse(p1.getTiles().contains("G3"));
         assertFalse(p1.getTiles().contains("G4"));
-
+        assertEquals(p1.getTiles().size(), 8);
     }
 
     @DisplayName("Tests for playing melds after initial 30")
@@ -359,16 +362,20 @@ public class AppTest {
         gs.endTurn();
         gs.play(new String[] {"O11", "O12", "O13"});
         gs.endTurn();
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R11", "R12", "R13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("B11", "B12", "B13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("O11", "O12", "O13")));
 
         // Turn 2
         gs.play(new String[] {"G2", "R2", "O2"});
         gs.endTurn();
 
         assertEquals(gs.getGame().getTurn(), 2);
-        assertEquals(gs.getGame().getTable().size(), 4);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("G2", "R2", "O2")));
         assertFalse(p1.getTiles().contains("G2"));
         assertFalse(p1.getTiles().contains("R2"));
         assertFalse(p1.getTiles().contains("O2"));
+        assertEquals(p1.getTiles().size(), 8);
 
     }
 
