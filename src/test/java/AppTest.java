@@ -557,9 +557,9 @@ public class AppTest {
         assertFalse(p2.getTiles().contains("B13"));
         gs.play(new String[] {"O11", "O12", "O13"});
         gs.endTurn();
-        assertFalse(p2.getTiles().contains("O11"));
-        assertFalse(p2.getTiles().contains("O12"));
-        assertFalse(p2.getTiles().contains("O13"));
+        assertFalse(p3.getTiles().contains("O11"));
+        assertFalse(p3.getTiles().contains("O12"));
+        assertFalse(p3.getTiles().contains("O13"));
 
         // Turn 2
         gs.play(new String[] {"G2", "R2", "O2"});
