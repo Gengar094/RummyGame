@@ -618,7 +618,7 @@ public class AppTest {
         assertEquals(gs.getGame().getTable().size(), 0);
         assertEquals(p1.getTiles().size(), 15);
     }
-    // todo
+
     @DisplayName("Test for declaring a winner upon a player playing all tiles and reporting correct scores")
     @Test
     public void testWinnerAndScores() {
@@ -640,6 +640,8 @@ public class AppTest {
         gs.play(new String[] {"B10", "B11", "B12", "B13"});
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 2);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R10", "R11", "R12", "R13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R10", "R11", "R12", "R13")));
         assertFalse(p3.getTiles().contains("R10"));
         assertFalse(p3.getTiles().contains("R11"));
         assertFalse(p3.getTiles().contains("R12"));
@@ -651,14 +653,18 @@ public class AppTest {
         gs.play(new String[] {"R2", "G2", "O2"});
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 3);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R2", "G2", "O2")));
         assertFalse(p1.getTiles().contains("R2"));
-        assertEquals(p1.getTiles().indexOf("G2"), p1.getTiles().lastIndexOf("G2"));
+        assertEquals(p1.getTiles().indexOf("G2"), p1.getTiles().lastIndexOf("G2")); // to ensure p1 has only 1 G2 left after playing another G2
         assertFalse(p1.getTiles().contains("O2"));
         gs.play(new String[] {"R2", "B2", "G2", "O2"});
         gs.play(new String[] {"G3", "G4", "G5", "G6", "G7"});
         gs.play(new String[] {"O4", "O5", "O6", "O7", "O8", "O9"});
         gs.endTurn();
         assertEquals(gs.getGame().getTable().size(), 6);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R2", "B2", "G2", "O2")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("G3", "G4", "G5", "G6", "G7")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("O4", "O5", "O6", "O7", "O8", "O9")));
         assertEquals(p2.getTiles().size(), 0);
         assertEquals(gs.getGame().getWinner(), p2);
         assertEquals(gs.getGame().getWinner().getScore(), 0);
