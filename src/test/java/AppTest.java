@@ -74,6 +74,8 @@ public class AppTest {
         p1.setTiles(new ArrayList<>(Arrays.asList("R1", "R1", "R2", "R3", "R3", "R4", "R4", "R5", "R5", "R6", "R12", "B12", "G12", "O12")));
         p3.setTiles(new ArrayList<>(Arrays.asList("R2", "R13", "B2", "B3", "B3", "B4", "B4", "B5", "B5", "B6", "B13", "G2", "G4", "G13")));
         p2.setTiles(new ArrayList<>(Arrays.asList("R11", "R12", "R13", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11")));
+        assertTrue(gs.getGame().getTable().size() == 0);
+
 
         gs.draw();
         gs.endTurn();
@@ -81,15 +83,15 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 15);
         gs.play(new String[] {"R11", "R12", "R13"});
         gs.endTurn();
-        assertEquals(gs.getGame().getTable().size(), 1);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R11", "R12", "R13")));
         assertFalse(p2.getTiles().contains("R11"));
         assertFalse(p2.getTiles().contains("R12"));
         assertFalse(p2.getTiles().contains("R13"));
         gs.play(new String[] {"R13", "B13", "G13"});
         gs.play(new String[] {"R2", "B2", "G2"});
         gs.endTurn();
-        assertEquals(gs.getGame().getTable().size(), 3);
-        System.out.println(p3.getTiles());
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R13", "B13", "G13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R2", "B2", "G2")));
         assertFalse(p3.getTiles().contains("R13"));
         assertFalse(p3.getTiles().contains("B13"));
         assertFalse(p3.getTiles().contains("G13"));
@@ -98,7 +100,7 @@ public class AppTest {
         assertFalse(p3.getTiles().contains("G2"));
         gs.play(new String[] {"R12", "B12", "O13"});
         gs.endTurn();
-        assertEquals(gs.getGame().getTable().size(), 4);
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R12", "B12", "O13")));
         assertFalse(p1.getTiles().contains("R12"));
         assertFalse(p1.getTiles().contains("B12"));
         assertFalse(p1.getTiles().contains("O13"));
