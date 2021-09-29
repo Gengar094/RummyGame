@@ -122,6 +122,12 @@ public class Player implements Serializable {
         while (currTile.size() != 0) {
             for (int i = 0; i < currTile.size(); i++) {
                 String tile = currTile.get(i);
+                if (tile.equals("R1")) {
+                    sum += runForR1(currTile);
+                    currTile.remove(tile);
+                    --i;
+                    continue;
+                }
                 temp += Integer.parseInt(tile.substring(1));
                 currTile.remove(tile);
                 String nextTile = findNext(tile);
@@ -140,6 +146,42 @@ public class Player implements Serializable {
             }
         }
         return sum;
+    }
+
+    private int runForR1(List<String> currTile) {
+        String nextTile = findNext("R1");
+        int count = 0;
+        int sum = 1;
+        while (currTile.contains(nextTile)) {
+            sum += Integer.parseInt(nextTile.substring(1));
+            currTile.remove(nextTile);
+            nextTile = findNext(nextTile);
+            count++;
+        }
+        String prevTile = findPrev("R1");
+        while (currTile.contains(prevTile)) {
+            sum += Integer.parseInt(prevTile.substring(1));
+            currTile.remove(prevTile);
+            prevTile = findPrev(prevTile);
+            count++;
+        }
+        if (count >= 3) {
+            return sum;
+        }
+
+        return 0;
+    }
+
+    public String findPrev(String tile) {
+        // Since tile can only be R1
+        String prev;
+        if (tile.substring(1).equals("1")) {
+            prev = tile.charAt(0) + "13";
+        } else {
+            int p = Integer.parseInt(tile.substring(1)) - 1;
+            prev = tile.charAt(0) + Integer.toString(p);
+        }
+        return prev;
     }
 
     public String findNext(String tile) {
