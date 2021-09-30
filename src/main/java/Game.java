@@ -172,6 +172,12 @@ public class Game {
             des.add(moved[i]);
             updatedDes.add("!" + moved[i]);
         }
+        if (target.isEmpty()) {
+            table.remove(target);
+        }
+        if (updatedTarget.isEmpty()) {
+            updatedTable.remove(updatedTarget);
+        }
     }
 
     public void splitMeld(int index, String[]... args) {
