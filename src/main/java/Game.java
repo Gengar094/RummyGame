@@ -143,6 +143,19 @@ public class Game {
         updatedTable.add(updatedMeld);
     }
 
+    public void addToCurrentMeld(int index, String[] strings) {
+        if (updatedTable == null) {
+            creatUpdatedTable();
+        }
+        List<String> target = table.get(index - 1);
+        List<String> updatedTarget = updatedTable.get(index - 1);
+        for (int i = 0; i < strings.length; i++) {
+            players[curr % 3].play(strings[i]);
+            target.add(strings[i]);
+            updatedTarget.add("*" + strings[i]);
+        }
+    }
+
     public void tableRefresh() {
         updatedTable = null;
     }

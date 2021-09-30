@@ -52,6 +52,7 @@ public class GameServer {
     }
 
     public void addToCurrentMeld(int i, String[] strings) {
+        game.addToCurrentMeld(i, strings);
     }
 
     //  ********************* Networking Code below ****************************
