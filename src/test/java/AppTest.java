@@ -938,7 +938,7 @@ public class AppTest {
         p1.reset();
         p2.reset();
         p3.reset();
-        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "O11", "B11", "G1", "B12", "B13", "B1", "B2", "B3", "B4", "B5", "B6", "B7")));
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "O11", "B11", "G1", "B12", "B13", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8")));
         p2.setTiles(new ArrayList<>(Arrays.asList("G11", "G12", "G13", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10","B7")));
         p3.setTiles(new ArrayList<>(Arrays.asList("R4", "G4", "B4", "R5", "R6", "R7", "O1", "O2", "O3", "O4", "O5", "O6", "O7", "O8")));
         gs.play(new String[] {"R11", "O11", "B11"});
@@ -955,6 +955,7 @@ public class AppTest {
         gs.addToCurrentMeld(2, new String[] {"G1"});
         gs.reuseAndPlay(1, new String[] {"B11"}, new String[] {"B12", "B13"});
         gs.endTurn();
+        System.out.println(p1.getTiles());
         assertEquals(p1.getTiles().size(), 8);
         assertFalse(p1.getTiles().contains("G1"));
         assertFalse(p1.getTiles().contains("B12"));
