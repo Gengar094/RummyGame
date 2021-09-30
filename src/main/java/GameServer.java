@@ -55,6 +55,8 @@ public class GameServer {
         game.addToCurrentMeld(i, strings);
     }
 
+    public void moveTilesOnTable(int from, String[] moved, int to) {}
+
     //  ********************* Networking Code below ****************************
     private void start() {
         while (true) {
