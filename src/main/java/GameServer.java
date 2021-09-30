@@ -152,6 +152,8 @@ public class GameServer {
             while (true) {
                 writer.write("Type 1: play a set or run from your hand" + "\r\n");
                 writer.write("Type 2: reuse the tiles on the table" + "\r\n");
+                writer.write("Type 3: split a meld into smaller melds" + "\r\n");
+                writer.write("Type 4: Move a tile in a meld into another meld on the table" + "\r\n");
                 if (count > 0) {
                     writer.write("Type end: If you want to end this turn" + "\r\n");
                 }
@@ -185,6 +187,29 @@ public class GameServer {
                     String[] reuse = choices.get(1).split("\\|");
                     String[] play = choices.get(2).split("\\|");
                     game.reuseAndPlay(index, reuse, play);
+                } else if (str.equals("3")) {
+                    writer.write("Please typing things like 1,R2|R3,R4|R5 (Split the 1st meld {R2, R3, R4, R5} on the table into 2 new \"melds\" {R2, R3}, {R4, R5}" + "\r\n");
+                    writer.write("\n");
+                    writer.flush();
+                    str = reader.readLine();
+                    List<String> choices = new ArrayList<>(Arrays.asList(str.split(",")));
+                    int index = Integer.parseInt(choices.get(0));
+                    String[][] param = new String[choices.size() - 1][];
+                    for (int i = 1; i < choices.size(); i++) {
+                        String[] smallMeld = choices.get(i).split("\\|");
+                        param[i - 1] = smallMeld;
+                    }
+                    game.splitMeld(index, param);
+                } else if (str.equals("4")) {
+                    writer.write("Please typing things like 1,R2|R3,4 (Move tiles R2, R3 in the 1st meld into 4th meld on the table"  + "\r\n");
+                    writer.write("\n");
+                    writer.flush();
+                    str = reader.readLine();
+                    List<String> choices = new ArrayList<>(Arrays.asList(str.split(",")));
+                    int from = Integer.parseInt(choices.get(0));
+                    int to = Integer.parseInt(choices.get(2));
+                    String[] moved = choices.get(1).split("\\|");
+                    game.moveTilesOnTable(from, moved, to);
                 }
                 count++;
                 for (int i = 0; i < sockets.length; i++) {
