@@ -168,7 +168,11 @@ public class Game {
 
         for (int i = 0; i < moved.length; i++) {
             target.remove(moved[i]);
-            updatedTarget.remove(moved[i]);
+            if (!updatedTarget.remove(moved[i])) {
+                if (!updatedTarget.remove("*" + moved[i])) {
+                    updatedTarget.remove("!" + moved[i]);
+                }
+            }
             des.add(moved[i]);
             updatedDes.add("!" + moved[i]);
         }
