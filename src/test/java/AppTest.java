@@ -962,7 +962,7 @@ public class AppTest {
         assertFalse(p1.getTiles().contains("B13"));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("G12", "G13", "G1"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B11", "B12", "B13"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("G11", "R11", "O11"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "O11", "G11"))));
     }
 
 
