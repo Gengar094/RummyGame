@@ -988,7 +988,7 @@ public class AppTest {
         gs.splitMeld(3, new String[] {"R7", "R8", "R9"}, new String[] {"R10"}, new String[] {"R11", "R12", "R13"});
         gs.reuseAndPlay(4, new String[] {"R10"}, new String[] {"G10", "B10"});
         gs.endTurn();
-        assertEquals(p1.getTiles().size(), 7);
+        assertEquals(p1.getTiles().size(), 8);
         assertFalse(p1.getTiles().contains("R13"));
         assertFalse(p1.getTiles().contains("G10"));
         assertFalse(p1.getTiles().contains("B10"));
