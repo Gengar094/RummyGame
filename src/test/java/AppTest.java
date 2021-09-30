@@ -966,4 +966,36 @@ public class AppTest {
     }
 
 
+    @DisplayName("Test for simple case 2")
+    @Test
+    public void test_simple_2() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("O11", "B11", "G11", "R1", "R2", "R3", "R4", "R5", "R6", "G10", "B10", "R13", "R7", "R8")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("O12", "B12", "G12", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("R7", "R8", "R9", "R10", "R11", "R12", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8")));
+        gs.play(new String[] {"O11", "B11", "G11"});
+        gs.endTurn();
+        gs.play(new String[] {"O12", "B12", "G12"});
+        gs.endTurn();
+        gs.play(new String[] {"R7", "R8", "R9", "R10", "R11", "R12"});
+        gs.endTurn();
+
+
+        // 2 R13
+        gs.addToCurrentMeld(3, new String[] {"R13"});
+        gs.splitMeld(3, new String[] {"R7", "R8", "R9"}, new String[] {"R10"}, new String[] {"R11", "R12", "R13"});
+        gs.reuseAndPlay(4, new String[] {"R10"}, new String[] {"G10", "B10"});
+        gs.endTurn();
+        assertEquals(p1.getTiles().size(), 7);
+        assertFalse(p1.getTiles().contains("R13"));
+        assertFalse(p1.getTiles().contains("G10"));
+        assertFalse(p1.getTiles().contains("B10"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R7", "R8", "R9"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R10", "G10", "B10"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "R12", "R13"))));
+    }
+
+
 }
