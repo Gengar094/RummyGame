@@ -156,6 +156,23 @@ public class Game {
         }
     }
 
+    public void moveTilesOnTable(int from, String[] moved, int to) {
+        if (updatedTable == null) {
+            creatUpdatedTable();
+        }
+        List<String> target = table.get(from - 1);
+        List<String> updatedTarget = updatedTable.get(from - 1);
+        List<String> des = table.get(to - 1);
+        List<String> updatedDes = updatedTable.get(to - 1);
+
+        for (int i = 0; i < moved.length; i++) {
+            target.remove(moved[i]);
+            updatedTarget.remove(moved[i]);
+            des.add(moved[i]);
+            updatedDes.add("!" + moved[i]);
+        }
+    }
+
     public void tableRefresh() {
         updatedTable = null;
     }
