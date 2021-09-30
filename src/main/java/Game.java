@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /* Game logic, store current info about the game*/
@@ -171,6 +172,24 @@ public class Game {
             des.add(moved[i]);
             updatedDes.add("!" + moved[i]);
         }
+    }
+
+    public void splitMeld(int index, String[]... args) {
+        if (updatedTable == null) {
+            creatUpdatedTable();
+        }
+        table.remove(index - 1);
+        updatedTable.remove(index - 1);
+
+        for (int i = 0; i < args.length; i++) {
+            table.add(new ArrayList<>(Arrays.asList(args[i])));
+            List<String> update = new ArrayList<>();
+            for (int j = 0; j < args[i].length; j++) {
+                update.add("!" + args[i][j]);
+            }
+            updatedTable.add(update);
+        }
+
     }
 
     public void tableRefresh() {

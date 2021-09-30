@@ -59,7 +59,9 @@ public class GameServer {
         game.moveTilesOnTable(from, moved, to);
     }
 
-    public void splitMeld(int index, String[]... args) {}
+    public void splitMeld(int index, String[]... args) {
+        game.splitMeld(index, args);
+    }
 
     //  ********************* Networking Code below ****************************
     private void start() {
