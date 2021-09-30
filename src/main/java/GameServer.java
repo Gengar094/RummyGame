@@ -51,6 +51,9 @@ public class GameServer {
         game.reuseAndPlay(meldNum, reuse, play);
     }
 
+    public void addToCurrentMeld(int i, String[] strings) {
+    }
+
     //  ********************* Networking Code below ****************************
     private void start() {
         while (true) {

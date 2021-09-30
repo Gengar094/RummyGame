@@ -901,4 +901,35 @@ public class AppTest {
 
     }
 
+    @DisplayName("Test for simple case 3")
+    @Test
+    public void test_simple_3() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "O11", "R8", "R4", "O4", "B1", "B2", "B3", "B4", "B5", "B6", "B7")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("R12", "B12", "G12", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10","G11")));
+        p3.setTiles(new ArrayList<>(Arrays.asList("R4", "G4", "B4", "R5", "R6", "R7", "O1", "O2", "O3", "O4", "O5", "O6", "O7", "O8")));
+        gs.play(new String[] {"R11", "O11", "B11", "G11"});
+        gs.endTurn();
+        gs.play(new String[] {"R12", "B12", "G12"});
+        gs.endTurn();
+        gs.play(new String[] {"R4", "G4", "B4"});
+        gs.play(new String[] {"R5", "R6", "R7"});
+        gs.endTurn();
+
+
+        // 2
+        gs.addToCurrentMeld(3, new String[] {"O4"});
+        gs.addToCurrentMeld(4, new String[] {"R4", "R8"});
+        gs.endTurn();
+        assertEquals(p1.getTiles().size(), 7);
+        assertFalse(p1.getTiles().contains("O4"));
+        assertFalse(p1.getTiles().contains("R4"));
+        assertFalse(p1.getTiles().contains("R8"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R4", "G4", "B4", "O4"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5", "R6", "R7", "R4", "R8"))));
+    }
+
+
 }
