@@ -997,5 +997,53 @@ public class AppTest {
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "R12", "R13"))));
     }
 
+    @DisplayName("Test for complex case")
+    @Test
+    public void test_complex_case() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
+        p1.setTiles(new ArrayList<>(Arrays.asList("R11", "B11", "G11", "R3", "R4", "R5", "B1", "B2", "B3", "B4", "G4", "B4", "O5", "O13")));
+        p2.setTiles(new ArrayList<>(Arrays.asList("O1", "O2", "O3", "O4", "R3", "O3", "B3", "G3", "G3", "G4", "G5", "G9", "G10","B7")));
+        p3.randomizeTiles();
+        gs.play(new String[] {"R11", "B11", "G11"});
+        gs.play(new String[] {"R3", "R4", "R5"});
+        gs.play(new String[] {"B1", "B2", "B3", "B4"});
+        gs.endTurn();
+        gs.play(new String[] {"O1", "O2", "O3", "O4"});
+        gs.play(new String[] {"R3", "O3", "B3", "G3"});
+        gs.play(new String[] {"G3", "G4", "G5"});
+        gs.endTurn();
+        gs.draw();
+        gs.endTurn();
+
+        // 2 R13
+        gs.splitMeld(2, new String[] {"R3"}, new String[] {"R4"}, new String[] {"R5"});
+        gs.reuseAndPlay(7, new String[] {"R4"}, new String[] {"G4", "B4"});
+        gs.moveTilesOnTable(5, new String[] {"G5"}, 7);
+        gs.reuseAndPlay(7, new String[] {"R5", "G5"}, new String[] {"O5"});
+        gs.addToCurrentMeld(3, new String[] {"O13"});
+        gs.splitMeld(3, new String[] {"O13", "O1", "O2", "O3"}, new String[] {"O4"});
+        gs.moveTilesOnTable(4, new String[] {"G4"}, 9);
+        gs.moveTilesOnTable(2, new String[] {"B4"}, 9);
+        gs.moveTilesOnTable(4, new String[] {"G3"}, 5);
+        gs.moveTilesOnTable(3, new String[] {"O3"}, 4);
+
+
+        gs.endTurn();
+        System.out.println(gs.getGame().getTable());
+        assertFalse(p1.getTiles().contains("G4"));
+        assertFalse(p1.getTiles().contains("B4"));
+        assertFalse(p1.getTiles().contains("O5"));
+        assertFalse(p1.getTiles().contains("O13"));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O4", "G4", "B4"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O13", "O1", "O2", "O3"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5", "G5", "O5"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B1", "B2", "B3"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R4", "G4", "B4"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "B3", "G3"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "G3", "O3"))));
+    }
+
 
 }
