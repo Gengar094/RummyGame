@@ -157,6 +157,7 @@ public class GameServer {
                 writer.write("Type 2: reuse the tiles on the table" + "\r\n");
                 writer.write("Type 3: split a meld into smaller melds" + "\r\n");
                 writer.write("Type 4: Move a tile in a meld into another meld on the table" + "\r\n");
+                writer.write("Type 5: Play tiles to current meld" + "\r\n");
                 if (count > 0) {
                     writer.write("Type end: If you want to end this turn" + "\r\n");
                 }
@@ -213,6 +214,15 @@ public class GameServer {
                     int to = Integer.parseInt(choices.get(2));
                     String[] moved = choices.get(1).split("\\|");
                     game.moveTilesOnTable(from, moved, to);
+                } else if (str.equals("5")) {
+                    writer.write("Please typing things like 1,R2|R3 (Play R2,R3, add them in to the first meld)"  + "\r\n");
+                    writer.write("\n");
+                    writer.flush();
+                    str = reader.readLine();
+                    List<String> choices = new ArrayList<>(Arrays.asList(str.split(",")));
+                    int index = Integer.parseInt(choices.get(0));
+                    String[] play = choices.get(1).split("\\|");
+                    game.addToCurrentMeld(index, play);
                 }
                 count++;
                 for (int i = 0; i < sockets.length; i++) {

@@ -1,0 +1,62 @@
+2021-09-30T18:08:27-04:00 | 689cdd93e4368ed0f244ce69531e7700c7b73f70 | UPDATING CODE for networking and players joining
+2021-09-30T18:08:27-04:00 | 05e410fc7e5cf32505bd0722f2387cad28a7e004 | UPDATING CODE for moving tiles from one meld to another (simple case 1)
+2021-09-30T18:08:27-04:00 | 23c4f11d31aa6341eabea3b795cd4f697b4ae7fb | UPDATING CODE for networking and players joining
+2021-09-30T18:08:27-04:00 | 1ee9827f0500990a4da5f55728bc5ce9c436bf2d | ALREADY RUNS video complex case
+2021-09-30T18:08:27-04:00 | c8f0805d3bc23c00a77937de1ccd9c95acd1c06e | UPDATING CODE for moving tiles from one meld to another (simple case 1)
+2021-09-30T18:08:12-04:00 | 9974052f81ddb685e39e55cf2e12650607f3bbfc | REFACTOR TESTS for spliting a meld into many smaller melds (simple case 2)
+2021-09-30T18:06:11-04:00 | 3ff85c14011f1fd1d663ce0112c42021aa8fb546 | CODE FOR spliting a meld into many smaller melds (simple case 2)
+2021-09-30T18:06:11-04:00 | 851d93d1c5002b594f1262efe12ba28e6a625b14 | TESTS FOR spliting a meld into many smaller melds (simple case 2)
+2021-09-30T18:06:11-04:00 | ab201826bbf0cad5dabb1ee4b61b94698d8fa274 | CODE FOR moving tiles from one meld to another (simple case 1)
+2021-09-30T18:06:11-04:00 | fad7a3dd06279065015f50f9ffb80215d4f225be | UPDATING TESTS for moving tiles from one meld to another (simple case 1)
+2021-09-30T18:06:11-04:00 | f82402268a2a510dfb145e796ea12291865f2e14 | UPDATING TESTS for moving tiles from one meld to another (simple case 1)
+2021-09-30T18:06:11-04:00 | 73712b8c39a29baac1a1d0aa66757f8fbe0b3b28 | TESTS FOR moving tiles from one meld to another (simple case 1)
+2021-09-30T18:06:11-04:00 | 8870e81a3090a3fbdb483e12b698f762a78be8cb | CODE FOR adding tiles from hand to current melds (simple case 3)
+2021-09-30T18:06:11-04:00 | 9227c351b58f935bac756bdc4eb3de7b12703bd2 | TESTS FOR adding tiles from hand to current melds (simple case 3)
+2021-09-30T18:05:54-04:00 | 631f23fcb745f7ed75b798615f29987a50de3171 | REFACTOR TESTS for play multiple melds after initial 30 points and win
+2021-09-30T18:04:38-04:00 | 4e13415f21a3c95ef9a7df29448176221c87d713 | REFACTOR TESTS for play multiple melds after initial 30 points
+2021-09-30T18:00:14-04:00 | a1baf6b69c454c196c04532660418e6df8a1a112 | REFACTOR TESTS for play 1 meld after initial 30 points
+2021-09-30T17:58:05-04:00 | 94b7144d686a0f131cc915a05a4b4a2c3e57300a | UPDATING CODE for player can choose to draw
+2021-09-30T17:58:05-04:00 | e128f5555367ade3b176bbeec7934eda313a3a35 | UPDATING CODE for networking and players joining
+2021-09-30T22:42:12-04:00 | 8da3e08feec30025134460b2982d419c852373d1 | REFACTOR TESTS for completing a partial run from a hand by reusing a run of the table
+2021-09-30T22:42:12-04:00 | e504e37133dc6599a6c404af0a8cadb8f7c9475e | REFACTOR TESTS for completing a partial set from a hand by reusing a run of the table
+2021-09-30T22:42:12-04:00 | 1eaa46fb0fd3f19cddff07b82a16b85c5ec24d60 | REFACTOR TESTS for completing a partial meld from a hand by reusing from a set of 4 of the table
+2021-09-30T22:42:12-04:00 | 928be0a8903240fb07296f09b73a7a175ed50794 | REFACTOR TESTS for declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:12-04:00 | 217c824014972575446737fbde8bed1becd7e678 | UPDATING CODE for player can choose to draw
+2021-09-30T22:42:11-04:00 | 90e99aecba1da7f7d6b57c622d89c6c4b05213cc | UPDATING TESTS for player can choose to draw
+2021-09-30T22:42:11-04:00 | 6fb524e572621ba289652a85eceed4f74b9dec95 | REFACTOR TESTS for play multiple melds after initial 30 points and win
+2021-09-30T22:42:11-04:00 | 044e64ccfe2c1f5f31e0abf818a81ab722810638 | REFACTOR TESTS for play 1 meld after initial 30 points
+2021-09-30T22:42:11-04:00 | 07f2cbbd24883a085b2a80908d1dd29a89edb6c4 | REFACTOR TESTS for play multiple melds after initial 30 points
+2021-09-30T22:42:11-04:00 | 62bb6f8077e5677699f3f1c8af9a4670a2c63d6a | REFACTOR TESTS for play 1 meld after initial 30 points
+2021-09-30T22:42:11-04:00 | 2e15d9ecff2472e1a4854d61b05bfe5b27d4194e | REFACTOR TESTS for initial 30 points
+2021-09-30T22:42:11-04:00 | 3a975cdd2e9d5656a71805f90ba4750728dd1b55 | REFACTOR TESTS for player sequence and game update
+2021-09-30T22:42:11-04:00 | 933addc17be6459e47d363458186eb2ab079776c | UPDATING CODE for networking and players joining
+2021-09-30T22:42:11-04:00 | 45c2049675f200d3758f588686cffcbb7d22a280 | ALREADY RUNS completing a partial run from a hand by reusing from run of the table
+2021-09-30T22:42:11-04:00 | ccbd61a9d25e4bc8ac4cf42626176cc5f1994f58 | ALREADY RUNS completing a partial set from a hand by reusing from a run of the table
+2021-09-30T22:42:11-04:00 | 3cb62132d032684bca7aa2faf9949852658d868c | CODE FOR completing a partial meld from a hand by reusing from a set of 4 of the table
+2021-09-30T22:42:11-04:00 | f5fb3e515c0a1fbe29cd0d85fb5e592f643e7add | REFACTOR TESTS for completing a partial meld from a hand by reusing from a set of 4 of the table
+2021-09-30T22:42:11-04:00 | 471b46b9129ec4bb24b88e01b56859cda483dccc | TESTS FOR completing a partial meld from a hand by reusing from a set of 4 of the table
+2021-09-30T22:42:11-04:00 | afea22bea179f17263d75141160e40a26e9499d0 | UPDATING CODE for declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:11-04:00 | d7b4040e334fe906b68d2755e98cd740e5e81a6b | UPDATING TESTS for declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:11-04:00 | 0ed8f995bd1d4a79d861b7897858b02c165d6d42 | REFACTOR TESTS for initial 30 points
+2021-09-30T22:42:11-04:00 | 411dbd575b5b1e4ccbdc1ab0e5e065012dc0d71d | CODE FOR declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:11-04:00 | f17b439bf99c7bdc3b7c3b584ad0608fb2fd722c | REFACTOR TESTS for declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:11-04:00 | 824f67bd7f40795d97888d3922bf658d385e9a51 | TESTS FOR declaring a winner upon a player playing all tiles and reporting correct scores
+2021-09-30T22:42:11-04:00 | b241842841513d5dbe94c903da501b64e2590da2 | ALREADY RUNS player has to draw
+2021-09-30T22:42:10-04:00 | 938cbd08c5b0187651503d466fc8cd621f1bd4f3 | CODE FOR player can choose to draw
+2021-09-30T22:42:10-04:00 | af8b1f24cf27caf2297c237f622388eb807a925c | TESTS FOR player can choose to draw
+2021-09-30T22:42:10-04:00 | 9d9d1cfdd16efa5dbb18e2f55f86bc7d85d0f9f1 | ALREADY RUNS play multiple melds after initial 30 points and win
+2021-09-30T22:42:10-04:00 | 06015513e66ef58107a96cffc5797bcbf7fdc397 | ALREADY RUNS play multiple melds after initial 30 points
+2021-09-30T22:42:10-04:00 | dc4a7bad1c54168ad83d22d1357869d481278bdd | CODE FOR play 1 meld after initial 30 points
+2021-09-30T22:42:10-04:00 | 8061f61789c21633f5ca8b847eb854d58c910edc | TESTS FOR play 1 meld after initial 30 points
+2021-09-30T22:42:10-04:00 | b1fd32c24619cbc8adb4a44d2ca6a90b9d2d9436 | CODE FOR initial 30 points
+2021-09-30T22:42:10-04:00 | 4a80bbc0a0edaa5c3ae2d76998c36f328d8242c1 | TESTS FOR initial 30 points
+2021-09-30T22:41:51-04:00 | 1d73a154a2915d49c4a4bc3345a033c7c9aaee09 | CODE FOR SEQUENCE of PLAYERS
+2021-09-30T22:40:36-04:00 | 50e2a12bafe0c487ebd59d1ca9cb588efc7f4443 | TESTS FOR SEQUENCE of PLAYERS
+2021-09-30T22:30:22-04:00 | 55d37b8bf69eca63faa60f189e6e073b0574a0a4 | REFACTOR TESTS for the number of each specific tile can only be 2
+2021-09-30T22:30:11-04:00 | 2138a8433cf5751e7cba75e81037b0cbe3c9a0cd | REFACTOR TESTS for each player gets 14 random tiles
+2021-09-20T21:47:15-04:00 | 9fa4e427c5c1d43bceab8f438c87d4c57eb9829b | CODE FOR the number of each specific tile can only be 2
+2021-09-19T02:28:34-04:00 | 2f0934c433ca4b17b82e4cc076b284a0c6b0de79 | TESTS FOR the number of each specific tile can only be 2
+2021-09-18T22:03:16-04:00 | 7a5aa91ef7e625e3206b0566063229c6722104ce | CODE FOR each player gets 14 random tiles
+2021-09-18T21:50:03-04:00 | 717ec1b026df639e0669ec32250367a50a1bfeac | TESTS FOR each player gets 14 random tiles
+2021-09-18T15:43:09-04:00 | 38fe2c75fac5396dce694795bfa0cf876b338b23 | CODE FOR networking and players joining
+2021-09-15T13:45:11-04:00 | 8369e86f65600d9bfdf914b95db60d64344aceec | Initial commit
