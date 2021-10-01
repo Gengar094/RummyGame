@@ -20,6 +20,9 @@ public class GameServer {
     }
 
     public void endTurn() {
+        System.out.println("Current table at the end of turn: " + game.getTableString(game.getTable()));
+        System.out.println("Current hand of current player " + players[game.getCurr() % 3].getName() + " at the end of turn: " + players[game.getCurr() % 3].getTilesString());
+        System.out.println("\r\n");
         game.endTurn();
     }
 
