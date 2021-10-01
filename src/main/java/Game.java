@@ -174,6 +174,7 @@ public class Game {
                 }
             }
             des.add(moved[i]);
+            updatedDes.remove(moved[i]);
             updatedDes.add("!" + moved[i]);
         }
         if (target.isEmpty()) {
