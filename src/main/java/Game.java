@@ -153,6 +153,7 @@ public class Game {
         for (int i = 0; i < strings.length; i++) {
             players[curr % 3].play(strings[i]);
             target.add(strings[i]);
+            updatedTarget.remove(strings[i]);
             updatedTarget.add("*" + strings[i]);
         }
     }
