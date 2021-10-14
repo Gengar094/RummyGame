@@ -33,7 +33,11 @@ public class Player implements Serializable {
         tiles.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                if (o1.charAt(0) == o2.charAt(0)) {
+                if (o1.charAt(0) == '*') {
+                    return 1;
+                } else if (o2.charAt(0) == '*') {
+                    return -1;
+                } else if (o1.charAt(0) == o2.charAt(0)) {
                     return Integer.parseInt(o1.substring(1)) - Integer.parseInt(o2.substring(1));
                 } else {
                     return map.get(o1.charAt(0)) - map.get(o2.charAt(0));
