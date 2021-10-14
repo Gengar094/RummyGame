@@ -13,7 +13,7 @@
 
   @FailToDraw
   Scenario: Fail to draw from a deck
-  Given The deck has 0 tiles remaining
-  And A player has 14 tiles in the hand
+  Given A player has 14 tiles in the hand
+  And The deck has 0 tiles remaining
   When A player chooses to draw from a deck
   Then The player has 14 tiles in the hand

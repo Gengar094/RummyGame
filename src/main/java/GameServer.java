@@ -66,6 +66,10 @@ public class GameServer {
         game.splitMeld(index, args);
     }
 
+    public Player getCurrentPlayer() {
+        return null;
+    }
+
     //  ********************* Networking Code below ****************************
     private void start() {
         while (true) {
