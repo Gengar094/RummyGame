@@ -68,9 +68,13 @@ public class Game {
         return sb.toString();
     }
 
-    public Player draw() {
-        players[curr % 3].drawTiles();
-        return players[curr % 3];
+    public void draw() {
+        if (Config.tiles.size() == 0) {
+            System.out.println("Current deck has no tiles");
+        } else {
+            players[curr % 3].drawTiles();
+        }
+        // return players[curr % 3];
     }
 
     public List<List<String>> play(List<String> melds) {
