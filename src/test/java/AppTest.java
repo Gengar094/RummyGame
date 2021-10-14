@@ -1,6 +1,6 @@
 import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.*;
-
+// import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -14,8 +14,9 @@ public class AppTest {
     private static Player p3;
 
     @BeforeAll
-    public static void setUp() throws InterruptedException {
+    public static void setup() throws InterruptedException {
         // Simulate the join process
+        System.out.println("Harry");
         gs = new GameServer();
         p1 = new Player("Kris");
         p2 = new Player("Nick");
