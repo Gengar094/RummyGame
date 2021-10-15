@@ -1,6 +1,7 @@
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -13,18 +14,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class stepDefPlay {
     GameServer gs;
+    Player p1;
+    Player p2;
+    Player p3;
 
 
     @Before
-    public void setup() {
+    public void setup(Scenario scenario) {
+        System.out.println("AA");
         gs = new GameServer();
-        Player p1 = new Player("Harry");
-        Player p3 = new Player("Sean");
-        Player p2 = new Player("Chris");
+        p1 = new Player("Harry");
+        p3 = new Player("Sean");
+        p2 = new Player("Chris");
         gs.setPlayers(new Player[] {p1,p2,p3});
         gs.setGame(new Game(new Player[] {p1,p2,p3}));
         p1.reset();
-        p1.setTiles(new ArrayList<>(Arrays.asList("R10","B11","R12","R13","*","R7","B7","G7","G7","R8","B10","G10","R1","R2","R3","O7","R11","O7","R6","R7", "G11", "G12", "G13")));
+        p1.setTiles(new ArrayList<>(Arrays.asList("R10","B11","R12","R13","*","R7","B7","G7","G7","R8","B10","G10","R1","R2","R3","O7","R11","O7","R6", "G11", "G12", "G13", "B6","G6","O6")));
         p2.reset();
         p2.randomizeTiles();
         p3.reset();
@@ -60,6 +65,7 @@ public class stepDefPlay {
     @Then("Player does not have {string} in his hand")
     public void player_does_not_have_this_meld(String string) {
         String[] ss = string.split("/");
+        System.out.println(gs.getCurrentPlayer().getTiles());
         for (String s: ss) {
             String[] tt = s.split(",");
             for (String t: tt) {
@@ -121,5 +127,13 @@ public class stepDefPlay {
     @And("Player still has R6,R7 tiles in his hand")
     public void playerStillHasRRTilesInHisHand() {
         player_has_in_his_hand("R6,R7");
+    }
+
+    @After
+    public void afterHook(Scenario scenario) {
+        gs.reset();
+        p1.reset();
+        p2.reset();
+        p3.reset();
     }
 }

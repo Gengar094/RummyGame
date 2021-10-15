@@ -28,10 +28,10 @@ Feature: A player plays tiles from his hand
     Examples:
       |melds|
       |"R1,R2,R3"    |
-      |"R7,B7,G7,O7"              |
+      |"R6,B6,G6,O6"              |
       |"R1,R2,*"                           |
       |"R7,B7.G7,*"                                    |
-      |"R1,R2,R3/R7,B7,O7"                                                |
+      |"R1,R2,R3/R6,B6,O6"                                                |
 
 
   #invalid cases

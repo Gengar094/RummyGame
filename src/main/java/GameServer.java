@@ -67,7 +67,7 @@ public class GameServer {
     }
 
     public Player getCurrentPlayer() {
-        return players[game.getCurr()];
+        return players[game.getCurr() % 3];
     }
 
     //  ********************* Networking Code below ****************************
