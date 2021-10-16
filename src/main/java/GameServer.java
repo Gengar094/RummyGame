@@ -70,6 +70,13 @@ public class GameServer {
         return players[game.getCurr() % 3];
     }
 
+    public Player getPrevPlayer() {
+        if (game.getCurr() == 0) {
+            return null;
+        }
+        return players[(game.getCurr() - 1) % 3];
+    }
+
     //  ********************* Networking Code below ****************************
     private void start() {
         while (true) {

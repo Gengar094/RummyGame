@@ -53,6 +53,7 @@ public class stepDefPlay {
         for (String s: ss) {
             gs.play(s.split(","));
         }
+        gs.endTurn();
     }
 
     @Then("the table has {string} now")
@@ -65,11 +66,10 @@ public class stepDefPlay {
     @Then("Player does not have {string} in his hand")
     public void player_does_not_have_this_meld(String string) {
         String[] ss = string.split("/");
-        System.out.println(gs.getCurrentPlayer().getTiles());
         for (String s: ss) {
             String[] tt = s.split(",");
             for (String t: tt) {
-                assertFalse(gs.getCurrentPlayer().getTiles().contains(t));
+                assertFalse(gs.getPrevPlayer().getTiles().contains(t));
             }
         }
     }
@@ -98,8 +98,10 @@ public class stepDefPlay {
         String[] ss = string.split("/");
         for (String s: ss) {
             String[] tt = s.split(",");
+            System.out.println(gs.getGame().getCurr());
+            System.out.println(gs.getPrevPlayer().getTiles());
             for (String t: tt) {
-                assertTrue(gs.getCurrentPlayer().getTiles().contains(t));
+                assertTrue(gs.getPrevPlayer().getTiles().contains(t));
             }
         }
     }

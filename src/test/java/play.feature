@@ -30,11 +30,25 @@ Feature: A player plays tiles from his hand
       |"R1,R2,R3"    |
       |"R6,B6,G6,O6"              |
       |"R1,R2,*"                           |
-      |"R7,B7.G7,*"                                    |
+      |"R7,B7,*"                                    |
       |"R1,R2,R3/R6,B6,O6"                                                |
 
 
   #invalid cases
+  @Play_an_invalid_meld_general
+  Scenario Outline: Player plays an invalid meld from his hand that is not set or run
+    Given Player has <tiles> in his hand
+    When Player plays <tiles> during his turn
+    Then the table does not have <tiles>
+    And Player still has <tiles> in his hand
+    Examples:
+      |tiles |
+      |"R10,R11,R11,R13" |
+      |"R7,B7,G7,O6"     |
+      |"R7,B6,*"                  |
+      |"R10,R11,R11,*"                           |
+
+
   @Play_an_invalid_meld_with_wrong_color
     Scenario Outline: Player plays an invalid meld from his hand with wrong color
     Given Player has <tiles> in his hand
