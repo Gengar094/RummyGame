@@ -49,6 +49,10 @@ public class Game {
         return initial[curr % 3];
     }
 
+    public void setInitial(boolean i) {
+        initial[curr % 3] = i;
+    }
+
     public List<List<String>> getTable() {
         return table;
     }

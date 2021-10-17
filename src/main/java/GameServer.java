@@ -77,6 +77,23 @@ public class GameServer {
         return players[(game.getCurr() - 1) % 3];
     }
 
+    public void setDesiredAndUniqueTiles(String[] desired) {
+        for (String d: desired) {
+            if (!players[game.getCurr() % 3].getTiles().contains(d)) {
+                setDraw(d);
+            } else {
+                if (players[game.getCurr() % 3].getTiles().indexOf(d) != players[game.getCurr() % 3].getTiles().lastIndexOf(d)) {
+                    players[game.getCurr() % 3].getTiles().remove(d);
+                    Config.tiles.add(d);
+                }
+            }
+        }
+    }
+
+    public void setInitial(boolean initial) {
+        game.setInitial(initial);
+    }
+
     //  ********************* Networking Code below ****************************
     private void start() {
         while (true) {
