@@ -16,7 +16,7 @@ import game.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class stepDefPlay {
+public class StepDefPlay {
 
     @Given("Player has {string} in his hand")
     public void player_has_in_his_hand(String string) {

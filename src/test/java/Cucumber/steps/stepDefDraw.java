@@ -9,7 +9,7 @@ import Cucumber.supports.*;
 import game.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class stepDefDraw {
+public class StepDefDraw {
 
     // valid case
     @Given("A player has 14 tiles in the hand")
