@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import game.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
@@ -99,12 +100,12 @@ public class AppTest {
         assertFalse(p3.getTiles().contains("R2"));
         assertFalse(p3.getTiles().contains("B2"));
         assertFalse(p3.getTiles().contains("G2"));
-        gs.play(new String[] {"R12", "B12", "O13"});
+        gs.play(new String[] {"R12", "B12", "O12"});
         gs.endTurn();
-        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R12", "B12", "O13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("R12", "B12", "O12")));
         assertFalse(p1.getTiles().contains("R12"));
         assertFalse(p1.getTiles().contains("B12"));
-        assertFalse(p1.getTiles().contains("O13"));
+        assertFalse(p1.getTiles().contains("O12"));
 
     }
 

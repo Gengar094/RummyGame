@@ -1,5 +1,8 @@
+package Cucumber.supports;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import game.*;
 
 public class Public {
     public static GameServer gs = new GameServer();

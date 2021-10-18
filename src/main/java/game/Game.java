@@ -1,3 +1,4 @@
+package game;
 import java.util.*;
 
 /* Game logic, store current info about the game*/

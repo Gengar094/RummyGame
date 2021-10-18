@@ -1,8 +1,12 @@
+package Cucumber.steps;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import Cucumber.supports.*;
+import game.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class stepDefDraw {

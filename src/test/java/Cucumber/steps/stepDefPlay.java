@@ -1,3 +1,5 @@
+package Cucumber.steps;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -8,7 +10,9 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import java.util.ArrayList;
 import java.util.Arrays;
+import Cucumber.supports.*;
 import java.util.List;
+import game.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
