@@ -54,6 +54,10 @@ public class Game {
         initial[curr % 3] = i;
     }
 
+    public void setTable(List<List<String>> table) {
+        this.table = table;
+    }
+
     public List<List<String>> getTable() {
         return table;
     }
