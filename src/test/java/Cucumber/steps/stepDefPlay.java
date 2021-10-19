@@ -49,6 +49,7 @@ public class StepDefPlay {
     }
     @Then("Player does not have {string} in his hand")
     public void player_does_not_have_this_meld(String string) {
+        System.out.println(Public.gs.getPrevPlayer().getTiles());
         String[] ss = string.split("/");
         for (String s: ss) {
             String[] tt = s.split(",");
@@ -76,8 +77,6 @@ public class StepDefPlay {
         String[] ss = string.split("/");
         for (String s: ss) {
             String[] tt = s.split(",");
-            System.out.println(Public.gs.getGame().getCurr());
-            System.out.println(Public.gs.getPrevPlayer().getTiles());
             for (String t: tt) {
                 assertTrue(Public.gs.getPrevPlayer().getTiles().contains(t));
             }
@@ -86,27 +85,13 @@ public class StepDefPlay {
 
 
 
-    @Given("Player does not have R5 in his hand")
-    public void playerDoesNotHaveR5InHisHand() {
-        while (Public.gs.getCurrentPlayer().getTiles().contains("R5")) {
-            Public.gs.getCurrentPlayer().getTiles().remove("R5");
-            Config.tiles.add("R5");
+    @Given("Player does not have tiles {string} in his hand")
+    public void playerDoesNotHaveInHisHand(String s) {
+        while (Public.gs.getCurrentPlayer().getTiles().contains(s)) {
+            Public.gs.getCurrentPlayer().getTiles().remove(s);
+            Config.tiles.add(s);
         }
     }
 
-    @When("Player plays tiles R5,R6,R7 during his turn")
-    public void playerPlaysTilesR5R6R7DuringHisTurn() {
-        player_plays_during_his_turn("R5,R6,R7");
-    }
-
-    @Then("the table does not have meld R5,R6,R7")
-    public void theTableDoesNotHaveMeldR5R6R7() {
-        theTableDoesNotHaveTiles("R5,R6,R7");
-    }
-
-    @And("Player still has R6,R7 tiles in his hand")
-    public void playerStillHasRRTilesInHisHand() {
-        player_has_in_his_hand("R6,R7");
-    }
 
 }

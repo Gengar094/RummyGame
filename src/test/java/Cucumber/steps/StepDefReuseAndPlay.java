@@ -16,6 +16,9 @@ public class StepDefReuseAndPlay {
         List<List<String>> table = new ArrayList<>();
         for (String s: ss) {
             List<String> list = new ArrayList<>(Arrays.asList(s.split(",")));
+            if (list.contains("*")) {
+                Public.gs.getGame().getReplaceable().put(list.hashCode(),false);
+            }
             table.add(list);
         }
         Public.gs.setTable(table);
@@ -23,18 +26,19 @@ public class StepDefReuseAndPlay {
 
     @When("Player reuses {string} from {int} meld, and play {string}")
     public void player_reuses(String meld, int num, String tiles) {
-        Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," ));
+        System.out.println(Arrays.asList(meld.split(",")));
+        System.out.println(Arrays.asList(tiles.split(",")));
+        System.out.println(Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," )));
+        System.out.println(Public.gs.getGame().getTable());
         Public.gs.endTurn();
     }
 
-    @When("Player ends his turn")
-    public void player_ends_his_turn() {
-        Public.gs.endTurn();
-    }
 
     @When("Player replace joker in meld {int} with {string}")
     public void replace_joker(int num, String string) {
-        Public.gs.addToCurrentMeld(num, string.split(","));
+        Public.gs.getGame().getTable().get(num - 1).add(string);
+        Public.gs.getGame().getReplaceable().put(Public.gs.getGame().getTable().get(num - 1).hashCode(), true);
+        Public.gs.getCurrentPlayer().getTiles().remove(string);
     }
 
 

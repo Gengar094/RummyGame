@@ -8,7 +8,7 @@ public class Game {
     private boolean[] attemptFirstPlay = {false, false, false};
     private int[] initialScore = {0, 0, 0};
     private int[] score;
-    private Map<Integer, List<String>> replaceMap; // <hashcode of melds that have jokers, list of replace tiles>
+    private Map<Integer, Set<String>> replaceMap; // <hashcode of melds that have jokers, list of replace tiles>
     private Map<Integer, Boolean> replaceable;     // <hashcode, whether the jokers have been replaced>
     private List<List<String>> table;
     private List<List<String>> updatedTable;
@@ -22,6 +22,7 @@ public class Game {
         this.table = new ArrayList<>();
         this.score = new int[3];
         replaceMap = new HashMap<>();
+        replaceable = new HashMap<>();
     }
 
     public int getCurr() {
@@ -34,6 +35,10 @@ public class Game {
 
     public boolean hasToDraw() {
         return players[curr % 3].hasToDraw();
+    }
+
+    public Map<Integer, Boolean> getReplaceable() {
+        return replaceable;
     }
 
     public void setDraw(String draw) {
@@ -123,6 +128,7 @@ public class Game {
         for (String m: melds) {
             players[curr % 3].play(m);
         }
+        buildReplaceTable();
         return table;
     }
 
@@ -138,8 +144,18 @@ public class Game {
     }
 
     public boolean endTurn() {
+        for (List<String> sub: table) {
+            if (!isValid(sub)) {
+                rollback();
+                curr++;
+                return false;
+            }
+        }
         if (attemptFirstPlay[getCurr() % 3] && initialScore[getCurr() % 3] < 30) {
             rollback();
+            attemptFirstPlay[getCurr() % 3] = false;
+            initial[getCurr() % 3] = true;
+            initialScore[getCurr() % 3] = 0;
             curr++;
             return false;
         } else {
@@ -157,20 +173,38 @@ public class Game {
         System.out.println("ROLLBACK");
         table = new ArrayList<>(preTable);
         players[getCurr() % 3].setTiles(preTiles);
-        attemptFirstPlay[getCurr() % 3] = false;
-        initial[getCurr() % 3] = true;
-        initialScore[getCurr() % 3] = 0;
     }
 
     public boolean win() {
         return players[curr % 3].getTiles().size() == 0;
     }
 
-    public void reuseAndPlay(int meldNum, String[] reuse, String[] play) {
+    public boolean reuseAndPlay(int meldNum, String[] reuse, String[] play) {
+        if (meldNum > table.size() || meldNum < 1) {
+            return false;
+        }
+        for (String s: play) {
+            if (!players[curr % 3].getTiles().contains(s)) {
+                return false;
+            }
+        }
+        if (initial[curr % 3]) {
+            return false;
+        }
+        if (!checkMovable(meldNum)) {
+            return false;
+        }
         if (updatedTable == null) {
             creatUpdatedTable();
         }
+        preTable = new ArrayList<>(table);
+        preTiles = new ArrayList<>(players[getCurr() % 3].getTiles());
         List<String> target = table.get(meldNum - 1);
+        for (String s: reuse) {
+            if (!target.contains(s)) {
+                return false;
+            }
+        }
         List<String> updatedTarget = updatedTable.get(meldNum - 1);
         List<String> newMeld = new ArrayList<>();
         List<String> updatedMeld = new ArrayList<>();
@@ -195,6 +229,8 @@ public class Game {
         }
         table.add(newMeld);
         updatedTable.add(updatedMeld);
+        buildReplaceTable();
+        return true;
     }
 
     public void addToCurrentMeld(int index, String[] strings) {
@@ -441,5 +477,99 @@ public class Game {
         }
         return sum;
     }
+
+    public void buildReplaceTable() {
+        for (List<String> list: table) {
+            if (list.contains("*")) {
+                if (replaceMap.get(list.hashCode()) == null) {
+                    if (isRun(list)) {
+                        findReplaceableElement(list, true);
+                    } else {
+                        findReplaceableElement(list, false);
+                    }
+                }
+            }
+        }
+    }
+
+    public void findReplaceableElement(List<String> list, boolean isRun) {
+        List<String> newList = new ArrayList<>(list);
+        while (newList.contains("*")) {
+            newList.remove("*");
+            for (int i = newList.size() - 1; i >= 0; i--) {
+                if (newList.get(newList.size() - 1).equals("*")) {
+                    continue;
+                } else {
+                    if (isRun) {
+                        String replace;
+                        if (Integer.parseInt(newList.get(i).substring(1)) != 13) {
+                            replace = String.valueOf(newList.get(i).charAt(0)) + (Integer.parseInt(newList.get(i).substring(1)) + 1);
+                        } else {
+                            replace = String.valueOf(newList.get(i).charAt(0)) + 1; // maybe here
+                        }
+                        newList.add(replace);
+                        if (isRun(newList)) {
+                            if (replaceMap.get(list.hashCode()) == null) {
+                                Set<String> l = new HashSet<>();
+                                l.add(replace);
+                                replaceMap.put(list.hashCode(), l);
+                            } else {
+                                replaceMap.get(list.hashCode()).add(replace);
+                            }
+                        }
+                        newList.remove(replace);
+                        if (i == 0) {
+                            if (Integer.parseInt(newList.get(i).substring(1)) != 1) {
+                                replace = String.valueOf(newList.get(i).charAt(0)) + (Integer.parseInt(newList.get(i).substring(1)) - 1);
+                            } else {
+                                replace = String.valueOf(newList.get(i).charAt(0)) + 13; // maybe here
+                            }
+                            newList.add(replace);
+                            if (isRun(newList)) {
+                                System.out.println(replaceMap);
+                                if (replaceMap.get(list.hashCode()) == null) {
+                                    Set<String> l = new HashSet<>();
+                                    l.add(replace);
+                                    replaceMap.put(list.hashCode(), l);
+                                } else {
+                                    replaceMap.get(list.hashCode()).add(replace);
+                                }
+                            }
+                        }
+                    } else {
+                        String[] table = {"R", "B", "G", "O"};
+                        String num = newList.get(0).substring(1);
+
+                        for (String s: table) {
+                            String replace = s + num;
+                            newList.add(replace);
+                            if (isSet(newList)) {
+                                if (replaceMap.get(list.hashCode()) == null) {
+                                    Set<String> l = new HashSet<>();
+                                    l.add(replace);
+                                    replaceMap.put(list.hashCode(), l);
+                                } else {
+                                    replaceMap.get(list.hashCode()).add(replace);
+                                }
+                            }
+                            newList.remove(replace);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // rule 1,3
+    public boolean checkMovable(int meldNum) {
+        if (!table.get(meldNum - 1).contains("*")) {
+            return true;
+        }
+        if (!replaceable.get(table.get(meldNum - 1).hashCode())) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

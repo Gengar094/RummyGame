@@ -23,6 +23,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   Scenario: Player reuses the non-joker tiles in a meld after replacing the joker
   Given Player has "R3,R4,R8" in his hand
   And Table has "R5,R6,R7,*"
+  And Player has played tiles before this turn
   When Player replace joker in meld 1 with "R8"
   And Player reuses "R5" from 1 meld, and play "R3,R4"
   Then Player does not have "R3,R4,R8" in his hand
@@ -30,35 +31,31 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
 
 
 @reuse_the_joker_after_replacing_it
-  Scenario Outline: Player reuses the joker after replacing it from the table
-  Given Player has <tiles> in his hand
-  And Table has <melds>
-  When Player replace joker in meld 1 with <replace>
-  And Player reuses <reuse> from 1 meld, and play <play>
-  Then Player does not have <tiles> in his hand
-  And Table has <new>
-  #
-  Examples:
-    | tiles | melds | replace | reuse | play | new |
-    |  "R3,R4,R7"  | "R5,R6,R7,*" | "R7"| "*" | "R3,R4" | "R3,R4,*" |
-
+  Scenario: Player reuses the joker after replacing it from the table
+  Given Player has "R3,R4,R8" in his hand
+  And Table has "R5,R6,R7,*"
+  And Player has played tiles before this turn
+  When Player replace joker in meld 1 with "R8"
+  And Player reuses "*" from 1 meld, and play "R3,R4"
+  Then Player does not have "R3,R4,R8" in his hand
+  And Table has "R3,R4,*"
 
 #invalid
 
 @reuse_tiles_that_player_does_not_have
-  Scenarios: Player reuses the meld, but plays tiles that he does not have
-  Given Player does not have "R6" in his hand
+  Scenario: Player reuses the meld, but plays tiles that he does not have
+  Given Player does not have tiles "R6" in his hand
   And Table has "R7,R8,R9,R10,R11"
   When Player reuses "R7,R8" from 1 meld, and play "R7,R8,R9,R10,R11"
   Then the table does not have "R6,R7,R8/R9,R10,R11"
 
 @reuse_tiles_that_meld_does_not_have
   Scenario: Player reuses the non-existed tile from meld
-  Given Table has "R6,R7,R8,R9"
-  And Player has "R3,R4" in his hand
+  Given Player has "R6,R7,R8,R9" in his hand
+  And Table has "R2,R3,R4"
   When Player reuses "R5" from 1 meld, and play "R6,R7,R8,R9"
-  Then Player still has "R3,R4" in his hand
-  And the table does not have "R3,R4,R5/R6,R7,R8,R9"
+  Then Player still has "R6,R7,R8,R9" in his hand
+  And the table does not have "R2,R3,R4,R5/R6,R7,R8,R9"
 
 @select_a_meld_that_does_not_on_the_table
 Scenario: Player select a meld that is not in the table
@@ -81,18 +78,18 @@ Scenario: Player select a meld that is not in the table
   Scenario Outline: Player reuses the table to form an invalid meld
   Given Player has <tiles> in his hand
   And Table has <melds>
+  And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
-  And Player ends his turn
   Then Player still has <tiles> in his hand
   And the table does not have <new>
   Examples:
     | tiles | melds | reuse | new |
     | "R10"      |   "R9,R10,R11,R12"    |   "R10,R11,R12"    |  "R10,R10,R11,R12"   |
-    | "O6"       |  "R7,B7,G7"        |   "R7,B7,G7"       |  "R7,B7.G7,O6"       |
+    | "O6"       |  "R7,B7,G7"        |   "R7,B7,G7"       |  "R7,B7,G7,O6"       |
     | "R7,*"     |  "R6,G6,B6,O6"     |   "B6"              | "R7,B6,*"           |
     | "R10,R11,*"    |  "R9,R10,R11,R12"| "R11"             | "R10,R11,R11,*"     |
 
-    | "R10,B11"  |  "R11,R12,R13"     |   "R12.R13"        |  "R10,B11,R12,R13"   |
+    | "R10,B11"  |  "R11,R12,R13"     |   "R12,R13"        |  "R10,B11,R12,R13"   |
     | "G7"       |  "R7,B7,G7"        |   "R7,B7,G7"       |  "R7,B7,G7,G7"       |
 
     | "R7"       |  "R8,R9,R10,R11"   |   "R8"             |  "R7,R8"             |
@@ -108,7 +105,6 @@ Scenario Outline: Player reuses the table to form an valid meld, but left an inv
   Given Player has <tiles> in his hand
   And Table has <melds>
   When Player reuses <reuse> from 1 meld, and play <tiles>
-  And Player ends his turn
   Then Player still has <tiles> in his hand
   And the table does not have <new>
   Examples:
@@ -123,6 +119,7 @@ Scenario Outline: Player reuses the table to form an valid meld, but left an inv
 Scenario: Player reuses the joker before replacing it from the table
   Given Player has "R3,R4" in his hand
   And Table has "R4,R5,R6,*"
+  And Player has played tiles before this turn
   When Player does not replace joker with a tile
   And Player reuses "*" from 1 meld, and play "R3,R4"
   Then Player still has "R3,R4" in his hand
@@ -133,18 +130,19 @@ Scenario: Player reuses the joker before replacing it from the table
 Scenario: Player reuses the non-joker tiles in a meld before replacing the joker
   Given Player has "R3,R4" in his hand
   And Table has "R5,R6,R7,*"
+  And Player has played tiles before this turn
   When Player does not replace joker with a tile
   And Player reuses "R5" from 1 meld, and play "R3,R4"
   Then Player still has "R3,R4" in his hand
-  And the table does not have "R3,R4,R5"
+  And the table does not have "R3,R4,R5/R6,R7,*"
 
 
-  #OK
+  #OK ?
 @joker_can_only_be_used_with_player_own_tiles
 Scenario: Player reuses the joker with other tiles from same meld
   Given Player has "R3,R4,R8" in his hand
-  And Table has "R5,R6,R7,*"
-  When Player replace joker in meld 0 with "R8"
+  And Table has "R5,R6,R7,*/R8,R9,R10,R11"
+  And Player has played tiles before this turn
   And Player reuses "R5,*" from 1 meld, and play "R3,R4"
   Then Player still has "R3,R4" in his hand
   And the table does not have "R3,R4,R5,*"

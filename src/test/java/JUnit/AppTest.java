@@ -881,16 +881,13 @@ public class AppTest {
         assertFalse(p2.getTiles().contains("B12"));
         assertFalse(p2.getTiles().contains("G12"));
         assertTrue(gs.getGame().getTable().contains(Arrays.asList("R12", "B12", "G12")));
-        gs.play(new String[] {"O7", "O8", "O9", "O10", "O11", "O12", "O13"});
+        gs.play(new String[] {"O7", "O8", "O9", "O10"});
         gs.endTurn();
         assertFalse(p3.getTiles().contains("O7"));
         assertFalse(p3.getTiles().contains("O8"));
         assertFalse(p3.getTiles().contains("O9"));
         assertFalse(p3.getTiles().contains("O10"));
-        assertFalse(p3.getTiles().contains("O11"));
-        assertFalse(p3.getTiles().contains("O12"));
-        assertFalse(p3.getTiles().contains("O13"));
-        assertTrue(gs.getGame().getTable().contains(Arrays.asList("O7", "O8", "O9", "O10", "O11", "O12", "O13")));
+        assertTrue(gs.getGame().getTable().contains(Arrays.asList("O7", "O8", "O9", "O10")));
 
 
         // 2

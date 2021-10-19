@@ -76,10 +76,11 @@ Feature: A player plays tiles from his hand
 
   @Play_a_tile_that_player_does_not_have
     Scenario: Player plays a tile that he does not have
-    Given Player does not have R5 in his hand
-    When Player plays tiles R5,R6,R7 during his turn
-    Then the table does not have meld R5,R6,R7
-    And Player still has R6,R7 tiles in his hand
+    Given Player does not have tiles "R5" in his hand
+    And Player has "R6,R7" in his hand
+    When Player plays "R5,R6,R7" during his turn
+    Then the table does not have "R5,R6,R7"
+    And Player still has "R6,R7" in his hand
 
 
   @Play_valid_meld(s)_but_invalid_for_initial_30
