@@ -107,7 +107,7 @@ Scenario: Player selects a meld that is not in the table
 Scenario Outline: Player reuses the table to form an valid meld, but left an invalid meld on the table
   Given Player has <tiles> in his hand
   And Table has <melds>
-    And Player has played tiles before this turn
+  And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
   Then Player still has <tiles> in his hand
   And the table does not have <new>

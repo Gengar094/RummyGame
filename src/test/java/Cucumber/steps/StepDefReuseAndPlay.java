@@ -13,7 +13,12 @@ public class StepDefReuseAndPlay {
     @Given("Table has {string}")
     public void table_has_meld(String string) {
         String[] ss = string.split("/");
-        List<List<String>> table = new ArrayList<>();
+        List<List<String>> table;
+        if (Public.gs.getGame().getTable().size() != 0) {
+            table = Public.gs.getGame().getTable();
+        } else {
+            table = new ArrayList<>();
+        }
         for (String s: ss) {
             List<String> list = new ArrayList<>(Arrays.asList(s.split(",")));
             if (list.contains("*")) {
@@ -26,10 +31,7 @@ public class StepDefReuseAndPlay {
 
     @When("Player reuses {string} from {int} meld, and play {string}")
     public void player_reuses(String meld, int num, String tiles) {
-        System.out.println(Arrays.asList(meld.split(",")));
-        System.out.println(Arrays.asList(tiles.split(",")));
         System.out.println(Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," )));
-        System.out.println(Public.gs.getGame().getTable());
         Public.gs.endTurn();
     }
 

@@ -7,8 +7,8 @@ Feature: A player moves tiles in a meld to another on the table
       Given  Table has <from>
       And Table has <to>
       And Player has played tiles before this turn
-      When Player moves <move> from 1st meld to 2nd meld
-      Then Table has <new>
+      When Player moves <move> from 1 meld to 2 meld
+      Then the table has <new> now
     Examples:
       | from | to | move | new |
       | "R1,R2,R3,R4"  | "R5,R6,R7" | "R4"| "R1,R2,R3/R4,R5,R6,R7" |
@@ -25,8 +25,8 @@ Feature: A player moves tiles in a meld to another on the table
       And Table has "B8,G8,O8"
       And Player has played tiles before this turn
       And Player replace joker in meld 1 with "R11"
-      When Player moves "R8" from 1st meld to 2nd meld
-      Then Table has "R8,B8,G8,O8/R9,R10,R11,*"
+      When Player moves "R8" from 1 meld to 2 meld
+      Then the table has "R8,B8,G8,O8/R9,R10,R11,*" now
 
 
   #invalid
@@ -56,7 +56,7 @@ Feature: A player moves tiles in a meld to another on the table
     And Table has "R11,R12,R13"
     And Player has played tiles before this turn
     When Player moves "R10" from 1 meld to 3 meld
-    Then the table still has ""R6,R7,R8,R9,R10"/R11,R12,R13"
+    Then the table still has "R6,R7,R8,R9,R10/R11,R12,R13"
 
     #ok
   @move_before_initial_30
@@ -73,7 +73,7 @@ Feature: A player moves tiles in a meld to another on the table
     Given Table has <from>
     And Table has <to>
     And Player has played tiles before this turn
-    When Player moves <move> from 1st meld to 2nd meld
+    When Player moves <move> from 1 meld to 2 meld
     Then the table still has <melds>
     Examples:
       | from | to | move | melds |
@@ -92,7 +92,7 @@ Feature: A player moves tiles in a meld to another on the table
     Given Table has <from>
     And Table has <to>
     And Player has played tiles before this turn
-    When Player moves <move> from 1st meld to 2nd meld
+    When Player moves <move> from 1 meld to 2 meld
     Then the table still has <melds>
     Examples:
       | from | to | move | melds |
@@ -110,13 +110,13 @@ Feature: A player moves tiles in a meld to another on the table
     And Player has "R8" in his hand
     And Player replace joker in meld 1 with "R8"
     And Player has played tiles before this turn
-    When Player moves "*" from 1st meld to 2nd meld
-    Then the table still has "R3,R4,R5,R6,*/R7,B7,G7""
+    When Player moves "*" from 1 meld to 2 meld
+    Then the table still has "R3,R4,R5,R6,*/R7,B7,G7"
 
   @move_tiles_before_replacing_joker
     Scenario: Player moves tiles from a meld with joker before replacing joker
     Given Table has "R3,R4,R5,R6,*"
     And Table has "B3,G3,O3"
     And Player has played tiles before this turn
-    When Player moves "R3" from 1st meld to 2nd meld
+    When Player moves "R3" from 1 meld to 2 meld
     Then the table still has "R3,R4,R5,R6,*/B3,G3,O3"
