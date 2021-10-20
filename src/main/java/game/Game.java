@@ -144,6 +144,7 @@ public class Game {
     }
 
     public boolean endTurn() {
+        System.out.println(table);
         for (List<String> sub: table) {
             if (!isValid(sub)) {
                 rollback();
@@ -242,9 +243,11 @@ public class Game {
         for (int i = 0; i < strings.length; i++) {
             players[curr % 3].play(strings[i]);
             target.add(strings[i]);
+            System.out.println("target " + target);
             updatedTarget.remove(strings[i]);
             updatedTarget.add("*" + strings[i]);
         }
+        System.out.println("table " + table);
     }
 
     public void moveTilesOnTable(int from, String[] moved, int to) {
