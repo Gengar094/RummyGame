@@ -23,7 +23,7 @@ Feature: A player add his tiles to the existing meld on the table
 
   @player_adds_tiles_that_he_does_not_have
     Scenario: Player adds tiles that he does not have to existing meld on the table
-      Given Player does not have "R5" in his hand
+      Given Player does not have tiles "R5" in his hand
       And Table has "R6,R7,R8"
       And Player has played tiles before this turn
       When Player adds "R5" to 1 meld

@@ -133,7 +133,11 @@ public class Game {
     }
 
     public void creatUpdatedTable() {
-        updatedTable = new ArrayList<>(table);
+        updatedTable = new ArrayList<>();
+        for (List<String> list: table) {
+            List<String> copy = new ArrayList<>(list);
+            updatedTable.add(copy);
+        }
     }
 
     public void setScore() {
@@ -199,7 +203,7 @@ public class Game {
             creatUpdatedTable();
         }
         preTable = new ArrayList<>(table);
-        preTiles = new ArrayList<>(players[getCurr() % 3].getTiles());
+        preTiles = new ArrayList<>(players[curr % 3].getTiles());
         List<String> target = table.get(meldNum - 1);
         for (String s: reuse) {
             if (!target.contains(s)) {
@@ -234,20 +238,48 @@ public class Game {
         return true;
     }
 
-    public void addToCurrentMeld(int index, String[] strings) {
+    public boolean addToCurrentMeld(int index, String[] strings) {
         if (updatedTable == null) {
             creatUpdatedTable();
         }
+        if (index > table.size() || index < 1) {
+            return false;
+        }
+        for (String s: strings) {
+            if (!players[curr % 3].getTiles().contains(s)) {
+                return false;
+            }
+        }
+        if (initial[curr % 3]) {
+            return false;
+        }
+        System.out.println("table " + table);
+        setPreTable();
+        setPreTiles();
         List<String> target = table.get(index - 1);
         List<String> updatedTarget = updatedTable.get(index - 1);
         for (int i = 0; i < strings.length; i++) {
             players[curr % 3].play(strings[i]);
             target.add(strings[i]);
-            System.out.println("target " + target);
             updatedTarget.remove(strings[i]);
             updatedTarget.add("*" + strings[i]);
         }
-        System.out.println("table " + table);
+        sort(target);
+        sort(updatedTarget);
+        return true;
+    }
+
+    private void setPreTable() {
+        preTable = new ArrayList<>();
+        for (List<String> list: table) {
+            List<String> copy = new ArrayList<>(list);
+            preTable.add(copy);
+        }
+    }
+
+    private void setPreTiles() {
+        preTiles = new ArrayList<>();
+        preTiles.addAll(players[curr % 3].getTiles());
     }
 
     public void moveTilesOnTable(int from, String[] moved, int to) {
@@ -419,13 +451,17 @@ public class Game {
     }
 
     private void sort(List<String> check) {
+        Character[] chars = {'R','B','G','O'};
+        List<Character> list = Arrays.asList(chars);
         check.sort((o1, o2) -> {
             if (o1.charAt(0) == '*') {
                 return 1;
             } else if (o2.charAt(0) == '*') {
                 return -1;
-            } else {
+            } else if (o1.charAt(0) == o2.charAt(0)){
                 return Integer.parseInt(o1.substring(1)) - Integer.parseInt(o2.substring(1));
+            } else {
+                return list.indexOf(o1.charAt(0)) - list.indexOf(o2.charAt(0));
             }
         });
     }

@@ -49,7 +49,6 @@ public class StepDefPlay {
     }
     @Then("Player does not have {string} in his hand")
     public void player_does_not_have_this_meld(String string) {
-        System.out.println(Public.gs.getPrevPlayer().getTiles());
         String[] ss = string.split("/");
         for (String s: ss) {
             String[] tt = s.split(",");
@@ -66,6 +65,7 @@ public class StepDefPlay {
 
     @Then("the table does not have {string}")
     public void theTableDoesNotHaveTiles(String string) {
+        System.out.println(Public.gs.getGame().getTable());
         String[] ss = string.split("/");
         for (String s: ss) {
             assertFalse(Public.gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(s.split(",")))));
