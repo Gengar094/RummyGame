@@ -46,6 +46,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   Scenario: Player reuses the meld, but plays tiles that he does not have
   Given Player does not have tiles "R6" in his hand
   And Table has "R7,R8,R9,R10,R11"
+  And Player has played tiles before this turn
   When Player reuses "R7,R8" from 1 meld, and play "R7,R8,R9,R10,R11"
   Then the table does not have "R6,R7,R8/R9,R10,R11"
 
@@ -53,14 +54,16 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   Scenario: Player reuses the non-existed tile from meld
   Given Player has "R6,R7,R8,R9" in his hand
   And Table has "R2,R3,R4"
+  And Player has played tiles before this turn
   When Player reuses "R5" from 1 meld, and play "R6,R7,R8,R9"
   Then Player still has "R6,R7,R8,R9" in his hand
   And the table does not have "R2,R3,R4,R5/R6,R7,R8,R9"
 
 @select_a_meld_that_does_not_on_the_table
-Scenario: Player select a meld that is not in the table
+Scenario: Player selects a meld that is not in the table
   Given Table has "R6,R7,R8,R9/R1,R2,R3"
   And Player has "R4,R5" in his hand
+  And Player has played tiles before this turn
   When Player reuses "R3" from 3 meld, and play "R4,R5"
   Then Player still has "R4,R5" in his hand
   And the table does not have "R4,R5"
@@ -104,6 +107,7 @@ Scenario: Player select a meld that is not in the table
 Scenario Outline: Player reuses the table to form an valid meld, but left an invalid meld on the table
   Given Player has <tiles> in his hand
   And Table has <melds>
+    And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
   Then Player still has <tiles> in his hand
   And the table does not have <new>

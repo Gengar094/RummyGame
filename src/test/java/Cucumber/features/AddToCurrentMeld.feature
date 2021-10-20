@@ -52,6 +52,7 @@ Feature: A player add his tiles to the existing meld on the table
     Scenario: Player choose a meld that is not on the table (e.g. there are 3 melds on the table, the player selects to add tiles to 4th meld)
       Given Player has "R5" in his hand
       And Table has "R6,R7,R8"
+      And Player has played tiles before this turn
       When Player adds "R5" to 2 meld
       Then the table does not have "R5,R6,R7,R8"
       And Player still has "R5" in his hand

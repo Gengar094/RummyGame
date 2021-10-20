@@ -264,6 +264,15 @@ public class Game {
             updatedTarget.remove(strings[i]);
             updatedTarget.add("*" + strings[i]);
         }
+        if (replaceMap.get(target.hashCode()) != null) {
+            Set<String> set = replaceMap.get(target.hashCode());
+            for (String s: strings) {
+                if (set.contains(s)) {
+                    replaceable.put(target.hashCode(), true);
+                }
+            }
+        }
+        buildReplaceTable();
         sort(target);
         sort(updatedTarget);
         return true;
@@ -450,7 +459,7 @@ public class Game {
         return set.size() == 3 || set.size() == 4;
     }
 
-    private void sort(List<String> check) {
+    public void sort(List<String> check) {
         Character[] chars = {'R','B','G','O'};
         List<Character> list = Arrays.asList(chars);
         check.sort((o1, o2) -> {
