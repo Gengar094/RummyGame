@@ -137,12 +137,3 @@ Scenario: Player reuses the non-joker tiles in a meld before replacing the joker
   And the table does not have "R3,R4,R5/R6,R7,*"
 
 
-  #OK ?
-@joker_can_only_be_used_with_player_own_tiles
-Scenario: Player reuses the joker with other tiles from same meld
-  Given Player has "R3,R4,R8" in his hand
-  And Table has "R5,R6,R7,*/R8,R9,R10,R11"
-  And Player has played tiles before this turn
-  And Player reuses "R5,*" from 1 meld, and play "R3,R4"
-  Then Player still has "R3,R4" in his hand
-  And the table does not have "R3,R4,R5,*"

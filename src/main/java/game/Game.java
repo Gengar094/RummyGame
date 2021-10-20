@@ -479,14 +479,13 @@ public class Game {
     }
 
     public void buildReplaceTable() {
+        replaceMap = new HashMap<>();
         for (List<String> list: table) {
             if (list.contains("*")) {
-                if (replaceMap.get(list.hashCode()) == null) {
-                    if (isRun(list)) {
-                        findReplaceableElement(list, true);
-                    } else {
-                        findReplaceableElement(list, false);
-                    }
+                if (isRun(list)) {
+                    findReplaceableElement(list, true);
+                } else {
+                    findReplaceableElement(list, false);
                 }
             }
         }
