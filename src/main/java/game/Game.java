@@ -148,7 +148,6 @@ public class Game {
     }
 
     public boolean endTurn() {
-        System.out.println(table);
         for (List<String> sub: table) {
             if (!isValid(sub)) {
                 rollback();
