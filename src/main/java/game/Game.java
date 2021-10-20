@@ -291,14 +291,36 @@ public class Game {
         preTiles.addAll(players[curr % 3].getTiles());
     }
 
-    public void moveTilesOnTable(int from, String[] moved, int to) {
+    public boolean moveTilesOnTable(int from, String[] moved, int to) {
         if (updatedTable == null) {
             creatUpdatedTable();
         }
+
+        if (from > table.size() || from < 1 || to > table.size() || to < 1) {
+            return false;
+        }
+        if (initial[curr % 3]) {
+            return false;
+        }
+        if (Arrays.asList(moved).contains("*")) {
+            return false;
+        }
+        if (replaceable.get(table.get(from-1).hashCode()) != null) {
+            if (!replaceable.get(table.get(from-1).hashCode())) {
+                return false;
+            }
+        }
         List<String> target = table.get(from - 1);
+        for (String s: moved) {
+            if (!target.contains(s)) {
+                return false;
+            }
+        }
         List<String> updatedTarget = updatedTable.get(from - 1);
         List<String> des = table.get(to - 1);
         List<String> updatedDes = updatedTable.get(to - 1);
+        setPreTable();
+        setPreTiles();
 
         for (int i = 0; i < moved.length; i++) {
             target.remove(moved[i]);
@@ -317,6 +339,11 @@ public class Game {
         if (updatedTarget.isEmpty()) {
             updatedTable.remove(updatedTarget);
         }
+        sort(target);
+        sort(des);
+        sort(updatedTarget);
+        sort(updatedDes);
+        return true;
     }
 
     public void splitMeld(int index, String[]... args) {
