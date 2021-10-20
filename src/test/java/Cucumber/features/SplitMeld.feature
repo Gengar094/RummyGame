@@ -12,7 +12,7 @@ Feature: A player moves tiles in a meld to another on the table
     And the table has <pieces> now
   Examples:
     | meld | pieces |
-    | "R1,R2,R3,R4"| "R1/R2,R3/R4"|
+    | "R1,R2,R3,R4"| "R1,R2/R3,R4"|
     | "R1,R2,R3"   | "R1/R2/R3"   |
     | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13" | "B1,B2,B3/B4,B5,B6/B6,B7,B8,B9/B10,B11,B12,B13"|
     | "R4,B4,G4"   | "R4/B4,G4"   |
@@ -38,7 +38,7 @@ Scenario Outline: Player splits a meld including joker on the table after replac
     | "R3,B3,*"    | "G3"|  "R3/B3,G3,*"  |
     | "R3,B3,G3,*" | "O3"| "R3,B3/G3,O3,*"|
 
-
+#invalid
 @split_not_existing_meld
   Scenario: Player splits a meld that table does not have
     Given Table has "R1,R2,R3"
