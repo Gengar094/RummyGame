@@ -31,8 +31,8 @@ public class GameServer {
         game.draw();
     }
 
-    public void play(String[] melds) {
-        game.play(new ArrayList<>(Arrays.asList(melds)));
+    public boolean play(String[] melds) {
+        return game.play(new ArrayList<>(Arrays.asList(melds)));
     }
 
     public void setPlayers(Player[] players) {
@@ -57,12 +57,12 @@ public class GameServer {
         return game.reuseAndPlay(meldNum, reuse, play);
     }
 
-    public void addToCurrentMeld(int i, String[] strings) {
-        game.addToCurrentMeld(i, strings);
+    public boolean addToCurrentMeld(int i, String[] strings) {
+        return game.addToCurrentMeld(i, strings);
     }
 
-    public void moveTilesOnTable(int from, String[] moved, int to) {
-        game.moveTilesOnTable(from, moved, to);
+    public boolean moveTilesOnTable(int from, String[] moved, int to) {
+        return game.moveTilesOnTable(from, moved, to);
     }
 
     public boolean splitMeld(int index, String[]... args) {

@@ -89,7 +89,6 @@ public class Game {
 
     public boolean draw() {
         if (Config.tiles.size() == 0) {
-            System.out.println("Current deck has no tiles");
             return false;
         } else {
             players[curr % 3].drawTiles();
@@ -98,19 +97,17 @@ public class Game {
         // return players[curr % 3];
     }
 
-    public List<List<String>> play(List<String> melds) {
+    public boolean play(List<String> melds) {
         sort(melds);
         if (!isValid(melds)) {
-            System.out.println("invalid play");
-            return null;
+            return false;
         }
         if (!playerHasMelds(melds)) {
-            System.out.println("player does not have melds");
-            return null;
+            return false;
         }
         if (!attemptFirstPlay[getCurr() % 3]) {
-            preTable = new ArrayList<>(table);
-            preTiles = new ArrayList<>(players[getCurr() % 3].getTiles());
+            setPreTable();
+            setPreTiles();
         }
         if (initial[getCurr() % 3]) {
             initialScore[getCurr() % 3] += scoreForMelds(melds);
@@ -129,68 +126,16 @@ public class Game {
             players[curr % 3].play(m);
         }
         buildReplaceTable();
-        return table;
-    }
-
-    public void creatUpdatedTable() {
-        updatedTable = new ArrayList<>();
-        for (List<String> list: table) {
-            List<String> copy = new ArrayList<>(list);
-            updatedTable.add(copy);
-        }
-    }
-
-    public void setScore() {
-        for (int i = 0; i < players.length; i++) {
-            int s = players[i].calculateNetScore();
-            score[i] = s;
-        }
-    }
-
-    public boolean endTurn() {
-        for (List<String> sub: table) {
-            if (!isValid(sub)) {
-                rollback();
-                curr++;
-                return false;
-            }
-        }
-        if (attemptFirstPlay[getCurr() % 3] && initialScore[getCurr() % 3] < 30) {
-            rollback();
-            attemptFirstPlay[getCurr() % 3] = false;
-            initial[getCurr() % 3] = true;
-            initialScore[getCurr() % 3] = 0;
-            curr++;
-            return false;
-        } else {
-            initial[getCurr() % 3] = false;
-        }
-        if (win()) {
-            winner = players[curr % 3];
-            setScore();
-        }
-        curr++;
         return true;
     }
 
-    private void rollback() {
-        System.out.println("ROLLBACK");
-        table = new ArrayList<>(preTable);
-        players[getCurr() % 3].setTiles(preTiles);
-    }
-
-    public boolean win() {
-        return players[curr % 3].getTiles().size() == 0;
-    }
 
     public boolean reuseAndPlay(int meldNum, String[] reuse, String[] play) {
         if (meldNum > table.size() || meldNum < 1) {
             return false;
         }
-        for (String s: play) {
-            if (!players[curr % 3].getTiles().contains(s)) {
-                return false;
-            }
+        if (!playerHasMelds(Arrays.asList(play))) {
+            return false;
         }
         if (initial[curr % 3]) {
             return false;
@@ -198,20 +143,19 @@ public class Game {
         if (!checkMovable(meldNum)) {
             return false;
         }
+        List<String> target = table.get(meldNum - 1);
+        if (!tableHasMeld(target, reuse)) {
+            return false;
+        }
         if (updatedTable == null) {
             creatUpdatedTable();
-        }
-        preTable = new ArrayList<>(table);
-        preTiles = new ArrayList<>(players[curr % 3].getTiles());
-        List<String> target = table.get(meldNum - 1);
-        for (String s: reuse) {
-            if (!target.contains(s)) {
-                return false;
-            }
         }
         List<String> updatedTarget = updatedTable.get(meldNum - 1);
         List<String> newMeld = new ArrayList<>();
         List<String> updatedMeld = new ArrayList<>();
+
+        setPreTiles();
+        setPreTable();
         for (int i = 0; i < reuse.length; i++) {
             target.remove(reuse[i]);
             if (!updatedTarget.remove(reuse[i])) {
@@ -233,6 +177,7 @@ public class Game {
         }
         table.add(newMeld);
         updatedTable.add(updatedMeld);
+        sort(newMeld);
         buildReplaceTable();
         return true;
     }
@@ -244,10 +189,8 @@ public class Game {
         if (index > table.size() || index < 1) {
             return false;
         }
-        for (String s: strings) {
-            if (!players[curr % 3].getTiles().contains(s)) {
-                return false;
-            }
+        if (!playerHasMelds(Arrays.asList(strings))) {
+            return false;
         }
         if (initial[curr % 3]) {
             return false;
@@ -273,21 +216,7 @@ public class Game {
         }
         buildReplaceTable();
         sort(target);
-        sort(updatedTarget);
         return true;
-    }
-
-    private void setPreTable() {
-        preTable = new ArrayList<>();
-        for (List<String> list: table) {
-            List<String> copy = new ArrayList<>(list);
-            preTable.add(copy);
-        }
-    }
-
-    private void setPreTiles() {
-        preTiles = new ArrayList<>();
-        preTiles.addAll(players[curr % 3].getTiles());
     }
 
     public boolean moveTilesOnTable(int from, String[] moved, int to) {
@@ -310,10 +239,8 @@ public class Game {
             }
         }
         List<String> target = table.get(from - 1);
-        for (String s: moved) {
-            if (!target.contains(s)) {
-                return false;
-            }
+        if (!tableHasMeld(target, moved)) {
+            return false;
         }
         List<String> updatedTarget = updatedTable.get(from - 1);
         List<String> des = table.get(to - 1);
@@ -340,8 +267,6 @@ public class Game {
         }
         sort(target);
         sort(des);
-        sort(updatedTarget);
-        sort(updatedDes);
         return true;
     }
 
@@ -381,6 +306,70 @@ public class Game {
             updatedTable.add(update);
         }
         return true;
+    }
+
+    public boolean endTurn() {
+        for (List<String> sub: table) {
+            if (!isValid(sub)) {
+                rollback();
+                curr++;
+                return false;
+            }
+        }
+        if (attemptFirstPlay[getCurr() % 3] && initialScore[getCurr() % 3] < 30) {
+            rollback();
+            attemptFirstPlay[getCurr() % 3] = false;
+            initial[getCurr() % 3] = true;
+            initialScore[getCurr() % 3] = 0;
+            curr++;
+            return false;
+        } else {
+            initial[getCurr() % 3] = false;
+        }
+        if (win()) {
+            winner = players[curr % 3];
+            setScore();
+        }
+        curr++;
+        return true;
+    }
+
+    public void creatUpdatedTable() {
+        updatedTable = new ArrayList<>();
+        for (List<String> list: table) {
+            List<String> copy = new ArrayList<>(list);
+            updatedTable.add(copy);
+        }
+    }
+
+    public void setScore() {
+        for (int i = 0; i < players.length; i++) {
+            int s = players[i].calculateNetScore();
+            score[i] = s;
+        }
+    }
+
+    private void rollback() {
+        System.out.println("ROLLBACK");
+        table = new ArrayList<>(preTable);
+        players[getCurr() % 3].setTiles(preTiles);
+    }
+
+    public boolean win() {
+        return players[curr % 3].getTiles().size() == 0;
+    }
+
+    private void setPreTable() {
+        preTable = new ArrayList<>();
+        for (List<String> list: table) {
+            List<String> copy = new ArrayList<>(list);
+            preTable.add(copy);
+        }
+    }
+
+    private void setPreTiles() {
+        preTiles = new ArrayList<>();
+        preTiles.addAll(players[curr % 3].getTiles());
     }
 
     public void tableRefresh() {
@@ -524,6 +513,15 @@ public class Game {
     private boolean playerHasMelds(List<String> melds) {
         for (String s: melds) {
             if (!players[getCurr() % 3].getTiles().contains(s)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean tableHasMeld(List<String> target, String[] check) {
+        for (String s: check) {
+            if (!target.contains(s)) {
                 return false;
             }
         }

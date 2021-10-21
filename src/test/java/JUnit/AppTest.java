@@ -717,7 +717,7 @@ public class AppTest {
         assertEquals(p2.getTiles().size(), 9);
         assertFalse(p2.getTiles().contains("R11"));
         assertFalse(p2.getTiles().contains("G11"));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B11", "R11", "G11"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "B11", "G11"))));
     }
 
 
@@ -808,7 +808,7 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 8);
         assertFalse(p1.getTiles().contains("R7"));
         assertFalse(p1.getTiles().contains("B7"));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O7", "R7", "B7"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R7", "B7", "O7"))));
 
     }
 
@@ -853,7 +853,7 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 8);
         assertFalse(p1.getTiles().contains("R12"));
         assertFalse(p1.getTiles().contains("R13"));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O13", "R13", "B13"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R13", "B13", "O13"))));
 
     }
 
@@ -896,7 +896,7 @@ public class AppTest {
         assertEquals(p1.getTiles().size(), 8);
         assertFalse(p1.getTiles().contains("O8"));
         assertFalse(p1.getTiles().contains("O9"));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O10", "O8", "O9"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O8", "O9", "O10"))));
 
     }
 
@@ -959,9 +959,10 @@ public class AppTest {
         assertFalse(p1.getTiles().contains("G1"));
         assertFalse(p1.getTiles().contains("B12"));
         assertFalse(p1.getTiles().contains("B13"));
+        System.out.println(gs.getGame().getTable());
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("G1", "G12", "G13"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B11", "B12", "B13"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "O11", "G11"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "G11", "O11"))));
     }
 
 
@@ -992,7 +993,7 @@ public class AppTest {
         assertFalse(p1.getTiles().contains("G10"));
         assertFalse(p1.getTiles().contains("B10"));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R7", "R8", "R9"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R10", "G10", "B10"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R10", "B10", "G10"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R11", "R12", "R13"))));
     }
 
@@ -1035,11 +1036,11 @@ public class AppTest {
         assertFalse(p1.getTiles().contains("B4"));
         assertFalse(p1.getTiles().contains("O5"));
         assertFalse(p1.getTiles().contains("O13"));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O4", "G4", "B4"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B4", "G4", "O4"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("O13", "O1", "O2", "O3"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5", "G5", "O5"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("B1", "B2", "B3"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R4", "G4", "B4"))));
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R4", "B4", "G4"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "B3", "G3"))));
         assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "G3", "O3"))));
     }

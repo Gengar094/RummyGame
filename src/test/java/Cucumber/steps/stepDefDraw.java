@@ -10,6 +10,7 @@ import game.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StepDefDraw {
+    int tiles = 0;
 
     // valid case
     @Given("A player has 14 tiles in the hand")
@@ -17,9 +18,10 @@ public class StepDefDraw {
         // already has 14 tiles in hand by randomizeTiles()
     }
 
-    @Given("The deck has 64 tiles remaining")
-    public void deck_has_64_tiles() {
+    @Given("The deck has some tiles")
+    public void deck_has_some_tiles() {
         // as p1, p2, p3 have already 14 tiles, deck automatically has 64 tiles left
+        this.tiles = Config.tiles.size();
     }
 
     @When("A player chooses to draw from a deck")
@@ -27,14 +29,14 @@ public class StepDefDraw {
         Public.gs.draw(); // p1 draws a tile from deck
     }
 
-    @Then("A player has 15 in the hand now")
+    @Then("A player has 15 tiles in the hand")
     public void player_has_tiles_now() {
         assertEquals(Public.gs.getCurrentPlayer().getTiles().size(), 15);
     }
 
-    @Then("The deck has 63 tiles remaining")
+    @Then("The deck has 1 less tile")
     public void deck_has_remaining_tiles() {
-        assertEquals(Config.tiles.size(), 63);
+        assertEquals(Config.tiles.size(), tiles - 1);
     }
 
     // invalid case

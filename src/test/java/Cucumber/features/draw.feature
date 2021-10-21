@@ -5,10 +5,10 @@
   @SuccessfullyDraw
   Scenario: Successfully drawing from a deck
   Given A player has 14 tiles in the hand
-  And The deck has 64 tiles remaining
+  And The deck has some tiles
   When A player chooses to draw from a deck
-  Then A player has 15 in the hand now
-  And The deck has 63 tiles remaining
+  Then A player has 15 tiles in the hand
+  And The deck has 1 less tile
 
 
   @FailToDraw
