@@ -94,7 +94,6 @@ public class Game {
             players[curr % 3].drawTiles();
             return true;
         }
-        // return players[curr % 3];
     }
 
     public boolean play(List<String> melds) {
@@ -195,7 +194,6 @@ public class Game {
         if (initial[curr % 3]) {
             return false;
         }
-        System.out.println("table " + table);
         setPreTable();
         setPreTiles();
         List<String> target = table.get(index - 1);
@@ -374,6 +372,20 @@ public class Game {
 
     public void tableRefresh() {
         updatedTable = null;
+    }
+
+    public void penalty() {
+        System.out.println("you have to draw 3 tiles as penalty");
+        for (int i = 0; i < 3; i++) {
+            players[curr % 3].drawTiles();
+        }
+    }
+
+    public void penaltyAtEndTurn() {
+        System.out.println("prev player have to draw 3 tiles as penalty");
+        for (int i = 0; i < 3; i++) {
+            players[(curr - 1) % 3].drawTiles();
+        }
     }
 
     // ************************* check for invalid move && wildcards **************************//
