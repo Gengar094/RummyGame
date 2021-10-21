@@ -65,8 +65,8 @@ public class GameServer {
         game.moveTilesOnTable(from, moved, to);
     }
 
-    public void splitMeld(int index, String[]... args) {
-        game.splitMeld(index, args);
+    public boolean splitMeld(int index, String[]... args) {
+        return game.splitMeld(index, args);
     }
 
     public Player getCurrentPlayer() {

@@ -345,10 +345,30 @@ public class Game {
         return true;
     }
 
-    public void splitMeld(int index, String[]... args) {
+    public boolean splitMeld(int index, String[]... args) {
+        if (index < 1 || index > table.size()) {
+            return false;
+        }
+        for (String[] arg: args) {
+            for (String a: arg) {
+                if (!table.get(index - 1).contains(a)) {
+                    return false;
+                }
+            }
+        }
+        if (initial[curr % 3]) {
+            return false;
+        }
+        if (replaceable.get(table.get(index - 1).hashCode()) != null) {
+            if (!replaceable.get(table.get(index - 1).hashCode())) {
+                return false;
+            }
+        }
         if (updatedTable == null) {
             creatUpdatedTable();
         }
+        setPreTable();
+        setPreTiles();
         table.remove(index - 1);
         updatedTable.remove(index - 1);
 
@@ -360,7 +380,7 @@ public class Game {
             }
             updatedTable.add(update);
         }
-
+        return true;
     }
 
     public void tableRefresh() {
