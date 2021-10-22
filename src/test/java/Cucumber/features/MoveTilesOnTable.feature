@@ -24,6 +24,7 @@ Feature: A player moves tiles in a meld to another on the table
       Given Table has "R8,R9,R10,*"
       And Table has "B8,G8,O8"
       And Player has played tiles before this turn
+      And Player has "R11" in his hand
       And Player replace joker in meld 1 with "R11"
       When Player moves "R8" from 1 meld to 2 meld
       Then the table has "R8,B8,G8,O8/R9,R10,R11,*" now
@@ -110,7 +111,7 @@ Feature: A player moves tiles in a meld to another on the table
     And Player replace joker in meld 1 with "R8"
     And Player has played tiles before this turn
     When Player moves "*" from 1 meld to 2 meld
-    Then the table still has "R3,R4,R5,R6,*,R8/R7,B7,G7"
+    Then the table still has "R3,R4,R5,R6,*/R7,B7,G7"
 
   @move_tiles_before_replacing_joker
     Scenario: Player moves tiles from a meld with joker before replacing joker

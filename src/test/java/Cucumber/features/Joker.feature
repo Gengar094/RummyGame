@@ -9,7 +9,7 @@ Feature: A player's operations regarding using joker
     And Player has <hand> in his hand
     And Player has played tiles before this turn
     When Player adds <tiles> to 1 meld
-    Then The joker is replaceable
+    Then The joker in meld 1 is replaceable
     Examples:
       | meld | hand | tiles |
       | "R2,R3,R4,*" | "R5,R6,R7" | "R5,R6"|
@@ -26,8 +26,8 @@ Feature: A player's operations regarding using joker
   Scenario Outline: Player tries to replace Joker in the meld by moving tiles from other melds on the table
     Given Table has <melds>
     And Player has played tiles before this turn
-    When Player moves <move> from 1 meld to 2 meld
-    Then The joker is not replaceable
+    When Player moves <move> from 2 meld to 1 meld
+    Then The joker in meld 1 is not replaceable
     Examples:
       | melds | move |
       | "R2,R3,R4,*/R5,R6,R7"| "R5,R6" |

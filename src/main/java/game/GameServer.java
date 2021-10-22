@@ -51,7 +51,10 @@ public class GameServer {
         this.game = game;
     }
 
-    public void setTable(List<List<String>> table) {game.setTable(table);}
+    public void setTable(List<List<String>> table) {
+        game.setTable(table);
+        game.buildReplaceTable();
+    }
 
     public boolean reuseAndPlay(int meldNum, String[] reuse, String[] play) {
         return game.reuseAndPlay(meldNum, reuse, play);

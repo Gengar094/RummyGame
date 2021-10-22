@@ -9,6 +9,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Table has <melds>
   And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
+  And Player ends his turn
   Then Player does not have <tiles> in his hand
   And Table has <new>
   And Table has <left>
@@ -26,6 +27,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Player has played tiles before this turn
   When Player replace joker in meld 1 with "R8"
   And Player reuses "R5" from 1 meld, and play "R3,R4"
+  And Player ends his turn
   Then Player does not have "R3,R4,R8" in his hand
   And Table has "R3,R4,R5/R6,R7,R8"
 
@@ -37,6 +39,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Player has played tiles before this turn
   When Player replace joker in meld 1 with "R8"
   And Player reuses "*" from 1 meld, and play "R3,R4"
+  And Player ends his turn
   Then Player does not have "R3,R4,R8" in his hand
   And Table has "R3,R4,*"
 
@@ -48,6 +51,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Table has "R7,R8,R9,R10,R11"
   And Player has played tiles before this turn
   When Player reuses "R7,R8" from 1 meld, and play "R7,R8,R9,R10,R11"
+  And Player ends his turn
   Then the table does not have "R6,R7,R8/R9,R10,R11"
 
 @reuse_tiles_that_meld_does_not_have
@@ -56,6 +60,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Table has "R2,R3,R4"
   And Player has played tiles before this turn
   When Player reuses "R5" from 1 meld, and play "R6,R7,R8,R9"
+  And Player ends his turn
   Then Player still has "R6,R7,R8,R9" in his hand
   And the table does not have "R2,R3,R4,R5/R6,R7,R8,R9"
 
@@ -65,6 +70,7 @@ Scenario: Player selects a meld that is not in the table
   And Player has "R4,R5" in his hand
   And Player has played tiles before this turn
   When Player reuses "R3" from 3 meld, and play "R4,R5"
+  And Player ends his turn
   Then Player still has "R4,R5" in his hand
   And the table does not have "R4,R5"
 
@@ -74,6 +80,7 @@ Scenario: Player selects a meld that is not in the table
   And Player has not played any tile yet
   And Player has "R5" in his hand
   When Player reuses "R6,R7" from 1 meld, and play "R6,R7,R8,R9,R10"
+  And Player ends his turn
   Then Player still has "R5" in his hand
   And the table does not have "R5,R6,R7/R8,R9,R10"
 
@@ -83,6 +90,7 @@ Scenario: Player selects a meld that is not in the table
   And Table has <melds>
   And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
+  And Player ends his turn
   Then Player still has <tiles> in his hand
   And the table does not have <new>
   Examples:
@@ -109,6 +117,7 @@ Scenario Outline: Player reuses the table to form an valid meld, but left an inv
   And Table has <melds>
   And Player has played tiles before this turn
   When Player reuses <reuse> from 1 meld, and play <tiles>
+  And Player ends his turn
   Then Player still has <tiles> in his hand
   And the table does not have <new>
   Examples:
@@ -126,6 +135,7 @@ Scenario: Player reuses the joker before replacing it from the table
   And Player has played tiles before this turn
   When Player does not replace joker with a tile
   And Player reuses "*" from 1 meld, and play "R3,R4"
+  And Player ends his turn
   Then Player still has "R3,R4" in his hand
   And the table does not have "R3,R4,*"
 
@@ -137,6 +147,7 @@ Scenario: Player reuses the non-joker tiles in a meld before replacing the joker
   And Player has played tiles before this turn
   When Player does not replace joker with a tile
   And Player reuses "R5" from 1 meld, and play "R3,R4"
+  And Player ends his turn
   Then Player still has "R3,R4" in his hand
   And the table does not have "R3,R4,R5/R6,R7,*"
 

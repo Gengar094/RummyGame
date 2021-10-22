@@ -31,16 +31,13 @@ public class StepDefReuseAndPlay {
 
     @When("Player reuses {string} from {int} meld, and play {string}")
     public void player_reuses(String meld, int num, String tiles) {
-        System.out.println(Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," )));
-        Public.gs.endTurn();
+        Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," ));
     }
 
 
     @When("Player replace joker in meld {int} with {string}")
     public void replace_joker(int num, String string) {
-        Public.gs.getGame().getTable().get(num - 1).add(string);
-        Public.gs.getGame().getReplaceable().put(Public.gs.getGame().getTable().get(num - 1).hashCode(), true);
-        Public.gs.getCurrentPlayer().getTiles().remove(string);
+        Public.gs.addToCurrentMeld(num, string.split(","));
     }
 
 

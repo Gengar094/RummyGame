@@ -8,6 +8,7 @@ Feature: A player add his tiles to the existing meld on the table
     And Table has <melds>
     And Player has played tiles before this turn
     When Player adds <tiles> to 1 meld
+    And Player ends his turn
     Then Player does not have <tiles> in his hand
     And the table has <new> now
     Examples:
@@ -27,6 +28,7 @@ Feature: A player add his tiles to the existing meld on the table
       And Table has "R6,R7,R8"
       And Player has played tiles before this turn
       When Player adds "R5" to 1 meld
+      And Player ends his turn
       Then the table does not have "R5,R6,R7,R8"
 
   @player_adds_tiles_that_form_invalid_meld_at_the_turn_end
@@ -35,6 +37,7 @@ Feature: A player add his tiles to the existing meld on the table
       And Table has <melds>
       And Player has played tiles before this turn
       When Player adds <tiles> to 1 meld
+      And Player ends his turn
       Then Player still has <tiles> in his hand
       And the table does not have <new>
     Examples:
@@ -54,6 +57,7 @@ Feature: A player add his tiles to the existing meld on the table
       And Table has "R6,R7,R8"
       And Player has played tiles before this turn
       When Player adds "R5" to 2 meld
+      And Player ends his turn
       Then the table does not have "R5,R6,R7,R8"
       And Player still has "R5" in his hand
 
@@ -63,5 +67,6 @@ Feature: A player add his tiles to the existing meld on the table
       And Table has "R7,R8,R9"
       And Player has not played any tile yet
       When Player adds "R5,R6" to 1 meld
+      And Player ends his turn
       Then Player still has "R5,R6" in his hand
       And the table does not have "R5,R6,R7,R8,R9"

@@ -12,7 +12,6 @@ public class StepDefSplitMeld {
         String[][] param = new String[ss.length][];
         for (int i = 0; i < param.length; i++) {
             param[i] = ss[i].split(",");
-            System.out.println(Arrays.asList(param[i]));
         }
         Public.gs.splitMeld(index, param);
     }
