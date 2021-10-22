@@ -181,6 +181,8 @@ public class Game {
                         rRep.put(integer - 1, replaceable.get(integer));
                     }
                 }
+                replaceMap = rMap;
+                replaceable = rRep;
             }
             newMeld.add(reuse[i]);
             updatedMeld.add("!" + reuse[i]);

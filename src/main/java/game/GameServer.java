@@ -20,19 +20,30 @@ public class GameServer {
         this.game = new Game(players);
     }
 
-    public void endTurn() {
+    public boolean endTurn() {
         System.out.println("Current table at the end of turn: " + game.getTableString(game.getTable()));
         System.out.println("Current hand of current player " + players[game.getCurr() % 3].getName() + " at the end of turn: " + players[game.getCurr() % 3].getTilesString());
         System.out.println("\r\n");
-        game.endTurn();
+        if (!game.endTurn()) {
+            game.penaltyAtEndTurn();
+            return false;
+        }
+        return true;
     }
 
-    public void draw() {
-        game.draw();
+    public boolean draw() {
+        if (!game.draw()) {
+            return false;
+        }
+        return true;
     }
 
     public boolean play(String[] melds) {
-        return game.play(new ArrayList<>(Arrays.asList(melds)));
+        if (!game.play(new ArrayList<>(Arrays.asList(melds)))) {
+            game.penalty();
+            return false;
+        }
+        return true;
     }
 
     public void setPlayers(Player[] players) {
@@ -57,19 +68,35 @@ public class GameServer {
     }
 
     public boolean reuseAndPlay(int meldNum, String[] reuse, String[] play) {
-        return game.reuseAndPlay(meldNum, reuse, play);
+        if (!game.reuseAndPlay(meldNum, reuse, play)) {
+            game.penalty();
+            return false;
+        }
+        return true;
     }
 
     public boolean addToCurrentMeld(int i, String[] strings) {
-        return game.addToCurrentMeld(i, strings);
+        if (!game.addToCurrentMeld(i, strings)) {
+            game.penalty();
+            return false;
+        }
+        return true;
     }
 
     public boolean moveTilesOnTable(int from, String[] moved, int to) {
-        return game.moveTilesOnTable(from, moved, to);
+        if (!game.moveTilesOnTable(from, moved, to)) {
+            game.penalty();
+            return false;
+        }
+        return true;
     }
 
     public boolean splitMeld(int index, String[]... args) {
-        return game.splitMeld(index, args);
+        if (!game.splitMeld(index, args)) {
+            game.penalty();
+            return false;
+        }
+        return true;
     }
 
     public Player getCurrentPlayer() {
@@ -206,7 +233,11 @@ public class GameServer {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(currPlayer.getInputStream()));
                 String str = reader.readLine();
                 if (str.equals("end")) {
-                    game.endTurn();
+                    if (!endTurn()) {
+                        writer.write("Invalid melds on the table, you get a penalty. Table rollbacks");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                     game.tableRefresh();
                     break;
                 } else if (str.equals("1")) {
@@ -214,7 +245,11 @@ public class GameServer {
                     writer.write("\n");
                     writer.flush();
                     str = reader.readLine();
-                    game.play(new ArrayList<>(Arrays.asList(str.split(","))));
+                    if (!play((str.split(",")))) {
+                        writer.write("Invalid play, you get a penalty" + "\r\n");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                 } else if (str.equals("2")) {
                     writer.write("Please typing things like 1,R7|R9,R6|R8 (Reuse tiles R7 R9 from 1st meld on the table, and play R6 R8 from hand to form a new meld)" + "\r\n");
                     writer.write("\n");
@@ -224,7 +259,11 @@ public class GameServer {
                     int index = Integer.parseInt(choices.get(0));
                     String[] reuse = choices.get(1).split("\\|");
                     String[] play = choices.get(2).split("\\|");
-                    game.reuseAndPlay(index, reuse, play);
+                    if(!reuseAndPlay(index, reuse, play)) {
+                        writer.write("Invalid play, you get a penalty" + "\r\n");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                 } else if (str.equals("3")) {
                     writer.write("Please typing things like 1,R2|R3,R4|R5 (Split the 1st meld {R2, R3, R4, R5} on the table into 2 new \"melds\" {R2, R3}, {R4, R5}" + "\r\n");
                     writer.write("\n");
@@ -237,7 +276,11 @@ public class GameServer {
                         String[] smallMeld = choices.get(i).split("\\|");
                         param[i - 1] = smallMeld;
                     }
-                    game.splitMeld(index, param);
+                    if (!splitMeld(index, param)) {
+                        writer.write("Invalid play, you get a penalty" + "\r\n");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                 } else if (str.equals("4")) {
                     writer.write("Please typing things like 1,R2|R3,4 (Move tiles R2, R3 in the 1st meld into 4th meld on the table"  + "\r\n");
                     writer.write("\n");
@@ -247,7 +290,11 @@ public class GameServer {
                     int from = Integer.parseInt(choices.get(0));
                     int to = Integer.parseInt(choices.get(2));
                     String[] moved = choices.get(1).split("\\|");
-                    game.moveTilesOnTable(from, moved, to);
+                    if (!moveTilesOnTable(from, moved, to)) {
+                        writer.write("Invalid play, you get a penalty" + "\r\n");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                 } else if (str.equals("5")) {
                     writer.write("Please typing things like 1,R2|R3 (Play R2,R3, add them in to the first meld)"  + "\r\n");
                     writer.write("\n");
@@ -256,7 +303,11 @@ public class GameServer {
                     List<String> choices = new ArrayList<>(Arrays.asList(str.split(",")));
                     int index = Integer.parseInt(choices.get(0));
                     String[] play = choices.get(1).split("\\|");
-                    game.addToCurrentMeld(index, play);
+                    if (!addToCurrentMeld(index, play)) {
+                        writer.write("Invalid play, you get a penalty" + "\r\n");
+                        writer.write("\n");
+                        writer.flush();
+                    }
                 }
                 count++;
                 for (int i = 0; i < sockets.length; i++) {

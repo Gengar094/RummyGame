@@ -8,6 +8,5 @@ public class StepDefAddToCurrentMeld {
     public void player_add_tiles(String s, int i) {
         String[] ss = s.split(",");
         Public.gs.addToCurrentMeld(i, ss);
-        // Public.gs.endTurn();
     }
 }

@@ -1,6 +1,7 @@
 import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.*;
 // import org.junit.Test;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ public class AppTest {
     private static Player p3;
 
     @BeforeAll
-    public static void setup() throws InterruptedException {
+    public static void setup() throws InterruptedException, IOException {
         // Simulate the join process
         System.out.println("Harry");
         gs = new GameServer();

@@ -131,27 +131,31 @@ public class Player implements Serializable {
         while (currTiles.size() != 0) {
             for (int i = 0; i < currTiles.size(); i++) {
                 String tile = currTiles.get(i);
-                if (tile.substring(1).equals("1")) {
-                    sum += runFor1(currTiles, tile);
+                if (!tile.equals("*")) {
+                    if (tile.substring(1).equals("1")) {
+                        sum += runFor1(currTiles, tile);
+                        currTiles.remove(tile);
+                        --i;
+                        continue;
+                    }
+                    temp += Integer.parseInt(tile.substring(1));
                     currTiles.remove(tile);
+                    String nextTile = findNext(tile);
+                    while (currTiles.contains(nextTile)) {
+                        temp += Integer.parseInt(nextTile.substring(1));
+                        currTiles.remove(nextTile);
+                        nextTile = findNext(nextTile);
+                        count++;
+                    }
+                    if (count >= 3) {
+                        sum += temp;
+                    }
+                    temp = 0;
+                    count = 1;
                     --i;
-                    continue;
+                } else {
+                    currTiles.remove("*");
                 }
-                temp += Integer.parseInt(tile.substring(1));
-                currTiles.remove(tile);
-                String nextTile = findNext(tile);
-                while (currTiles.contains(nextTile)) {
-                    temp += Integer.parseInt(nextTile.substring(1));
-                    currTiles.remove(nextTile);
-                    nextTile = findNext(nextTile);
-                    count++;
-                }
-                if (count >= 3) {
-                    sum += temp;
-                }
-                temp = 0;
-                count = 1;
-                --i;
             }
         }
         return sum;
@@ -203,11 +207,13 @@ public class Player implements Serializable {
         Map<Integer, HashSet<Character>> map = new HashMap<>();
         int sum = 0;
         for (String tile: tiles) {
-            int target = Integer.parseInt(tile.substring(1));
-            if (!map.containsKey(target)) {
-                map.put(target, new HashSet<>());
+            if (!tile.equals("*")) {
+                int target = Integer.parseInt(tile.substring(1));
+                if (!map.containsKey(target)) {
+                    map.put(target, new HashSet<>());
+                }
+                map.get(target).add(tile.charAt(0));
             }
-            map.get(target).add(tile.charAt(0));
         }
         for (int i = 1; i < 14; i++) {
             if (map.containsKey(i) && (map.get(i).size() >= 3)) {

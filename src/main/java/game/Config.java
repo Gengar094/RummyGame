@@ -35,6 +35,6 @@ public class Config {
                     "R13", "B13", "G13", "O13",
                     "R13", "B13", "G13", "O13", "*", "*"};
 
-    public static List<String> tiles = new LinkedList<String>(Arrays.asList(GAME_TILES));
+    public static List<String> tiles = new LinkedList<>(Arrays.asList(GAME_TILES));
 
 }
