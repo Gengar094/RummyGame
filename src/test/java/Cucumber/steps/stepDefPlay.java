@@ -1,9 +1,5 @@
 package Cucumber.steps;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -11,7 +7,6 @@ import io.cucumber.java.en.Then;
 import java.util.ArrayList;
 import java.util.Arrays;
 import Cucumber.supports.*;
-import java.util.List;
 import game.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,10 +37,6 @@ public class StepDefPlay {
         Public.gs.endTurn();
     }
 
-    @Then("Player gets penalty")
-    public void penalty() {
-        assertEquals(Public.gs.getCurrentPlayer().getTiles().size(), tiles + 3);
-    }
 
     @Then("the table has {string} now")
     public void the_table_has_now(String string) {

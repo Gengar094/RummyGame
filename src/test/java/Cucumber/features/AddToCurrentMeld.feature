@@ -13,12 +13,28 @@ Feature: A player add his tiles to the existing meld on the table
     And the table has <new> now
     Examples:
       | tiles | melds | new |
+      | "R5"  | "R6,R7"| "R5,R6,R7"|
       | "R5"  | "R6,R7,R8"| "R5,R6,R7,R8"|
+
+      | "R5"  | "B5,O5"   | "R5,B5,O5"   |
       | "R5"  | "G5,B5,O5"| "R5,B5,G5,O5"|
+
+      | "R5"  | "R6,R7,*" | "R5,R6,R7,*" |
+      | "R5"  | "G5,B5,*" | "R5,B5,G5,*" |
+
+      | "R4,R5"| "R3"     | "R3,R4,R5"   |
       | "R4,R5"| "R6,R7,R8,R9"| "R4,R5,R6,R7,R8,R9"|
+
+      | "R4,B4"| "G4"         | "R4,B4,G4"         |
+      | "R4,B4"| "G4,O4"      | "R4,B4,G4,O4"      |
+
       | "*"    | "R6,R7,R8"   | "R6,R7,R8,*"       |
+      | "*"    | "R6,R7"      | "R6,R7,*"          |
+      | "*"    | "R5,B5"      | "R5,B5,*"          |
       | "*"    | "R5,B5,G5"   | "R5,B5,G5,*"       |
+
       | "R4,*" | "R6,R7,R8"   | "R4,R6,R7,R8,*"    |
+      | "R4,*" | "B4,G4"      | "R4,B4,G4,*"       |
 
     #invalid
 
@@ -42,14 +58,17 @@ Feature: A player add his tiles to the existing meld on the table
       And the table does not have <new>
     Examples:
       | tiles | melds | new |
+      | "R3"  | "R2"  | "R2,R3"|
+
       | "R3"| "R3,B3,G3"| "R3,R3,B3,G3" |
-      | "R3" | "R3,B3,G3,O3" | "R3,R3,B3,G3,O3" |
       | "O4" | "R3,B3,G3"    | "R3,B3,G3,O4"    |
+      | "R3" | "R3,B3,G3,O3" | "R3,R3,B3,G3,O3" |
+      | "*"  | "R3,B3,G3,O3" | "R3,B3,G3,O3,*"  |
 
       | "R9" | "R4,R5,R6"    | "R4,R5,R6,R9"    |
       | "B3" | "R4,R5,R6"    | "B3,R4,R5,R6"    |
-      | "*"  | "R3,B3,G3,O4" | "R3,B3,G3,O3,*"  |
       | "*"  | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13" | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,*"|
+
 
   @select_a_meld_that_is_not_on_the_table
     Scenario: Player choose a meld that is not on the table (e.g. there are 3 melds on the table, the player selects to add tiles to 4th meld)
@@ -62,11 +81,36 @@ Feature: A player add his tiles to the existing meld on the table
       And Player still has "R5" in his hand
 
   @add_to_existing_meld_before_initial_30
-    Scenario: Player add tiles to an existing meld before he plays initial 30
-      Given Player has "R5,R6" in his hand
-      And Table has "R7,R8,R9"
+    Scenario Outline: Player add tiles to an existing meld before he plays initial 30
+      Given Player has <tiles> in his hand
+      And Table has <meld>
       And Player has not played any tile yet
-      When Player adds "R5,R6" to 1 meld
+      When Player adds <tiles> to 1 meld
       And Player ends his turn
-      Then Player still has "R5,R6" in his hand
-      And the table does not have "R5,R6,R7,R8,R9"
+      Then Player still has <tiles> in his hand
+      And the table does not have <new>
+    Examples:
+      | tiles | meld | new |
+      | "R5"  | "R6,R7"| "R5,R6,R7"|
+      | "R5"  | "R6,R7,R8"| "R5,R6,R7,R8"|
+
+      | "R5"  | "B5,O5"   | "R5,B5,O5"   |
+      | "R5"  | "G5,B5,O5"| "R5,B5,G5,O5"|
+
+      | "R5"  | "R6,R7,*" | "R5,R6,R7,*" |
+      | "R5"  | "G5,B5,*" | "R5,B5,G5,*" |
+
+      | "R4,R5"| "R3"     | "R3,R4,R5"   |
+      | "R4,R5"| "R6,R7,R8,R9"| "R4,R5,R6,R7,R8,R9"|
+
+      | "R4,B4"| "G4"         | "R4,B4,G4"         |
+      | "R4,B4"| "G4,O4"      | "R4,B4,G4,O4"      |
+
+      | "*"    | "R6,R7,R8"   | "R6,R7,R8,*"       |
+      | "*"    | "R6,R7"      | "R6,R7,*"          |
+      | "*"    | "R5,B5"      | "R5,B5,*"          |
+      | "*"    | "R5,B5,G5"   | "R5,B5,G5,*"       |
+
+      | "R4,*" | "R6,R7,R8"   | "R4,R6,R7,R8,*"    |
+      | "R4,*" | "B4,G4"      | "R4,B4,G4,*"       |
+

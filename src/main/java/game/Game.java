@@ -135,6 +135,7 @@ public class Game {
 
 
     public boolean reuseAndPlay(int meldNum, String[] reuse, String[] play) {
+        backup();
         if (meldNum > table.size() || meldNum < 1) {
             return false;
         }
@@ -158,7 +159,7 @@ public class Game {
         List<String> newMeld = new ArrayList<>();
         List<String> updatedMeld = new ArrayList<>();
 
-        backup();
+
         for (int i = 0; i < reuse.length; i++) {
             target.remove(reuse[i]);
             if (!updatedTarget.remove(reuse[i])) {
@@ -203,6 +204,7 @@ public class Game {
     }
 
     public boolean addToCurrentMeld(int index, String[] strings) {
+        backup();
         if (updatedTable == null) {
             creatUpdatedTable();
         }
@@ -215,7 +217,6 @@ public class Game {
         if (initial[curr % 3]) {
             return false;
         }
-        backup();
         List<String> target = table.get(index - 1);
         List<String> updatedTarget = updatedTable.get(index - 1);
         for (int i = 0; i < strings.length; i++) {
@@ -237,6 +238,7 @@ public class Game {
     }
 
     public boolean moveTilesOnTable(int from, String[] moved, int to) {
+        backup();
         if (updatedTable == null) {
             creatUpdatedTable();
         }
@@ -262,7 +264,7 @@ public class Game {
         List<String> updatedTarget = updatedTable.get(from - 1);
         List<String> des = table.get(to - 1);
         List<String> updatedDes = updatedTable.get(to - 1);
-        backup();
+
 
         for (int i = 0; i < moved.length; i++) {
             target.remove(moved[i]);
@@ -302,6 +304,7 @@ public class Game {
     }
 
     public boolean splitMeld(int index, String[]... args) {
+        backup();
         if (index < 1 || index > table.size()) {
             return false;
         }
@@ -323,7 +326,7 @@ public class Game {
         if (updatedTable == null) {
             creatUpdatedTable();
         }
-        backup();
+
         int oldSize = table.size();
         table.remove(index - 1);
         updatedTable.remove(index - 1);
