@@ -13,10 +13,20 @@ Feature: A player plays tiles from his hand
     Examples:
     |melds  |
       |"R10,R11,R12,R13"|
+      |"B9,B10,B11"       |
+
       |"R10,B10,G10"    |
+      |"R8,B8,G8,O8"    |
+
       |"R10,B10,*"               |
+      |"R9,B9,G9,*"              |
+
       |"R10,R11,R12,*"           |
+      |"R11,R12,*"                 |
+
       |"R1,R2,R3/R10,R11,R12,R13"|
+      |"R1,B1,G1/R12,B12,G12"    |
+      |"R1,R2,R3/R11,B11,G11"    |
 
   @Play_valid_meld(s)_after_initial_30
     Scenario Outline: Player plays a valid run from his hand after his first play
@@ -28,10 +38,20 @@ Feature: A player plays tiles from his hand
     Examples:
       |melds|
       |"R1,R2,R3"    |
+      |"R1,R2,R3,R4" |
+
+      |"R5,B5,G5"    |
       |"R6,B6,G6,O6"              |
+
       |"R1,R2,*"                           |
+      |"R1,R2,R3,*"                         |
+
       |"R7,B7,*"                                    |
+      |"R1,B1,G1,*"                                 |
+
       |"R1,R2,R3/R6,B6,O6"                                                |
+      |"R1,B1,G1/R2,B2,G2,O2"                                              |
+      |"R2,R3,R4,R5/R1,B1,G1"                                             |
 
 
   #invalid cases
@@ -41,6 +61,7 @@ Feature: A player plays tiles from his hand
     When Player plays <tiles> during his turn
     Then the table does not have <tiles>
     And Player still has <tiles> in his hand
+    And Player gets penalty
     Examples:
       |tiles |
       |"R10,R11,R11,R13" |
@@ -55,6 +76,7 @@ Feature: A player plays tiles from his hand
     When Player plays <tiles> during his turn
     Then the table does not have <tiles>
     And Player still has <tiles> in his hand
+    And Player gets penalty
     Examples:
       |tiles |
       |"R10,B11,R12,R13" |
@@ -66,6 +88,7 @@ Feature: A player plays tiles from his hand
     When Player plays <tiles> during his turn
     Then the table does not have <tiles>
     And Player still has <tiles> in his hand
+    And Player gets penalty
     Examples:
       |tiles  |
       |"R7,R8"       |
@@ -73,6 +96,7 @@ Feature: A player plays tiles from his hand
       |"R7,B7,G7,O7,O7"              |
       |"R7,*"              |
       |"R7,B7,G7,O7,*"                              |
+      |"R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,*"|
 
   @Play_a_tile_that_player_does_not_have
     Scenario: Player plays a tile that he does not have
@@ -81,6 +105,7 @@ Feature: A player plays tiles from his hand
     When Player plays "R5,R6,R7" during his turn
     Then the table does not have "R5,R6,R7"
     And Player still has "R6,R7" in his hand
+    And Player gets penalty
 
 
   @Play_valid_meld(s)_but_invalid_for_initial_30
@@ -90,10 +115,21 @@ Feature: A player plays tiles from his hand
     When Player plays <melds> during his turn
     Then the table does not have <melds>
     And Player still has <melds> in his hand
+    And Player gets penalty
     Examples:
       |melds  |
-      |"R1,R2,R3"       |
+      |"R8,R9,R10"       |
+      |"R5,R6,R7,R8"    |
+
+      |"R9,B9,O9"       |
       |"R7,B7,G7,O7"                 |
-      |"R1,R2,*"                              |
+
+      |"R8,R9,*"                              |
+      |"R5,R6,R7,*"                           |
+
+      |"R9,B9,*"                            |
       |"R7,B7,G7,*"                                       |
-      |"R1,R2,R3/R7,B7,O7"                                                    |
+
+      |"R1,R2,R3/R6,B6,O6"                                                |
+      |"R1,B1,G1/R2,B2,G2,O2"                                              |
+      |"R1,B1,G1/R1,R2,R3,R4"                                             |

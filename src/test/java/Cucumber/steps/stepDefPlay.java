@@ -17,6 +17,7 @@ import game.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StepDefPlay {
+    int tiles;
 
     @Given("Player has {string} in his hand")
     public void player_has_in_his_hand(String string) {
@@ -24,6 +25,7 @@ public class StepDefPlay {
         for (String s: ss) {
             Public.gs.setDesiredAndUniqueTiles(s.split(","));
         }
+        tiles = Public.gs.getCurrentPlayer().getTiles().size();
     }
 
     @Given("Player has not played any tile yet")
@@ -40,8 +42,14 @@ public class StepDefPlay {
         Public.gs.endTurn();
     }
 
+    @Then("Player gets penalty")
+    public void penalty() {
+        assertEquals(Public.gs.getCurrentPlayer().getTiles().size(), tiles + 3);
+    }
+
     @Then("the table has {string} now")
     public void the_table_has_now(String string) {
+        System.out.println(Public.gs.getGame().getTable());
         String[] ss = string.split("/");
         for (String s: ss) {
             assertTrue(Public.gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(s.split(",")))));
