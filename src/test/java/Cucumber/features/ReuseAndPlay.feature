@@ -20,6 +20,8 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
     |  "B13,O13"    |   "R10,R11,R12,R13"      |       "R13"         |    "R13,B13,O13"           |      "R10,R11,R12"  |
     |  "R11,R12"    |   "R7,R8,R9,R10"         |       "R10"         |        "R10,R11,R12"       |         "R7,R8,R9"  |
 
+    |  "R10,R11"    |   "R7,R8,R9,R10,R11,R12,R13"         |       "R12,R13"         |        "R10,R11,R12,R13"       |         "R7,R8,R9,R10,R11"  |
+
 @reuse_other_tiles_in_meld_after_replacing_joker
   Scenario: Player reuses the non-joker tiles in a meld after replacing the joker
   Given Player has "R3,R4,R8" in his hand
@@ -75,16 +77,23 @@ Scenario: Player selects a meld that is not in the table
   And the table does not have "R4,R5"
 
 @reuse_before_initial_30
-  Scenario: Player has not played tiles yet, but reuse the tiles on the table
-  Given Table has "R6,R7,R8,R9,R10"
+  Scenario Outline: Player has not played tiles yet, but reuse the tiles on the table
+  Given Player has <tiles> in his hand
   And Player has not played any tile yet
-  And Player has "R5" in his hand
-  When Player reuses "R6,R7" from 1 meld, and play "R6,R7,R8,R9,R10"
+  And Table has <melds>
+  When Player reuses <reuse> from 1 meld, and play <tiles>
   And Player ends his turn
-  Then Player still has "R5" in his hand
-  And the table does not have "R5,R6,R7/R8,R9,R10"
+  Then Player still has <tiles> in his hand
+  And the table still has <melds>
+  Examples:
+    | tiles | melds | reuse |
+    | "R11,B11"     | "R11,B11,G11,O11"        |   "G11"             |
+    |  "R11,R12"    | "R13,B13,G13,O13"        |   "R13"             |
+    |  "B13,O13"    |   "R10,R11,R12,R13"      |       "R13"         |
+    |  "R11,R12"    |   "R7,R8,R9,R10"         |       "R10"         |
 
-@form_invalid_meld_at_the_end_of_turn
+    |  "R10,R11"    |   "R7,R8,R9,R10,R11,R12,R13"         |       "R12,R13"         |
+  @form_invalid_meld_at_the_end_of_turn
   Scenario Outline: Player reuses the table to form an invalid meld
   Given Player has <tiles> in his hand
   And Table has <melds>
@@ -122,12 +131,15 @@ Scenario Outline: Player reuses the table to form an valid meld, but left an inv
   And the table does not have <new>
   Examples:
     | tiles | melds | reuse | new |
-    | "R7"  | "R8,R9,R10" | "R8,R9" | "R7,R8,R9" |
-    | "R7"  | "R7,B7,G7,O7" | "B7,G7" | "R7,B7,G7" |
-
+    | "R6,R7"  | "R8,R9,R10" | "R8" | "R6,R7,R8" |
     | "R6,R7" | "R4,R5,R6,R7,R8" | "R5" | "R5,R6,R7"|
 
-  #ok
+    | "R7,B7"  | "R7,G7,O7" | "G7" | "R7,B7,G7" |
+    | "R7"  | "R7,B7,G7,O7" | "B7,G7" | "R7,B7,G7" |
+
+
+
+
 @reuse_joker_before_replacing_it
 Scenario: Player reuses the joker before replacing it from the table
   Given Player has "R3,R4" in his hand
@@ -139,7 +151,7 @@ Scenario: Player reuses the joker before replacing it from the table
   Then Player still has "R3,R4" in his hand
   And the table does not have "R3,R4,*"
 
-  #ok
+
 @reuse_other_tiles_with_joker_before_replacing_it_in_meld
 Scenario: Player reuses the non-joker tiles in a meld before replacing the joker
   Given Player has "R3,R4" in his hand

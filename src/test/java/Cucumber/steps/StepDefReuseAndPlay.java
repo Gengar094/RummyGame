@@ -32,6 +32,7 @@ public class StepDefReuseAndPlay {
     @When("Player reuses {string} from {int} meld, and play {string}")
     public void player_reuses(String meld, int num, String tiles) {
         Public.gs.reuseAndPlay(num, meld.split(","), tiles.split("," ));
+        System.out.println(Public.gs.getGame().getTable());
     }
 
 
