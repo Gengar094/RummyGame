@@ -74,17 +74,24 @@ Scenario Outline: Player splits a meld including joker on the table after replac
     | "R3,B3,O3"          | "R3,B3/O3"         |
     | "R3,B3,O3,G3"       | "R3,B3,O3/G3"      |
 
-  #ok
 @split_before_initial_30
-  Scenario: Player splits a meld before playing initial 30
-    Given Table has "R1,R2,R3"
+  Scenario Outline: Player splits a meld before playing initial 30
+    Given Table has <meld>
     And Player has not played any tile yet
-    When Player splits the 1 meld into "R1,R2/R3"
+    When Player splits the 1 meld into <pieces>
     And Player does not end his turn
-    Then the table does not have "R1,R2/R3"
-    And the table still has "R1,R2,R3"
+    Then the table does not have <pieces>
+    And the table still has <meld>
+    Examples:
+      | meld | pieces |
+      | "R1,R2,R3,R4"| "R1,R2/R3,R4"|
+      | "R1,R2,R3"   | "R1/R2/R3"   |
+      | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13" | "B1,B2,B3/B4,B5,B6/B6,B7,B8,B9/B10,B11,B12,B13"|
+      | "R4,B4,G4"   | "R4/B4,G4"   |
+      | "R4,B4,G4,O4"| "R4/B4/G4/O4"|
 
-@split_before_replacing_joker
+
+  @split_before_replacing_joker
   Scenario: Player splits a meld including joker before replacing joker
     Given Table has "R1,R2,R3,*"
     And Player has played tiles before this turn
