@@ -14,7 +14,6 @@ public class StepDefMoveTilesOnTable {
     public void player_move_tiles_on_the_table(String s, int from, int to) {
         String[] ss = s.split(",");
         Public.gs.moveTilesOnTable(from, ss, to);
-        Public.gs.endTurn();
     }
 
     @Then("the table still has {string}")

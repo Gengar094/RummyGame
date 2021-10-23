@@ -11,23 +11,37 @@ Feature: A player moves tiles in a meld to another on the table
       Then the table has <new> now
     Examples:
       | from | to | move | new |
+      | "R1,R2,R3,R4"  | "R5,R6"    | "R4"| "R1,R2,R3/R4,R5,R6"    |
       | "R1,R2,R3,R4"  | "R5,R6,R7" | "R4"| "R1,R2,R3/R4,R5,R6,R7" |
+      | "R1,R2,R3,R4"  | "B1,G1"    | "R1"| "R1,B1,G1"             |
       | "R1,R2,R3,R4"  | "B4,G4,O4" | "R4"| "R1,R2,R3/R4,B4,G4,O4" |
 
+      | "R3,B3,G3,O3"  | "B4,B5"    | "B3"| "R3,G3,O3/B3,B4,B5"    |
       | "R3,B3,G3,O3"  | "B4,B5,B6" | "B3"| "R3,G3,O3/B3,B4,B5,B6" |
+      | "R3,B3,G3,O3"  | "B3,G3"    | "O3"| "R3,B3,G3/B3,G3,O3"    |
       | "R3,B3,G3,O3"  | "B3,G3,O3" | "R3"| "B3,G3,O3/R3,B3,G3,O3" |
 
 
-
   @player_moves_normal_tiles_after_replacing_joker
-    Scenario: Player moves tiles from one meld that the joker has been replaced to another
-      Given Table has "R8,R9,R10,*"
-      And Table has "B8,G8,O8"
+    Scenario Outline: Player moves tiles from one meld that the joker has been replaced to another
+      Given Table has <from>
+      And Table has <to>
       And Player has played tiles before this turn
-      And Player has "R11" in his hand
-      And Player replace joker in meld 1 with "R11"
-      When Player moves "R8" from 1 meld to 2 meld
-      Then the table has "R8,B8,G8,O8/R9,R10,R11,*" now
+      And Player has <tile> in his hand
+      And Player replace joker in meld 1 with <tile>
+      When Player moves <move> from 1 meld to 2 meld
+      Then the table has <new> now
+    Examples:
+      | from | to | tile | move | new |
+      | "R1,R2,R3,R4,R5,*" | "R3,R4" | "R6" | "R5" | "R1,R2,R3,R4,R6,*/R3,R4,R5"|
+      | "R1,R2,R3,R4,*" | "R2,R3,R4" | "R5" | "R1" | "R2,R3,R4,R5,*/R1,R2,R3,R4"|
+      | "R1,R2,R3,R4,*" | "G1,O1" | "R5" | "R1" | "R2,R3,R4,R5,*/R1,G1,O1"|
+      | "R1,R2,R3,R4,*" | "B1,G1,O1" | "R5" | "R1" | "R2,R3,R4,R5,*/R1,B1,G1,O1"|
+
+      | "R5,B5,O5,*" | "R3,R4" | "G5" | "R5" | "B5,G5,O5,*/R3,R4,R5"|
+      | "R2,B2,G2,*" | "R3,R4,R5" | "O2" | "R2" | "B2,G2,O2,*/R2,R3,R4,R5"|
+      | "R2,B2,G2,*" | "G2,O2" | "O2" | "B2" | "R2,G2,O2,*/B2,G2,O2"|
+      | "R2,B2,G2,*" | "B2,G2,O2" | "O2" | "R2" | "B2,G2,O2,*/R2,B2,G2,O2"|
 
 
   #invalid
@@ -40,7 +54,7 @@ Feature: A player moves tiles in a meld to another on the table
     When Player moves "R7" from 1 meld to 2 meld
     Then the table still has "R8,R9,R10,R11/R4,R5,R6"
 
-    #ok
+
   @from_a_meld_that_does_not_on_the_table
   Scenario: Player selects a meld that is not in the table
     Given Table has "R8,B8,G8,O8"
@@ -58,14 +72,26 @@ Feature: A player moves tiles in a meld to another on the table
     When Player moves "R10" from 1 meld to 3 meld
     Then the table still has "R6,R7,R8,R9,R10/R11,R12,R13"
 
-    #ok
+    
   @move_before_initial_30
-  Scenario: Player has not played tiles yet, but move the tiles on the table
-    Given Table has "R6,R7,R8,R9,R10"
-    And Table has "R11,R12,R13"
+  Scenario Outline: Player has not played tiles yet, but move the tiles on the table
+    Given Table has <from>
+    And Table has <to>
     And Player has not played any tile yet
-    When Player moves "R9,R10" from 1 meld to 2 meld
-    And the table still has "R6,R7,R8,R9,R10/R11,R12,R13"
+    When Player moves <move> from 1 meld to 2 meld
+    And the table still has <from>
+    And the table still has <to>
+    Examples:
+      | from | to | move |
+      | "R1,R2,R3,R4"  | "R5,R6"    | "R4"|
+      | "R1,R2,R3,R4"  | "R5,R6,R7" | "R4"|
+      | "R1,R2,R3,R4"  | "B1,G1"    | "R1"|
+      | "R1,R2,R3,R4"  | "B4,G4,O4" | "R4"|
+
+      | "R3,B3,G3,O3"  | "B4,B5"    | "B3"|
+      | "R3,B3,G3,O3"  | "B4,B5,B6" | "B3"|
+      | "R3,B3,G3,O3"  | "B3,G3"    | "O3"|
+      | "R3,B3,G3,O3"  | "B3,G3,O3" | "R3"|
 
 
   @move_to_form_invalid_meld_at_the_end_of_turn
@@ -74,35 +100,42 @@ Feature: A player moves tiles in a meld to another on the table
     And Table has <to>
     And Player has played tiles before this turn
     When Player moves <move> from 1 meld to 2 meld
-    Then the table still has <melds>
+    And Player ends his turn
+    Then the table still has <from>
+    And the table still has <to>
     Examples:
-      | from | to | move | melds |
-      | "R5,R6,R7,R8" | "R7,R8,R9" | "R8" | "R5,R6,R7,R8/R7,R8,R9" |
-      | "R10,B10,G10" | "R7,R8,R9" | "B10"| "R10,B10,G10/R7,R8,R9" |
-      | "R11,B11,G11" | "R7,R8,R9" | "R7,R8,R9,R11"| "R11,B11,G11/R7,R8,R9"|
+      | from | to | move |
+      | "R5,R6,R7,R8" | "R6"       | "R5" |
 
-      | "O10,O11,O12,O13" | "R7,B7,G7" | "O10"     | "O10,O11,O12,O13/R7,B7,G7"|
-      | "R7,R8,R9,R10"    | "R7,B7,G7" | "R7"      | "R7,R8,R9,R10/R7,B7,G7"   |
-      | "R7,R8,R9,R10"    | "R7,B7,G7,O7" | "R7"   | "R7,R8,R9,R10/R7,B7,G7,O7"|
+      | "R5,R6,R7,R8" | "R7,R8,R9" | "R8" |
+      | "R9,R10,R11,R12" | "R7,R8,R9" | "R12" |
+      | "R10,B10,G10" | "R7,R8,R9" | "B10"|
+
+      | "O10,O11,O12,O13" | "R7,B7,G7" | "O10"     |
+      | "R7,R8,R9,R10"    | "R7,B7,G7" | "R7"      |
+      | "R7,R8,R9,R10"    | "R7,B7,G7,O7" | "R7"   |
 
 
-      #ok
+
   @leaving_meld(s)_does_not_valid_at_the_end_of_turn
   Scenario Outline: Player moves the table and leave an invalid meld, and end his turn
     Given Table has <from>
     And Table has <to>
     And Player has played tiles before this turn
     When Player moves <move> from 1 meld to 2 meld
-    Then the table still has <melds>
+    And Player ends his turn
+    Then the table still has <from>
+    And the table still has <to>
     Examples:
-      | from | to | move | melds |
-      | "R5,R6,R7" | "R8,R9,R10" | "R7" | "R5,R6,R7/R8,R9,R10"|
-      | "R5,R6,R7,R8" | "R8,R9,R10"| "R7" | "R5,R6,R7,R8/R8,R9,R10"|
+      | from | to | move |
+      | "R5,R6,R7" | "R8,R9,R10" | "R7" |
+      | "R5,R6,R7,R8" | "R8,R9,R10"| "R7" |
 
-      | "R8,B8,G8"    | "R5,R6,R7" | "R8" | "R8,B8,G8/R5,R6,R7"    |
+      | "R8,B8,G8"    | "R5,R6,R7" | "R8" |
+      | "R8,B8,G8,O8" | "R8,G8"    | "B8,O8" |
 
 
-    #OK
+
   @move_tiles_includes_joker_to_another_meld_after_replacing_joker
     Scenario: Player moves jokers to another meld after replacing joker
     Given Table has "R3,R4,R5,R6,*"
