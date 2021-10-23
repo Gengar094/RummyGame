@@ -235,7 +235,7 @@ public class GameServer {
                 if (str.equals("end")) {
                     if (!endTurn()) {
                         writer.write("Invalid melds on the table, you get a penalty. Table rollbacks");
-                        writer.write("\n");
+                        writer.newLine();
                         writer.flush();
                     }
                     game.tableRefresh();
@@ -246,8 +246,8 @@ public class GameServer {
                     writer.flush();
                     str = reader.readLine();
                     if (!play((str.split(",")))) {
-                        writer.write("Invalid play, you get a penalty" + "\r\n");
-                        writer.write("\n");
+                        writer.write("Invalid play, you get a penalty");
+                        writer.newLine();
                         writer.flush();
                     }
                 } else if (str.equals("2")) {
@@ -260,8 +260,8 @@ public class GameServer {
                     String[] reuse = choices.get(1).split("\\|");
                     String[] play = choices.get(2).split("\\|");
                     if(!reuseAndPlay(index, reuse, play)) {
-                        writer.write("Invalid play, you get a penalty" + "\r\n");
-                        writer.write("\n");
+                        writer.write("Invalid play, you get a penalty");
+                        writer.newLine();
                         writer.flush();
                     }
                 } else if (str.equals("3")) {
@@ -277,8 +277,8 @@ public class GameServer {
                         param[i - 1] = smallMeld;
                     }
                     if (!splitMeld(index, param)) {
-                        writer.write("Invalid play, you get a penalty" + "\r\n");
-                        writer.write("\n");
+                        writer.write("Invalid play, you get a penalty");
+                        writer.newLine();
                         writer.flush();
                     }
                 } else if (str.equals("4")) {
@@ -291,8 +291,8 @@ public class GameServer {
                     int to = Integer.parseInt(choices.get(2));
                     String[] moved = choices.get(1).split("\\|");
                     if (!moveTilesOnTable(from, moved, to)) {
-                        writer.write("Invalid play, you get a penalty" + "\r\n");
-                        writer.write("\n");
+                        writer.write("Invalid play, you get a penalty");
+                        writer.newLine();
                         writer.flush();
                     }
                 } else if (str.equals("5")) {
@@ -304,8 +304,8 @@ public class GameServer {
                     int index = Integer.parseInt(choices.get(0));
                     String[] play = choices.get(1).split("\\|");
                     if (!addToCurrentMeld(index, play)) {
-                        writer.write("Invalid play, you get a penalty" + "\r\n");
-                        writer.write("\n");
+                        writer.write("Invalid play, you get a penalty");
+                        writer.newLine();
                         writer.flush();
                     }
                 }
