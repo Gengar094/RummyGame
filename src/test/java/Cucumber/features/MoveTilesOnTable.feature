@@ -41,7 +41,7 @@ Feature: A player moves tiles in a meld to another on the table
       | "R5,B5,O5,*" | "R3,R4" | "G5" | "R5" | "B5,G5,O5,*/R3,R4,R5"|
       | "R2,B2,G2,*" | "R3,R4,R5" | "O2" | "R2" | "B2,G2,O2,*/R2,R3,R4,R5"|
       | "R2,B2,G2,*" | "G2,O2" | "O2" | "B2" | "R2,G2,O2,*/B2,G2,O2"|
-      | "R2,B2,G2,*" | "B2,G2,O2" | "O2" | "R2" | "B2,G2,O2,*/R2,B2,G2,O2"|
+      | "R2,B2,G2,*" | "B2,G2,O2" | "O2" | "R2" | "B2,G2,O2,*/B2,G2,O2,*"|
 
 
   #invalid
@@ -105,10 +105,8 @@ Feature: A player moves tiles in a meld to another on the table
     And the table still has <to>
     Examples:
       | from | to | move |
-      | "R5,R6,R7,R8" | "R6"       | "R5" |
 
       | "R5,R6,R7,R8" | "R7,R8,R9" | "R8" |
-      | "R9,R10,R11,R12" | "R7,R8,R9" | "R12" |
       | "R10,B10,G10" | "R7,R8,R9" | "B10"|
 
       | "O10,O11,O12,O13" | "R7,B7,G7" | "O10"     |
@@ -132,7 +130,6 @@ Feature: A player moves tiles in a meld to another on the table
       | "R5,R6,R7,R8" | "R8,R9,R10"| "R7" |
 
       | "R8,B8,G8"    | "R5,R6,R7" | "R8" |
-      | "R8,B8,G8,O8" | "R8,G8"    | "B8,O8" |
 
 
 
