@@ -14,7 +14,6 @@ Feature: A player moves tiles in a meld to another on the table
     | meld | pieces |
     | "R1,R2,R3,R4"| "R1,R2/R3,R4"|
     | "R1,R2,R3"   | "R1/R2/R3"   |
-    | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13" | "B1,B2,B3/B4,B5,B6/B6,B7,B8,B9/B10,B11,B12,B13"|
     | "R4,B4,G4"   | "R4/B4,G4"   |
     | "R4,B4,G4,O4"| "R4/B4/G4/O4"|
 
@@ -32,7 +31,6 @@ Scenario Outline: Player splits a meld including joker on the table after replac
     | meld | replace | pieces |
     | "R3,R4,*"| "R5"| "R3,R5/R4,*"|
     | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,*" | "B13" | "B1,B2,B3/B4,B5,B6/B6,B7,B8,B9/B10,B11,B12,B13,*"|
-    | "R3,R4,R5,*" | "R6"| "R3,R4,R5/R6,*"|
     | "R3,R5,R6,*" | "R4"| "R3,R4/R5,R6,*"|
 
     | "R3,B3,*"    | "G3"|  "R3/B3,G3,*"  |
@@ -68,11 +66,9 @@ Scenario Outline: Player splits a meld including joker on the table after replac
   Examples:
     | meld | pieces |
     | "R1,R2,R3,R4,R5" | "R1,R2,R3/R4,R5"|
-    | "R1,R2,R3" | "R1/R2,R3"|
     | "R1,R2,R3,R4,R5,R6" | "R1,R3,R4/R2,R5,R6"|
 
     | "R3,B3,O3"          | "R3,B3/O3"         |
-    | "R3,B3,O3,G3"       | "R3,B3,O3/G3"      |
 
 @split_before_initial_30
   Scenario Outline: Player splits a meld before playing initial 30
@@ -86,7 +82,7 @@ Scenario Outline: Player splits a meld including joker on the table after replac
       | meld | pieces |
       | "R1,R2,R3,R4"| "R1,R2/R3,R4"|
       | "R1,R2,R3"   | "R1/R2/R3"   |
-      | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13" | "B1,B2,B3/B4,B5,B6/B6,B7,B8,B9/B10,B11,B12,B13"|
+      | "B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13" | "B1,B2,B3/B4,B5,B6/B7,B8,B9/B10,B11,B12,B13"|
       | "R4,B4,G4"   | "R4/B4,G4"   |
       | "R4,B4,G4,O4"| "R4/B4/G4/O4"|
 
