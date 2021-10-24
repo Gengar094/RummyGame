@@ -19,22 +19,12 @@ Feature: A player add his tiles to the existing meld on the table
       | "R5"  | "B5,O5"   | "R5,B5,O5"   |
       | "R5"  | "G5,B5,O5"| "R5,B5,G5,O5"|
 
-      | "R5"  | "R6,R7,*" | "R5,R6,R7,*" |
-      | "R5"  | "G5,B5,*" | "R5,B5,G5,*" |
-
       | "R4,R5"| "R3"     | "R3,R4,R5"   |
-      | "R4,R5"| "R6,R7,R8,R9"| "R4,R5,R6,R7,R8,R9"|
-
-      | "R4,B4"| "G4"         | "R4,B4,G4"         |
       | "R4,B4"| "G4,O4"      | "R4,B4,G4,O4"      |
 
       | "*"    | "R6,R7,R8"   | "R6,R7,R8,*"       |
-      | "*"    | "R6,R7"      | "R6,R7,*"          |
       | "*"    | "R5,B5"      | "R5,B5,*"          |
-      | "*"    | "R5,B5,G5"   | "R5,B5,G5,*"       |
 
-      | "R4,*" | "R6,R7,R8"   | "R4,R6,R7,R8,*"    |
-      | "R4,*" | "B4,G4"      | "R4,B4,G4,*"       |
 
     #invalid
 
@@ -59,15 +49,17 @@ Feature: A player add his tiles to the existing meld on the table
     Examples:
       | tiles | melds | new |
       | "R3"  | "R2"  | "R2,R3"|
+      | "*"  | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13" | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,*"|
+      | "R9" | "R4,R5,R6"    | "R4,R5,R6,R9"    |
+      | "B3" | "R4,R5,R6"    | "B3,R4,R5,R6"    |
 
       | "R3"| "R3,B3,G3"| "R3,R3,B3,G3" |
       | "O4" | "R3,B3,G3"    | "R3,B3,G3,O4"    |
+      | "R3" | "B3" | "R3,B3" |
       | "R3" | "R3,B3,G3,O3" | "R3,R3,B3,G3,O3" |
-      | "*"  | "R3,B3,G3,O3" | "R3,B3,G3,O3,*"  |
 
-      | "R9" | "R4,R5,R6"    | "R4,R5,R6,R9"    |
-      | "B3" | "R4,R5,R6"    | "B3,R4,R5,R6"    |
-      | "*"  | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13" | "R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,*"|
+
+
 
 
   @select_a_meld_that_is_not_on_the_table
@@ -97,20 +89,9 @@ Feature: A player add his tiles to the existing meld on the table
       | "R5"  | "B5,O5"   | "R5,B5,O5"   |
       | "R5"  | "G5,B5,O5"| "R5,B5,G5,O5"|
 
-      | "R5"  | "R6,R7,*" | "R5,R6,R7,*" |
-      | "R5"  | "G5,B5,*" | "R5,B5,G5,*" |
-
       | "R4,R5"| "R3"     | "R3,R4,R5"   |
-      | "R4,R5"| "R6,R7,R8,R9"| "R4,R5,R6,R7,R8,R9"|
-
-      | "R4,B4"| "G4"         | "R4,B4,G4"         |
       | "R4,B4"| "G4,O4"      | "R4,B4,G4,O4"      |
 
       | "*"    | "R6,R7,R8"   | "R6,R7,R8,*"       |
-      | "*"    | "R6,R7"      | "R6,R7,*"          |
       | "*"    | "R5,B5"      | "R5,B5,*"          |
-      | "*"    | "R5,B5,G5"   | "R5,B5,G5,*"       |
-
-      | "R4,*" | "R6,R7,R8"   | "R4,R6,R7,R8,*"    |
-      | "R4,*" | "B4,G4"      | "R4,B4,G4,*"       |
 
