@@ -1,3 +1,4 @@
+package JUnit;
 import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.*;
 // import org.junit.Test;
