@@ -39,6 +39,10 @@ public class Game {
         return players[curr % 3].hasToDraw();
     }
 
+    public List<String> getDeck() {
+        return Config.tiles;
+    }
+
     public Map<Integer, Boolean> getReplaceable() {
         return replaceable;
     }
