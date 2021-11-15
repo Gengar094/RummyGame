@@ -16,7 +16,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   Examples:
     | tiles | melds | reuse | new | left |
     | "R11,B11"     | "R11,B11,G11,O11"        |   "G11"             |   "R11,B11,G11"            |  "R11,B11,O11"      |
-    |  "R11,R12"    | "R13,B13,G13,O13"        |   "R13"             |  "R11,R12,R13"             |   "B13,G13.O13"     |
+    |  "R11,R12"    | "R13,B13,G13,O13"        |   "R13"             |  "R11,R12,R13"             |   "B13,G13,O13"     |
     |  "B13,O13"    |   "R10,R11,R12,R13"      |       "R13"         |    "R13,B13,O13"           |      "R10,R11,R12"  |
     |  "R11,R12"    |   "R7,R8,R9,R10"         |       "R10"         |        "R10,R11,R12"       |         "R7,R8,R9"  |
 
@@ -30,7 +30,7 @@ Feature: A player reuses the existing tiles on the table and play tiles from his
   And Player reuses "R5" from 1 meld, and play "R3,R4"
   And Player ends his turn
   Then Player does not have "R3,R4,R8" in his hand
-  And Table has "R3,R4,R5/R6,R7,R8"
+  And Table has "R3,R4,R5/R6,R7,R8,*"
 
 
 @reuse_the_joker_after_replacing_it

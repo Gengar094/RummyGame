@@ -45,7 +45,6 @@ public class drawTest {
         p3.randomizeTiles();
     }
 
-    // ******************************** draw *************************************** //
     @Test
     public void testSuccessfullyDraw() {
         int curr = gs.getGame().getDeck().size();
