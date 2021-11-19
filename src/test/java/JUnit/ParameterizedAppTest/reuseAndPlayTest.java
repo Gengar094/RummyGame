@@ -4,6 +4,7 @@ import game.Config;
 import game.Game;
 import game.GameServer;
 import game.Player;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,12 +36,22 @@ public class reuseAndPlayTest {
     @AfterEach
     public void reset() {
         System.out.println("after");
+        System.out.println(Config.tiles.size());
         p1.reset();
         p1.randomizeTiles();
         p2.reset();
         p2.randomizeTiles();
         p3.reset();
         p3.randomizeTiles();
+        System.out.println(Config.tiles.size());
+    }
+
+    @AfterAll
+    public static void finish() {
+        System.out.println("final");
+        p1.reset();
+        p2.reset();
+        p3.reset();
     }
 
     @ParameterizedTest

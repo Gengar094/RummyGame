@@ -4,10 +4,7 @@ import Cucumber.supports.Public;
 import game.Game;
 import game.GameServer;
 import game.Player;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,6 +40,13 @@ public class drawTest {
         p2.randomizeTiles();
         p3.reset();
         p3.randomizeTiles();
+    }
+
+    @AfterAll
+    public static void finish() {
+        p1.reset();
+        p2.reset();
+        p3.reset();
     }
 
     @Test
