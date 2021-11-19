@@ -105,149 +105,209 @@ public class reuseAndPlayTest {
     static List<Arguments> test_reuse_the_meld_from_the_table() {
         return List.of(
                 Arguments.arguments("R11,B11", "R11,B11,G11,O11",  "G11", "R11,B11,G11","R11,B11,O11" ),
+                Arguments.arguments("R12,B12,G12", "R12,B12,G12,O12",  "O12", "R12,B12,G12,O12","R12,B12,G12"),
+
+                Arguments.arguments("R11,R12,R13", "R10,B10,G10,O10",  "R10", "R10,R11,R12,R13","B10,G10,O10"),
                 Arguments.arguments("R11,R12", "R13,B13,G13,O13",  "R13", "R11,R12,R13","B13,G13,O13" ),
+
                 Arguments.arguments("B13,O13", "R10,R11,R12,R13",  "R13", "R13,B13,O13","R10,R11,R12" ),
-                Arguments.arguments("R11,R12", "R7,R8,R9,R10",  "R10", "R10,R11,R12", "R7,R8,R9" )
+                Arguments.arguments("R13,B13,O13", "G10,G11,G12,G13",  "G13", "R13,B13,G13,O13","G10,G11,G12"),
+
+                Arguments.arguments("R11,R12", "R7,R8,R9,R10",  "R10", "R10,R11,R12", "R7,R8,R9"),
+                Arguments.arguments("R11,R12,R13", "R7,R8,R9,R10",  "R10", "R10,R11,R12,R13", "R7,R8,R9")
         );
     }
 
 
 
-    @Test
-    public void test_reuse_other_tiles_in_meld_after_replacing_joker() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_other_tiles_in_meld_after_replacing_joker(String tiles, String melds, String replace, String reuse, String play, String newMeld) {
         // Given
-        String[] desired = {"R3", "R4", "R8"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R5", "R6", "R7", "*"));
+        String[] mm = melds.split(",");
+        List<String> list = new ArrayList<>(Arrays.asList(mm));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
+        gs.addToCurrentMeld(1, replace.split(","));
 
         // When
-        gs.addToCurrentMeld(1, new String[]{"R8"});
-        gs.reuseAndPlay(1, new String[]{"R5"}, new String[]{"R3","R4"});
+        gs.reuseAndPlay(1, reuse.split(","), play.split(","));
         gs.endTurn();
 
         // Then
-        for (String d: desired) {
+        for (String d: tiles.split(",")) {
             assertFalse(gs.getPrevPlayer().getTiles().contains(d));
         }
 
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3","R4","R5"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R6","R7","R8","*"))));
+        String[] parts = newMeld.split("/");
+        for (String p: parts) {
+            assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(p.split(",")))));
+        }
     }
 
-    @Test
-    public void test_reuse_the_joker_after_replacing_it() {
+    static List<Arguments> test_reuse_other_tiles_in_meld_after_replacing_joker() {
+        return List.of(
+                Arguments.arguments("R3,R4,R7", "R5,R6,*", "R7", "R5", "R3,R4", "R3,R4,R5/R6,R7,*"),
+                Arguments.arguments("R3,R4,R8", "R5,R6,R7,*", "R8", "R5", "R3,R4", "R3,R4,R5/R6,R7,R8,*"),
+
+                Arguments.arguments("R2,R3,G4", "R4,B4,*", "G4", "R4", "R2,R3", "R2,R3,R4/B4,G4,*"),
+                Arguments.arguments("R5,R6,R7,G4", "R4,B4,O4,*", "G4", "R4", "R5,R6,R7", "R4,R5,R6,R7/B4,G4,O4,*")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_the_joker_after_replacing_it(String tiles, String melds, String replace, String reuse, String play, String newMeld) {
         // Given
-        String[] desired = {"R3", "R4", "R8"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R5", "R6", "R7", "*"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.addToCurrentMeld(1, new String[]{"R8"});
-        gs.reuseAndPlay(1, new String[]{"*"}, new String[]{"R3","R4"});
+        gs.addToCurrentMeld(1, replace.split(","));
+        gs.reuseAndPlay(1, reuse.split(","), play.split(","));
         gs.endTurn();
 
         // Then
-        for (String d: desired) {
+        for (String d: play.split(",")) {
             assertFalse(gs.getPrevPlayer().getTiles().contains(d));
         }
 
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3","R4","*"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5","R6","R7","R8"))));
+        String[] parts = newMeld.split("/");
+        for (String p: parts) {
+            assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(p.split(",")))));
+        }
+    }
+
+    static List<Arguments> test_reuse_the_joker_after_replacing_it() {
+        return List.of(
+                Arguments.arguments("R3,R4,R8", "R5,R6,R7,*", "R8", "*", "R3,R4", "R3,R4,*"),
+                Arguments.arguments("R3,R4,R7", "R5,R6,*", "R7", "*", "R3,R4", "R3,R4,*"),
+                Arguments.arguments("R3,R4,R8,O6", "R6,B6,*", "O6", "*", "R3,R4", "R3,R4,*"),
+                Arguments.arguments("R3,R4,R8,G7", "R7,B7,O7,*", "G7", "*", "R3,R4", "R3,R4,*")
+        );
     }
 
 
 
     // ******************************* invalid cases *************************** //
-    @Test
-    public void test_reuse_tiles_that_player_does_not_have() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_tiles_that_player_does_not_have(String doesNotHave, String melds, String reuse, String doesNotExist) {
         // Given
-        while (gs.getCurrentPlayer().getTiles().contains("R6")) {
-            gs.getCurrentPlayer().getTiles().remove("R6");
-            Config.tiles.add("R6");
+        String[] dd = doesNotHave.split(",");
+        for (String d: dd) {
+            while (gs.getCurrentPlayer().getTiles().contains(doesNotHave)) {
+                gs.getCurrentPlayer().getTiles().remove(doesNotHave);
+                Config.tiles.add(doesNotHave);
+            }
         }
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R7", "R8", "R9", "R10","R11"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.reuseAndPlay(1, new String[]{"R7","R8"}, new String[]{"R6"});
+        gs.reuseAndPlay(1, reuse.split(","), dd);
         gs.endTurn();
 
         // Then
+        String[] ee = doesNotExist.split("/");
+        for (String e: ee) {
+            assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(e.split(",")))));
+        }
+        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(melds.split(",")))));
+    }
 
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R6","R7","R8"))));
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R9","R10","R11"))));
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R7", "R8", "R9", "R10","R11"))));
+    static List<Arguments> test_reuse_tiles_that_player_does_not_have() {
+        return List.of(
+                Arguments.arguments("R6", "R7,R8,R9,R10,R11", "R7,R8", "R6,R7,R8/R9,R10,R11")
+        );
     }
 
 
-    @Test
-    public void test_reuse_tiles_that_meld_does_not_have() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_tiles_that_meld_does_not_have(String tiles, String melds, String reuse, String newMeld) {
         // Given
-        String[] desired = {"R6", "R7", "R8", "R9"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R2", "R3", "R4"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.reuseAndPlay(1, new String[]{"R5"}, new String[]{"R6", "R7", "R8", "R9"});
+        gs.reuseAndPlay(1, reuse.split(","), tiles.split(","));
         gs.endTurn();
 
         // Then
 
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5", "R6", "R7", "R8", "R9"))));
-        for (String d: desired) {
+
+        for (String d: tiles.split(",")) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R2", "R3", "R4"))));
+
+        String[] ee = newMeld.split("/");
+        for (String e: ee) {
+            assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(e.split(",")))));
+        }
+    }
+
+    static List<Arguments> test_reuse_tiles_that_meld_does_not_have() {
+        return List.of(
+                Arguments.arguments("R6,R7,R8,R9", "R2,R3,R4", "R5", "R2,R3,R4,R5/R6,R7,R8,R9")
+        );
     }
 
 
-    @Test
-    public void test_select_a_meld_that_does_not_on_the_table() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_select_a_meld_that_does_not_on_the_table(String tiles, String melds, String reuse, String newMeld) {
         // Given
-        String[] desired = {"R6", "R7", "R8", "R9"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R2", "R3", "R4"));
-        table.add(list);
+        String[] mm = melds.split("/");
+        for (String m: mm) {
+            String[] ss = m.split(",");
+            List<String> list = new ArrayList<>(Arrays.asList(ss));
+            table.add(list);
+        }
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.reuseAndPlay(1, new String[]{"R5"}, new String[]{"R6", "R7", "R8", "R9"});
+        gs.reuseAndPlay(3, reuse.split(","), tiles.split(","));
         gs.endTurn();
 
         // Then
-
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R5", "R6", "R7", "R8", "R9"))));
-        for (String d: desired) {
+        for (String d: tiles.split(",")) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
-        assertTrue(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R2", "R3", "R4"))));
+        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(newMeld.split(",")))));
+    }
+
+    static List<Arguments> test_select_a_meld_that_does_not_on_the_table() {
+        return List.of(
+                Arguments.arguments("R4,R5", "R6,R7,R8,R9/R1,R2,R3", "R3", "R3,R4,R5")
+        );
     }
 
 
@@ -373,57 +433,73 @@ public class reuseAndPlayTest {
     }
 
 
-    @Test
-    public void test_reuse_joker_before_replacing_it() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_joker_before_replacing_it(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
-        String[] desired = {"R3","R4"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R4,R5,R6,*"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.reuseAndPlay(1, new String[]{"*"}, new String[]{"R3","R4"});
+        gs.reuseAndPlay(1, reuse.split(","), tiles.split(","));
         gs.endTurn();
 
         // Then
 
-        for (String d: desired) {
+        for (String d: tiles.split(",")) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "R4", "*"))));
+        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(doesNotExist.split(",")))));
+    }
+
+    static List<Arguments> test_reuse_joker_before_replacing_it() {
+        return List.of(
+                Arguments.arguments("R3,R4", "R4,R5,R6,*", "*", "R3,R4,*"),
+                Arguments.arguments("R4,R5", "R4,B4,G4,*", "*", "R4,R5,*")
+        );
     }
 
 
-    @Test
-    public void test_reuse_other_tiles_with_joker_before_replacing_it_in_meld() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_reuse_other_tiles_with_joker_before_replacing_it_in_meld(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
-        String[] desired = {"R3","R4"};
-        gs.setDesiredAndUniqueTiles(desired);
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R4,R5,R6,*"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.reuseAndPlay(1, new String[]{"R5"}, new String[]{"R3","R4"});
+        gs.reuseAndPlay(1, reuse.split(","), tiles.split(","));
         gs.endTurn();
 
         // Then
 
-        for (String d: desired) {
+        for (String d: tiles.split(",")) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R3", "R4", "R5"))));
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList("R6", "R7", "*"))));
 
+        String[] dd = doesNotExist.split("/");
+        for (String d: dd) {
+            assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(d.split(",")))));
+        }
+    }
+
+    static List<Arguments> test_reuse_other_tiles_with_joker_before_replacing_it_in_meld() {
+        return List.of(
+                Arguments.arguments("R3,R4", "R5,R6,R7,*", "R5", "R3,R4,R5/R6,R7,*"),
+                Arguments.arguments("R4,O4", "R4,B4,G4,*", "B4", "R4,B4,O4/R4,O4,*")
+        );
     }
 
 
