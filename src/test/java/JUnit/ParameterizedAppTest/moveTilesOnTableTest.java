@@ -449,7 +449,11 @@ public class moveTilesOnTableTest {
 
     static List<Arguments> test_move_tiles_includes_joker_to_another_meld_after_replacing_joker() {
         return List.of(
-                Arguments.arguments("R3,R4,R5,R6,*", "R7,B7,G7", "R8", "*", "R3,R4,R5,R6,R8,*/R7,B7,G7")
+                Arguments.arguments("R3,R4,R5,R6,*", "R7,B7,G7", "R8", "*", "R3,R4,R5,R6,R8,*/R7,B7,G7"),
+                Arguments.arguments("R4,R5,*", "R7,B7,G7", "R6", "*", "R4,R5,R6,*/R7,B7,G7"),
+
+                Arguments.arguments("R4,B4,*", "R7,R8,R9", "G4", "*", "R4,B4,G4,*/R7,R8,R9"),
+                Arguments.arguments("R4,B4,G4,*", "R7,R8,R9", "O4", "*", "R4,B4,G4,O4,*/R7,R8,R9")
         );
     }
 
@@ -492,7 +496,11 @@ public class moveTilesOnTableTest {
 
     static List<Arguments> test_move_tiles_before_replacing_joker() {
         return List.of(
-                Arguments.arguments("R3,R4,R5,R6,*", "B3,G3,O3", "R3", "R3,R4,R5,R6,*/B3,G3,O3")
+                Arguments.arguments("R3,R4,R5,R6,*", "B3,G3,O3", "R3", "R3,R4,R5,R6,*/B3,G3,O3"),
+                Arguments.arguments("R3,R4,*", "B3,G3,O3", "R3", "R3,R4,*/B3,G3,O3"),
+
+                Arguments.arguments("R3,B3,O3,*", "B3,G3,O3", "R3", "R3,B3,O3,*/B3,G3,O3"),
+                Arguments.arguments("R3,B3,*", "B3,G3,O3", "R3", "R3,B3,*/B3,G3,O3")
         );
     }
 }
