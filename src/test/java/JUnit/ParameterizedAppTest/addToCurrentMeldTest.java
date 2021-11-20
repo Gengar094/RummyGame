@@ -95,26 +95,37 @@ public class addToCurrentMeldTest {
 
 
     // ******************************* invalid cases *************************** //
-    @Test
-    public void test_player_adds_tiles_that_he_does_not_have() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_player_adds_tiles_that_he_does_not_have(String doesNotHave, String melds, String doesNotExist) {
         // When
-        while (gs.getCurrentPlayer().getTiles().contains("R5")) {
-            gs.getCurrentPlayer().getTiles().remove("R5");
-            Config.tiles.add("R5");
+        String[] dd = doesNotHave.split(",");
+        for (String d: dd) {
+            while (gs.getCurrentPlayer().getTiles().contains(d)) {
+                gs.getCurrentPlayer().getTiles().remove(d);
+                Config.tiles.add(d);
+            }
         }
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R6","R7","R8"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
 
         gs.setInitial(false);
 
         // When
-        gs.addToCurrentMeld(1, new String[]{"R5"});
+        gs.addToCurrentMeld(1, doesNotHave.split(","));
         gs.endTurn();
 
         // Then
-        assertFalse(gs.getGame().getTable().contains(Arrays.asList("R5","R6","R7","R8")));
+        String[] ss = doesNotExist.split(",");
+        assertFalse(gs.getGame().getTable().contains(Arrays.asList(ss)));
+    }
+
+    static List<Arguments> test_player_adds_tiles_that_he_does_not_have() {
+        return List.of(
+                Arguments.arguments("R5", "R6,R7,R8", "R5,R6,R7,R8")
+        );
     }
 
     @ParameterizedTest
@@ -160,26 +171,37 @@ public class addToCurrentMeldTest {
     }
 
 
-    @Test
-    public void test_select_a_meld_that_is_not_on_the_table() {
+    @ParameterizedTest
+    @MethodSource
+    public void test_select_a_meld_that_is_not_on_the_table(String tiles, String melds, String doesNotExist) {
         // Given
-        gs.setDesiredAndUniqueTiles(new String[]{"R5"});
+        gs.setDesiredAndUniqueTiles(tiles.split(","));
 
         List<List<String>> table = new ArrayList<>();
-        List<String> list = new ArrayList<>(Arrays.asList("R6","R7","R8"));
+        List<String> list = new ArrayList<>(Arrays.asList(melds.split(",")));
         table.add(list);
         gs.setTable(table);
 
         gs.setInitial(false);
 
         // When
-        gs.addToCurrentMeld(2, new String[]{"R5"});
+        gs.addToCurrentMeld(2, tiles.split(","));
         gs.endTurn();
 
         // Then
-        assertFalse(gs.getGame().getTable().contains(Arrays.asList("R5","R6","R7","R8")));
-        assertTrue(gs.getPrevPlayer().getTiles().contains("R5"));
+        String[] ss = doesNotExist.split(",");
+        assertFalse(gs.getGame().getTable().contains(Arrays.asList(ss)));
 
+        for (String s: tiles.split(",")) {
+            assertTrue(gs.getPrevPlayer().getTiles().contains(s));
+        }
+
+    }
+
+    static List<Arguments> test_select_a_meld_that_is_not_on_the_table() {
+        return List.of(
+                Arguments.arguments("R5", "R6,R7,R8", "R5,R6,R7,R8")
+        );
     }
 
 
