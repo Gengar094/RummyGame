@@ -264,7 +264,9 @@ public class splitMeldTest {
         return List.of(
                 Arguments.arguments("R1,R2,R3,R4,R5", "R1,R2,R3/R4,R5"),
                 Arguments.arguments("R1,R2,R3,R4,R5,R6", "R1,R3,R4/R2,R5,R6"),
-                Arguments.arguments("R3,B3,O3", "R3,B3/O3")
+
+                Arguments.arguments("R3,B3,O3", "R3,B3/O3"),
+                Arguments.arguments("R3,B3,G3,O3", "R3,B3/G3,O3")
         );
     }
 
@@ -350,7 +352,11 @@ public class splitMeldTest {
 
     static List<Arguments> test_split_before_replacing_joker() {
         return List.of(
-                Arguments.arguments("R1,R2,R3,*", "R1,R2/R3,*")
+                Arguments.arguments("R1,R2,R3,*", "R1,R2/R3,*"),
+                Arguments.arguments("R1,R2,*", "R1/R2,*"),
+
+                Arguments.arguments("R1,B1,G1,*", "R1,B1/G1,*"),
+                Arguments.arguments("R4,B4,*", "R4,B4/*")
         );
     }
 }
