@@ -241,7 +241,7 @@ public class reuseAndPlayTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_reuse_tiles_that_meld_does_not_have(String tiles, String melds, String reuse, String newMeld) {
+    public void test_reuse_tiles_that_meld_does_not_have(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
         gs.setDesiredAndUniqueTiles(tiles.split(","));
 
@@ -263,7 +263,7 @@ public class reuseAndPlayTest {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
 
-        String[] ee = newMeld.split("/");
+        String[] ee = doesNotExist.split("/");
         for (String e: ee) {
             assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(e.split(",")))));
         }
@@ -278,7 +278,7 @@ public class reuseAndPlayTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_select_a_meld_that_does_not_on_the_table(String tiles, String melds, String reuse, String newMeld) {
+    public void test_select_a_meld_that_does_not_on_the_table(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
         gs.setDesiredAndUniqueTiles(tiles.split(","));
 
@@ -301,7 +301,7 @@ public class reuseAndPlayTest {
         for (String d: tiles.split(",")) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(d));
         }
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(newMeld.split(",")))));
+        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(doesNotExist.split(",")))));
     }
 
     static List<Arguments> test_select_a_meld_that_does_not_on_the_table() {
@@ -343,8 +343,8 @@ public class reuseAndPlayTest {
         return List.of(
                 Arguments.arguments("R11,B11", "R11,B11,G11,O11", "G11"),
                 Arguments.arguments("R11,R12", "R13,B13,G13,O13", "R13"),
-                Arguments.arguments("B13,O13", "R10,R11,R12,R13", "R13"),
-                Arguments.arguments("R11,R12", "R7,R8,R9,R10" , "R10")
+                Arguments.arguments("B13,O13,G13", "R10,R11,R12,R13", "R13"),
+                Arguments.arguments("R11,R12,R13", "R7,R8,R9,R10" , "R10")
         );
     }
 
@@ -352,7 +352,7 @@ public class reuseAndPlayTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_invalid_meld_at_the_end_of_turn(String tiles, String melds, String reuse, String newMeld) {
+    public void test_invalid_meld_at_the_end_of_turn(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
         String[] tt = tiles.split(",");
         gs.setDesiredAndUniqueTiles(tt);
@@ -376,7 +376,7 @@ public class reuseAndPlayTest {
         for (String t: tt) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(t));
         }
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(newMeld.split(",")))));
+        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(doesNotExist.split(",")))));
 
     }
 
@@ -396,7 +396,7 @@ public class reuseAndPlayTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_leaving_meld_does_not_valid(String tiles, String melds, String reuse, String newMeld) {
+    public void test_leaving_meld_does_not_valid(String tiles, String melds, String reuse, String doesNotExist) {
         // Given
         String[] tt = tiles.split(",");
         gs.setDesiredAndUniqueTiles(tt);
@@ -420,7 +420,7 @@ public class reuseAndPlayTest {
         for (String t: tt) {
             assertTrue(gs.getPrevPlayer().getTiles().contains(t));
         }
-        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(newMeld.split(",")))));
+        assertFalse(gs.getGame().getTable().contains(new ArrayList<>(Arrays.asList(doesNotExist.split(",")))));
 
     }
 
