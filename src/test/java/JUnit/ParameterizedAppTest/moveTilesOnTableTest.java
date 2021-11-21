@@ -196,7 +196,7 @@ public class moveTilesOnTableTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_from_a_meld_that_does_not_on_the_table(String from, String to, String move, String stillHas) {
+    public void test_from_a_meld_that_is_not_on_the_table(String from, String to, String move, String stillHas) {
         // Given
         List<List<String>> table = new ArrayList<>();
         List<String> fromList = new ArrayList<>();
@@ -229,7 +229,7 @@ public class moveTilesOnTableTest {
         }
     }
 
-    static List<Arguments> test_from_a_meld_that_does_not_on_the_table() {
+    static List<Arguments> test_from_a_meld_that_is_not_on_the_table() {
         return List.of(
                 Arguments.arguments("R8,B8,G8,O8", "O9,O10,O11", "R10", "O9,O10,O11/R8,B8,G8,O8")
         );
@@ -238,7 +238,7 @@ public class moveTilesOnTableTest {
 
     @ParameterizedTest
     @MethodSource
-    public void test_to_a_meld_that_does_not_on_the_table(String from, String to, String move, String stillHas) {
+    public void test_to_a_meld_that_is_not_on_the_table(String from, String to, String move, String stillHas) {
         // Given
         List<List<String>> table = new ArrayList<>();
         List<String> fromList = new ArrayList<>();
@@ -271,7 +271,7 @@ public class moveTilesOnTableTest {
         }
     }
 
-    static List<Arguments> test_to_a_meld_that_does_not_on_the_table() {
+    static List<Arguments> test_to_a_meld_that_is_not_on_the_table() {
         return List.of(
                 Arguments.arguments("R6,R7,R8,R9,R10", "R11,R12,R13", "R10", "R6,R7,R8,R9,R10/R11,R12,R13")
         );
@@ -362,6 +362,7 @@ public class moveTilesOnTableTest {
         return List.of(
                 Arguments.arguments("R5,R6,R7,R8", "R7,R8,R9", "R8"),
                 Arguments.arguments("R10,B10,G10", "R7,R8,R9", "B10"),
+                Arguments.arguments("R3,R4,R5,R6", "R7,R8,R9", "R3"),
                 Arguments.arguments("O10,O11,O12,O13", "R7,B7,G7", "O10"),
                 Arguments.arguments("R7,R8,R9,R10", "R7,B7,G7", "R7"),
                 Arguments.arguments("R7,R8,R9,R10", "R7,B7,G7,O7", "R7")
@@ -404,8 +405,10 @@ public class moveTilesOnTableTest {
     static List<Arguments> test_leaving_meld_does_not_valid_at_the_end_of_turn() {
         return List.of(
                 Arguments.arguments("R5,R6,R7", "R8,R9,R10", "R7"),
+                Arguments.arguments("R5,R6,R7,R8", "R8,R9,R10", "R6,R7"),
                 Arguments.arguments("R5,R6,R7,R8", "R8,R9,R10", "R7"),
-                Arguments.arguments("R8,B8,G8", "R5,R6,R7", "R8")
+                Arguments.arguments("R8,B8,G8", "R5,R6,R7", "R8"),
+                Arguments.arguments("R8,B8,G8,O8", "G8,O8", "R8,B8")
         );
     }
 
