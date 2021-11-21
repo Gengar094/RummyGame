@@ -140,7 +140,8 @@ public class playTest {
             "R7,B7,G7,O6",
             "R7,B7,O6",
             "R7,B6,*" ,
-            "R10,R11,R11,*"})
+            "R10,R11,R11,*",
+            "R3,R4,R7,*"})
     public void test_play_an_invalid_meld_general(String melds) {
         // Given
         String[] ss = melds.split("/");
